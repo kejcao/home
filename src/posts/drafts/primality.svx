@@ -1,0 +1,64 @@
+---
+title: 'Primality'
+desc: 'primality'
+date: 2023-01-31
+---
+
+<script>
+// hack!
+let p;
+</script>
+
+```py
+import math
+
+def is_prime(n):
+    if n == 1:
+        return False
+
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n%i == 0:
+            return False
+    return True
+```
+
+Fermat's little theorem states that for a prime $p$ and any other integer $a$, $a^p-a$ is a multiple of $p$. Expressed in modular arithmetic as
+
+$$
+a^p \equiv a \pmod p
+$$
+
+For example take $a=3$ and $p=5$ then $3^5-3=240$ which is a multiple of $p$, expressed in modular arithmetic as
+
+$$
+3^5 \equiv 3 \pmod 5
+$$
+
+If $a$ and $p$ are coprime (that is their $gcd(a,p)=1$ meaning $p$ does not divide into $a$) then we can divide both sides by $a$ and get
+
+$$
+a^{p-1} \equiv 1 \pmod p
+$$
+
+
+
+```py
+import random
+
+def is_probably_prime(n, iter=20):
+    if n == 1:
+        return False
+    if n == 2 or n == 3:
+        return True
+
+    for i in range(iter+1):
+        if pow(random.randint(2, n-2), n-1, n) != 1:
+            return False
+    return True
+```
+
+The number 4125636888562548868221559797461449 is prime, but using trial division it would take about 64 quadrillion iterations because
+
+$$
+\sqrt{4125636888562548868221559797461449} \approx 6.4 \cdot 10^{16}
+$$

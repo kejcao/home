@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kevin Cao's Website</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+      <style>
+      
+        body {
+          padding: 0 1em;
+          margin: 0 auto;
+          font-family: "Merriweather", serif;
+          color: rgb(0, 0, 0, 0.7);
+          max-width: 50em;
+          -moz-tab-size: 4;
+            -o-tab-size: 4;
+               tab-size: 4;
+        }
+
+        code,
+        pre {
+          font-family: "Inconsolata", monospace;
+        }
+
+        pre {
+          overflow-x: auto;
+        }
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+        input {
+          width: 100%;
+          font: inherit;
+          padding: .5em;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        .navbar ul {
+          list-style: none;
+          padding: .5em 0 0 0;
+          margin: 0;
+        }
+
+        .navbar li {
+          display: inline;
+        }
+      
+    </style>
+    
+    
+  <title>Having Fun with an iPad - Kevin Cao</title>
+  <meta name="description" content="Poking and peeking into the internals of an iPad Mini 2." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <style>
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
+  Theme: a11y-light
+  Author: @ericwbailey
+  Maintainer: @ericwbailey
+
+  Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
+*/.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
+  </style>
+
+  </head>
+  <body>
+  
+    <header>
+      <nav class="navbar">
+        <ul>
+          <li><a href="/">homepage</a></li>
+          |
+          <li><a href="/posts/">posts</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+  <h1>Having Fun with an iPad</h1>
+  <i>2022-12-04</i>
+  <p>I have an iPad Mini 2 that I use to read eBooks. I transfer the books to and from my iPad using the technique I outlined on one of my recent posts: I create a temporary HTTP server on my desktop that broadcasts a <code>index.html</code> file with a list of hyperlinks, then I click on one of them from the iPad to download the book. It took me a ludicrous amount of time to find out that you could mount the iPad just like any other USB. The Arch Linux Wiki has a guide­as it does for everything­on iOS. I followed the Wiki's instructions:</p><ol><li>I installed <code>libimobiledevice</code> and <code>usbmuxd</code>, both of which I apparently already had.2. I ran <code>idevicepair pair</code>. The command exited, printing something like "please trust the device," then a little bubbly box pops up on the center of my iPad, asking me whether it should trust the device. I clicked "trust." I ran the pairing command again. It doesn't print out an error, which I assumed meant the pairing went well.</li>
+<li>I mounted it, with <code>ifuse ~/ipad</code>. It worked!</li>
+</ol><p>I <code>cd</code>'d into the directory and there these subdirectories stood,</p><pre><code>$ <span class="hljs-built_in">ls</span>
+Books  DCIM  Downloads  iTunes_Control  PhotoData  Photos  Radio</code></pre><p>Inside the directory <code>DCIM</code> was the subdirectory <code>100APPLE</code> and inside that directory were all of my photos and videos, in JPG and MOV format. Inside the directory <code>Books</code> was a subdirectory <code>Purchases</code> which contained all the books I had on my iPad. This is all merry and exciting but I wanted to use my iPad, in addition as a ebook reader, also as a MP3 player. I wanted to listen to audiobooks or music outside while sunbathing, but I can't well tug my heavy PC out everytime I did this. There wasn't an obvious folder to store audio, but I heard that I could jailbreak my device to store audio into Apple Music or something similar.</p><p>Jailbreaking was surprisingly easy, I downloaded Phoenix from <a href="https://jailbreaks.app/legacy.html">jailbreaks.app/legacy.html</a>since my iPad is a Mini 2­it runs iOS 9.3.5. I clicked buttons, followed instructions, waited on progress bars, then on my homescreen appeared a shiney new app called Cydia. I searched online for a method of importing music, and a reddit post led me to a jailbreak tweak called mImport. I install that using Cydia, but it didn't work out. There <em>was</em> a new button in the Apple Music app, that allowed me to choose a audio file from my iPad's filesystem, but whenever I tried to select a audio file it crashed.</p><p>Jailbreaking the device allowed me to mount with <code>ifuse ~/ipad --root</code>, which gave me access to the <em>entire</em> iPad filesystem, not just a portion of it. I had a fun few minutes exploring the structure and layout of my iPad, but this didn't lead to any insights on how I could listen to audio on the iPad.</p><p>I did find a tweak that does work though, an Ad blocker by the same author as mImport, so being able to watch YouTube without an Ad every few minutes is great. But I couldn't use mImport. Then I came up with an idea: Why not put the audio onto any video, then put the video onto the iPad?</p><p>I ran <code>ffmpeg -i audiobook.mp3 -f lavfi -i color=c=0xff00ff:s=640x480:r=30 -shortest out.mov</code> to convert an audiobook I had to a video with a 640 by 480 pure fuchsia background. I tried just copying that video into the <code>DCIM</code> folder of my iPad, where all the videos and photos were stored, but that didn't work out. The Photo program of the iPad didn't pick up the video. So, I fiddled around a bit, and found where the photo and video metadata was stored­in a SQLite database in the <code>PhotoData</code> subdirectory.</p><ol><li>I copied the video with <code>cp ~/out.mov ~/ipad/DCIM/100APPLE/IMG_0033.MOV</code>.2. I run <code>sqlitebrowser ~/ipad/PhotoData/Photos.sqlite</code>, by choice of tool to edit and browse a SQLite database.</li>
+<li>There were a lot of tables, looking around I found <code>ZGENERICASSET</code> that seemed most relevant to what I was doing. The table had a row for each video/photo and a lot of other information associated with that video/photo. I duplicated the row of a pre-existing video, then change only the columns regarding width, height, and filename.</li>
+<li>Then I save and exit out of <code>sqlitebrowser</code> and run <code>fusermount -u ~/ipad</code> to unmount the iPad before unplugging the wire connecting it to my desktop.</li>
+<li>I check, and lo and behold the video with its audio is present in my photo app, and works!</li>
+</ol><p>By the way, I ran <code>select * from ZGENERICASSET order by Z_PK desc limit 1;</code> from the sqlite CLI to get the last row of the table, which looks like this:</p><pre><code>51|23|4|0|0||||||0|0|1|0|0|1920|0|0|1|102|1|3|24|0|0|0|0|1080|51|||9||20480||689797057.443527|||||689797023|2.23333333333333||689797023|689797023.461807|||||||DCIM/100APPLE|IMG_0031.MOV||com.apple.quicktime-movie|CD4267DD-764C-4FF9-A400-4D05A02C29ED||||</code></pre><p>That's it for this post, I'm planning to change the structure of my website by using React and Next.js or something similar, so this post may not be as polished as the other ones.</p>
+
+  
+  </body>
+</html>

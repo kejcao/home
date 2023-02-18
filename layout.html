@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kevin Cao's Website</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    {% block style %}
+      {% style %}
+        body {
+          padding: 0 1em;
+          margin: 0 auto;
+          font-family: "Merriweather", serif;
+          color: rgb(0, 0, 0, 0.7);
+          max-width: 50em;
+          tab-size: 4;
+        }
+
+        code,
+        pre {
+          font-family: "Inconsolata", monospace;
+        }
+
+        pre {
+          overflow-x: auto;
+        }
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+        input {
+          width: 100%;
+          font: inherit;
+          padding: .5em;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        .navbar ul {
+          list-style: none;
+          padding: .5em 0 0 0;
+          margin: 0;
+        }
+
+        .navbar li {
+          display: inline;
+        }
+      {% endstyle %}
+    {% endblock%}
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body>
+  {% block body %}
+    <header>
+      <nav class="navbar">
+        <ul>
+          <li><a href="/">homepage</a></li>
+          |
+          <li><a href="/posts/">posts</a></li>
+        </ul>
+      </nav>
+    </header>
+    {% block content %}
+    {% endblock %}
+  {% endblock %}
+  </body>
+</html>

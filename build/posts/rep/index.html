@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kevin Cao's Website</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+      <style>
+      
+        body {
+          padding: 0 1em;
+          margin: 0 auto;
+          font-family: "Merriweather", serif;
+          color: rgb(0, 0, 0, 0.7);
+          max-width: 50em;
+          -moz-tab-size: 4;
+            -o-tab-size: 4;
+               tab-size: 4;
+        }
+
+        code,
+        pre {
+          font-family: "Inconsolata", monospace;
+        }
+
+        pre {
+          overflow-x: auto;
+        }
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+        input {
+          width: 100%;
+          font: inherit;
+          padding: .5em;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        .navbar ul {
+          list-style: none;
+          padding: .5em 0 0 0;
+          margin: 0;
+        }
+
+        .navbar li {
+          display: inline;
+        }
+      
+    </style>
+    
+    
+  <title>rep: A Tool for Repeating Commands - Kevin Cao</title>
+  <meta name="description" content="A small tool written in C to repeat commands." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <style>
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
+  Theme: a11y-light
+  Author: @ericwbailey
+  Maintainer: @ericwbailey
+
+  Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
+*/.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
+  </style>
+
+  </head>
+  <body>
+  
+    <header>
+      <nav class="navbar">
+        <ul>
+          <li><a href="/">homepage</a></li>
+          |
+          <li><a href="/posts/">posts</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+  <h1>rep: A Tool for Repeating Commands</h1>
+  <i>2022-07-18</i>
+  <p>When I needed to run a command multiple times, I would wrap that command into a loop.</p><pre><code><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {1..10}; <span class="hljs-keyword">do</span> ...; <span class="hljs-keyword">done</span></code></pre><p>But it's a bother to type that out just to repeat a command a few times, so I wrote a simple C script that simplifies the process.</p><pre><code><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/wait.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdbool.h&gt;</span></span>
+
+<span class="hljs-type">char</span> *<span class="hljs-title function_">join</span><span class="hljs-params">(<span class="hljs-type">char</span> **strs, <span class="hljs-type">int</span> len)</span> {
+	<span class="hljs-type">int</span> lens = <span class="hljs-number">0</span>;
+	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;len; ++i) {
+		lens += (<span class="hljs-built_in">strlen</span>(strs[i])+<span class="hljs-number">1</span>);
+	}
+	<span class="hljs-type">char</span> *str = <span class="hljs-built_in">malloc</span>(lens);
+	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;len; ++i) {
+		<span class="hljs-built_in">strcat</span>(str, strs[i]);
+		<span class="hljs-built_in">strcat</span>(str, <span class="hljs-string">&quot; &quot;</span>);
+	}
+	<span class="hljs-keyword">return</span> str;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span> {
+	<span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">2</span>) {
+		<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;usage: rep [n] cmd\n&quot;</span>);
+		<span class="hljs-built_in">exit</span>(EXIT_FAILURE);
+	}
+
+	<span class="hljs-type">char</span> *endptr;
+	<span class="hljs-type">int</span> repeat = strtol(argv[<span class="hljs-number">1</span>], &amp;endptr, <span class="hljs-number">10</span>);
+	<span class="hljs-type">bool</span> parsable = (*endptr == <span class="hljs-string">&#x27;\0&#x27;</span>);
+
+	<span class="hljs-keyword">if</span>(!parsable) {
+		repeat = <span class="hljs-number">20</span>;
+	}
+
+	<span class="hljs-keyword">if</span>(repeat &lt;= <span class="hljs-number">0</span>) {
+		<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;cannot repeat %s times.\n&quot;</span>, argv[<span class="hljs-number">1</span>]);
+		<span class="hljs-built_in">exit</span>(EXIT_FAILURE);
+	}
+
+	<span class="hljs-comment">/* you can change sh to bash or zsh or whatever other shell. */</span>
+	<span class="hljs-type">char</span> *cmd[<span class="hljs-number">4</span>] = {<span class="hljs-string">&quot;sh&quot;</span>, <span class="hljs-string">&quot;-c&quot;</span>, join(
+		<span class="hljs-comment">/* if the first argument is a parsable number, skip it. */</span>
+		argv + (parsable ? <span class="hljs-number">2</span> : <span class="hljs-number">1</span>),
+		argc - (parsable ? <span class="hljs-number">2</span> : <span class="hljs-number">1</span>)
+	), <span class="hljs-literal">NULL</span>};
+
+	<span class="hljs-keyword">while</span>(repeat--) {
+		<span class="hljs-type">pid_t</span> pid;
+		<span class="hljs-keyword">switch</span>(pid=fork()) {
+			<span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:
+				perror(<span class="hljs-string">&quot;fork()&quot;</span>);
+				<span class="hljs-built_in">exit</span>(EXIT_FAILURE);
+			<span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:
+				<span class="hljs-keyword">if</span>(execvp(cmd[<span class="hljs-number">0</span>], cmd) == <span class="hljs-number">-1</span>) {
+					perror(<span class="hljs-string">&quot;execvp()&quot;</span>);
+					<span class="hljs-built_in">exit</span>(EXIT_FAILURE);
+				}
+				<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">default</span>: {
+				<span class="hljs-type">int</span> status;
+				<span class="hljs-keyword">if</span>(waitpid(pid, &amp;status, <span class="hljs-number">0</span>) == <span class="hljs-number">-1</span>) {
+					perror(<span class="hljs-string">&quot;waitpid()&quot;</span>);
+					<span class="hljs-built_in">exit</span>(EXIT_FAILURE);
+				}
+			}
+		}
+	}
+}</code></pre><p>For example,</p><pre><code>$ rep <span class="hljs-built_in">ls</span> <span class="hljs-comment"># repeat ls 20 times.</span>
+$ rep 100 ./exe1 <span class="hljs-string">&#x27;$(./exe2)&#x27;</span> <span class="hljs-comment"># run exe1 100 times, with its first argument as the output of exe2.</span></code></pre><p>If the first argument is fully parsable as an integer, it will be taken as the number of times to repeat. Otherwise, it's treated as the beginning of a command.</p>
+
+  
+  </body>
+</html>

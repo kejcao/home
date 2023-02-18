@@ -1,0 +1,29 @@
+{% extends layout %}
+
+{% block head %}
+  <title>Homepage</title>
+  <meta name="description" content="" />
+{% endblock %}
+
+{% block content %}
+  <h1>Homepage</h1>
+  <p>Welcome! If you have any comments or questions send them to <a href="mailto:&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;">&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;</a>. My GitHub is <a href="https://github.com/kejcao">kejcao</a>.</p>
+  <section>
+    <h2>Projects</h2>
+    <ul>
+      <li><a href="/profile-card/">/profile-card/</a> is a simple profile card I made for Hacktoberfest 2022.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Posts</h2>
+    <ul>
+    {% for post in posts %}
+      <li>
+        <a href="/posts/{{ post.slug }}">{{ post.title }}</a> - <i>{{ post.date }}</i>
+        <br>
+        {{ post.desc }}
+      </li>
+    {% endfor %}
+    </ul>
+  </section>
+{% endblock %}

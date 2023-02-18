@@ -1,0 +1,19 @@
+{% extends layout %}	
+
+{% block head %}
+  <title>Posts</title>
+  <meta name="description" content="All of my posts, where I talk about things relating to computers." />
+{% endblock %}
+
+{% block content %}
+  <h1>Posts</h1>
+  <ul>
+  {% for post in posts %}
+    <li>
+      <a href="/posts/{{ post.slug }}">{{ post.title }}</a> - <i>{{ post.date }}</i>
+      <br>
+      {{ post.desc }}
+    </li>
+  {% endfor %}
+  </ul>
+{% endblock %}

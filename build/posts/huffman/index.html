@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kevin Cao's Website</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+      <style>
+      
+        body {
+          padding: 0 1em;
+          margin: 0 auto;
+          font-family: "Merriweather", serif;
+          color: rgb(0, 0, 0, 0.7);
+          max-width: 50em;
+          -moz-tab-size: 4;
+            -o-tab-size: 4;
+               tab-size: 4;
+        }
+
+        code,
+        pre {
+          font-family: "Inconsolata", monospace;
+        }
+
+        pre {
+          overflow-x: auto;
+        }
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+        input {
+          width: 100%;
+          font: inherit;
+          padding: .5em;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        .navbar ul {
+          list-style: none;
+          padding: .5em 0 0 0;
+          margin: 0;
+        }
+
+        .navbar li {
+          display: inline;
+        }
+      
+    </style>
+    
+    
+  <title>Experimenting with Huffman Coding - Kevin Cao</title>
+  <meta name="description" content="I created a Python script for compressing and uncompressing text using Huffman coding. It can shrink The Complete Works of William Shakespeare (from Gutenberg, in plaintext, 5.5 megabytes) down to 60% its original size in 10 seconds." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <style>
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
+  Theme: a11y-light
+  Author: @ericwbailey
+  Maintainer: @ericwbailey
+
+  Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
+*/.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
+  </style>
+
+  </head>
+  <body>
+  
+    <header>
+      <nav class="navbar">
+        <ul>
+          <li><a href="/">homepage</a></li>
+          |
+          <li><a href="/posts/">posts</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+  <h1>Experimenting with Huffman Coding</h1>
+  <i>2023-01-03</i>
+  <p>Huffman coding generates a tree from text and uses this tree to optimally and losslessly compress the text. Here is the tree generated from the text "beekeepers keep bees":</p>
+            <a href="/media/huffman-tree-1280w.jpeg">
+              <img
+                loading="lazy"
+                decoding="async"
+                sizes="(max-width: 50em) 100vw, 50em"
+                srcset="
+                  /media/huffman-tree-320w.jpeg 320w,
+                  /media/huffman-tree-640w.jpeg 640w,
+                  /media/huffman-tree-1280w.jpeg 1280w
+                "
+                src="/media/huffman-tree-640w.jpeg"
+                alt="huffman tree example"
+              />
+            </a>
+          <p>You can see the letter "E" occurs in the phrase frequently, so it's near the top. To compress text, follow the branches (colored lines) down to each letter. Each time you take a right, write down 1; each time you take a left, write down 0. For example, using the tree, the word "bees" would be encoded as <code>001110111</code>. This is smaller than <code>1100010110010111001011110011</code>, which is how it's represented uncompressed.</p><p>To generate the tree from text, create a sorted list of the letters by their frequencies. Repeatedly take the two elements with the lowest frequencies, make them the children of a parent (whose frequency is the combined frequency of its children), and then insert this back into the list. Continue until only one element is left, which is your tree.</p><p>Here's a Python script that does this:</p><pre><code><span class="hljs-keyword">import</span> bisect
+<span class="hljs-keyword">import</span> pickle
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter
+<span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> cached_property
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Tree</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, lhs: (<span class="hljs-params"><span class="hljs-built_in">chr</span>,<span class="hljs-built_in">int</span></span>), rhs=<span class="hljs-literal">None</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        self.lhs = lhs
+        self.rhs = rhs
+        <span class="hljs-keyword">if</span> rhs <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            self.rhs = (<span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-number">0</span>)
+
+<span class="hljs-meta">    @cached_property</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">is_leaf</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">bool</span>:
+        <span class="hljs-keyword">return</span> self.rhs == (<span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-number">0</span>)
+
+<span class="hljs-meta">    @cached_property</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">freq</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">int</span>:
+        <span class="hljs-keyword">if</span> self.is_leaf:
+            <span class="hljs-keyword">return</span> self.lhs[<span class="hljs-number">1</span>]
+        <span class="hljs-keyword">return</span> self.lhs.freq + self.rhs.freq
+
+<span class="hljs-meta">    @cached_property</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">letters</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">str</span>:
+        <span class="hljs-keyword">if</span> self.is_leaf:
+            <span class="hljs-keyword">return</span> self.lhs[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">return</span> self.lhs.letters + self.rhs.letters
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv) != <span class="hljs-number">3</span>:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;&#x27;
+usage: python3 huffman.py [compress|uncompress] [file]
+Compresses data from stdin.
+        &#x27;&#x27;&#x27;</span>.strip())
+        sys.exit(<span class="hljs-number">1</span>)
+
+    <span class="hljs-keyword">match</span> sys.argv[<span class="hljs-number">1</span>]:
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;compress&#x27;</span>:
+            txt = sys.stdin.read()
+            freqs = [
+                Tree(f)
+                <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> Counter(txt).most_common()
+            ]
+
+            <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(freqs) &gt; <span class="hljs-number">1</span>:
+                bisect.insort(
+                    freqs, Tree(freqs[-<span class="hljs-number">1</span>], freqs[-<span class="hljs-number">2</span>]),
+                    <span class="hljs-comment"># bisect.insort doesn&#x27;t work for lists in</span>
+                    <span class="hljs-comment"># descending order, this is a fix.</span>
+                    key=<span class="hljs-keyword">lambda</span> x: -<span class="hljs-number">1</span>*x.freq
+                )
+                <span class="hljs-keyword">del</span> freqs[-<span class="hljs-number">2</span>:]
+
+            tree = freqs[<span class="hljs-number">0</span>]
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title function_">compress</span>(<span class="hljs-params">tree: Tree, txt: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:
+                copy = tree
+                data = [<span class="hljs-number">1</span>]
+                <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> txt:
+                    <span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> tree.is_leaf:
+                        <span class="hljs-keyword">if</span> c <span class="hljs-keyword">in</span> tree.lhs.letters:
+                            data.append(<span class="hljs-number">0</span>)
+                            tree = tree.lhs
+                        <span class="hljs-keyword">else</span>:
+                            data.append(<span class="hljs-number">1</span>)
+                            tree = tree.rhs
+                    tree = copy
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">str</span>(b) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> data), <span class="hljs-number">2</span>)
+
+            pickle.dump(
+                (tree, compress(tree, txt)),
+                <span class="hljs-built_in">open</span>(sys.argv[<span class="hljs-number">2</span>], <span class="hljs-string">&#x27;wb&#x27;</span>)
+            )
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;uncompress&#x27;</span>:
+            copy, data = pickle.load(<span class="hljs-built_in">open</span>(sys.argv[<span class="hljs-number">2</span>], <span class="hljs-string">&#x27;rb&#x27;</span>))
+            data = [<span class="hljs-built_in">int</span>(b) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>(<span class="hljs-built_in">bin</span>(data)[<span class="hljs-number">3</span>:])]
+            txt = []
+            i = <span class="hljs-number">0</span>
+            <span class="hljs-keyword">while</span> i&lt;<span class="hljs-built_in">len</span>(data):
+                tree = copy
+                <span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> tree.is_leaf:
+                    <span class="hljs-keyword">if</span> data[i]:
+                        tree = tree.rhs
+                    <span class="hljs-keyword">else</span>:
+                        tree = tree.lhs
+                    i += <span class="hljs-number">1</span>
+                txt.append(tree.lhs[<span class="hljs-number">0</span>])
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(txt), end=<span class="hljs-string">&#x27;&#x27;</span>)</code></pre><p>In the code, I could've also used a priority queue, instead of inserting into a sorted list. To use it:</p><pre><code>$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;beekeepers keep bees&#x27;</span> | python3 huffman.py compress out.hm
+$ python3 huffman.py uncompress out.hm
+beekeepers keep bees
+$ <span class="hljs-built_in">wc</span> -c out.hm <span class="hljs-comment"># means file is 521 bytes</span>
+521 out.hm</code></pre><p>Wait, our input text is 21 bytes, but our output is 26 times larger? This is because we have to store the tree in addition to the compressed text, so Huffman coding actually enlarges short texts. Also, I'm using pickle, which is not the most space-efficient method.</p><p>The program is slow, taking about 10 seconds to compress and uncompress the The Complete Works of William Shakespeare (which I downloaded from Gutenberg in plaintext--its 172420 lines and 5.5 megabytes) to 60% of its original size:</p><pre><code>$ time <span class="hljs-built_in">cat</span> shakespeare.txt | python3 huffman.py compress out.hm
+
+real    0m9.672s
+user    0m8.611s
+sys     0m0.962s
+$ time python3 huffman.py uncompress out.hm &gt;/dev/null
+
+real    0m10.856s
+user    0m10.480s
+sys     0m0.196s
+$ <span class="hljs-built_in">du</span> -sh shakespeare.txt out.hm
+5.5M    shakespeare.txt
+3.3M    out.hm</code></pre><p>Compare this with GNU Tar, which takes 0.4 seconds to compress and 0.1 seconds to uncompress, reducing the file to 37% percent of its original size.</p><p>I've made the script run faster by adding <code>@cached_property</code> and using other techniques. Originally, I used a series of bit operations on integers with masks and such to compress and uncompress, but doing so is significantly slower than what I'm currently doing. I can't simply pickle the list because that results in a file much larger than the original file.</p>
+
+  
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kevin Cao's Website</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+      <style>
+      
+        body {
+          padding: 0 1em;
+          margin: 0 auto;
+          font-family: "Merriweather", serif;
+          color: rgb(0, 0, 0, 0.7);
+          max-width: 50em;
+          -moz-tab-size: 4;
+            -o-tab-size: 4;
+               tab-size: 4;
+        }
+
+        code,
+        pre {
+          font-family: "Inconsolata", monospace;
+        }
+
+        pre {
+          overflow-x: auto;
+        }
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+        input {
+          width: 100%;
+          font: inherit;
+          padding: .5em;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        .navbar ul {
+          list-style: none;
+          padding: .5em 0 0 0;
+          margin: 0;
+        }
+
+        .navbar li {
+          display: inline;
+        }
+      
+    </style>
+    
+    
+  <title>dwmbar: Create a DWM Status Bar - Kevin Cao</title>
+  <meta name="description" content="A C program that creates and updates every second a DWM status bar with the current time and ALSA volume." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <style>
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
+  Theme: a11y-light
+  Author: @ericwbailey
+  Maintainer: @ericwbailey
+
+  Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
+*/.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
+  </style>
+
+  </head>
+  <body>
+  
+    <header>
+      <nav class="navbar">
+        <ul>
+          <li><a href="/">homepage</a></li>
+          |
+          <li><a href="/posts/">posts</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+  <h1>dwmbar: Create a DWM Status Bar</h1>
+  <i>2022-08-15</i>
+  <p>DWM is a window manager and its status bar is a customizable piece of text on the top right of the screen. I wrote a C program that populates the status bar with the time and ALSA volume, in the format of <code>Thu Aug 11 11:03:23 AM EDT 2022 [ 36% ]</code>.</p><p>The code to set the window manager's name using Xlib was copied from <a href="https://git.suckless.org/dwmstatus/">dwmstatus</a> Compile with <code>gcc main.c $(pkg-config --cflags --libs x11 alsa) -O3 -o dwmbar</code>.</p><pre><code><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;X11/Xlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;alsa/asoundlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;alsa/mixer.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;signal.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdbool.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;time.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span>
+
+<span class="hljs-type">bool</span> run = <span class="hljs-literal">true</span>;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">sigint_handler</span><span class="hljs-params">()</span> {
+	run = <span class="hljs-literal">false</span>;
+}
+
+<span class="hljs-type">double</span> <span class="hljs-title function_">get_volume</span><span class="hljs-params">(<span class="hljs-type">snd_mixer_t</span> *handle)</span> {
+	snd_mixer_handle_events(handle);
+
+	<span class="hljs-type">snd_mixer_selem_id_t</span> *sid;
+	snd_mixer_selem_id_alloca(&amp;sid);
+	snd_mixer_selem_id_set_index(sid, <span class="hljs-number">0</span>);
+	snd_mixer_selem_id_set_name(sid, <span class="hljs-string">&quot;Master&quot;</span>);
+
+	<span class="hljs-type">long</span> min, max, volume;
+	<span class="hljs-type">snd_mixer_elem_t</span> *elem = snd_mixer_find_selem(handle, sid);
+	snd_mixer_selem_get_playback_volume_range(elem, &amp;min, &amp;max);
+	snd_mixer_selem_get_playback_volume(elem, SND_MIXER_SCHN_FRONT_LEFT, &amp;volume);
+
+	<span class="hljs-keyword">return</span> (<span class="hljs-type">double</span>)volume / (max/<span class="hljs-number">100</span>);
+}
+
+<span class="hljs-type">snd_mixer_t</span> *<span class="hljs-title function_">create_handle</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+	<span class="hljs-type">snd_mixer_t</span> *handle;
+	snd_mixer_open(&amp;handle, <span class="hljs-number">0</span>);
+	snd_mixer_attach(handle, <span class="hljs-string">&quot;default&quot;</span>);
+	snd_mixer_selem_register(handle, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);
+	snd_mixer_load(handle);
+	<span class="hljs-keyword">return</span> handle;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+	Display *dpy = XOpenDisplay(<span class="hljs-literal">NULL</span>);
+	<span class="hljs-type">snd_mixer_t</span> *handle = create_handle();
+
+	signal(SIGINT, sigint_handler);
+
+	<span class="hljs-keyword">while</span>(run) {
+		<span class="hljs-type">char</span> bar[<span class="hljs-number">128</span>];
+
+		<span class="hljs-type">time_t</span> t = time(<span class="hljs-literal">NULL</span>);
+		<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tm</span> *<span class="hljs-title">tm</span> =</span> localtime(&amp;t);
+		<span class="hljs-type">int</span> n = strftime(bar, <span class="hljs-keyword">sizeof</span>(bar), <span class="hljs-string">&quot; %a %b %d %r %Z %Y &quot;</span>, tm);
+
+		<span class="hljs-built_in">sprintf</span>(bar+n, <span class="hljs-string">&quot;[ %.0f%% ]&quot;</span>, get_volume(handle));
+
+		XStoreName(dpy, DefaultRootWindow(dpy), bar);
+		XSync(dpy, False);
+
+		usleep(<span class="hljs-number">1000000</span>);
+	}
+
+	snd_mixer_close(handle);
+	XCloseDisplay(dpy);
+}</code></pre>
+
+  
+  </body>
+</html>
