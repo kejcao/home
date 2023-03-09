@@ -122,9 +122,20 @@ function tohtml(txt) {
       block.push(lines[i]);
 
       html += block.join('\n');
-    } else if (lines[i].startsWith('---')) {
+    } else if (lines[i].startsWith('>>>')) {
+      let block = [];
+      while (++i < lines.length && !lines[i].startsWith('>>>')) {
+        block.push(lines[i]);
+      }
+      if (i >= lines.length) {
+        console.error('post has unterminated block quote.');
+        process.exit(1);
+      }
+
+      html += `<blockquote>${block.join('\n')}</blockquote>`;
+    } else if (lines[i].startsWith('```')) {
       let block = [lines[i]];
-      while (++i < lines.length && !lines[i].startsWith('---')) {
+      while (++i < lines.length && !lines[i].startsWith('```')) {
         block.push(lines[i]);
       }
       if (i >= lines.length) {
@@ -132,7 +143,7 @@ function tohtml(txt) {
         process.exit(1);
       }
 
-      const language = block[0].replace(/^---/, '').trim();
+      const language = block[0].replace(/^```/, '').trim();
       let code = block.slice(1).join('\n');
       if (language != '') {
         code = hljs.highlight(code, { language }).value;
@@ -143,8 +154,14 @@ function tohtml(txt) {
       }
       html += `<pre><code>${code}</code></pre>`;
     } else {
-      let block = lines[i];
-      while (++i < lines.length && lines[i].trim()) {
+      let block = lines[i] + '\n';
+      while (++i < lines.length && (lines[i].trim() || (
+        // Previous line has indent
+        lines[i-1].search(/\S/) != 0 &&
+        // which is the same as the next line's.
+        i+1 < lines.length &&
+        lines[i-1].search(/\S/) == lines[i+1].search(/\S/)))
+      ) {
         block += lines[i] + '\n';
       }
       block = block.trim()
@@ -153,6 +170,7 @@ function tohtml(txt) {
         txt = txt.trim()
           .replace(/</g, '&lt;')
           .replace(/>/g, '&gt;');
+
         let html = '';
         for (let i = 0; i < txt.length; ++i) {
           if (txt[i] == '*') {
@@ -188,7 +206,7 @@ function tohtml(txt) {
           } else if (/^\[[^\]]*\]\([^\)]*\)/.test(txt.slice(i))) {
             const len = txt.slice(i).indexOf(')') + 1;
             html += txt.slice(i, i + len).replace(/^\[([^\]]*)\]\(([^\)]*)\)$/, '<a href="$2">$1</a>');
-            i += len;
+            i += len-1;
           } else {
             html += txt[i];
           }
@@ -198,9 +216,9 @@ function tohtml(txt) {
 
       // Could be display mode math, an image, a list, or just
       // paragraph.
-      if (block.startsWith('\\[')) {
+      if (block.startsWith('$$')) {
         html += katex.renderToString(
-          block.replace(/^\\\[/, '').replace(/\\\]$/, ''),
+          block.replace(/^\$\$/, '').replace(/\$\$$/, ''),
           { displayMode: true }
         );
       } else if (block.startsWith('1.')) {
@@ -209,6 +227,45 @@ function tohtml(txt) {
           html += `<li>${processInline(item[1])}</li>\n`;
         }
         html += '</ol>';
+      } else if (block.startsWith('- ')) {
+        html += '<ul>';
+
+        let first = true;
+        let paragraphs = [''];
+
+        for(let line of block.split('\n')) {
+          if(line.startsWith('- ')) {
+            if(!first) {
+              /*
+              html += `<li>${
+                paragraphs.map(processInline).map(p => {
+                  return `<p>${p}</p>`;
+                }).join(' ')
+              }</li>`;
+              */
+              html += `<li>${
+                paragraphs.map(processInline).map(p => {
+                  return p;
+                }).join(' ')
+              }</li>`;
+              paragraphs = [''];
+            }
+            first = false;
+          }
+          line = line.replace(/^-/, '');
+          if(!line.trim()) {
+            paragraphs.push('');
+          }
+          paragraphs[paragraphs.length-1] += line;
+        }
+
+        html += `<li>${
+          paragraphs.map(processInline).map(p => {
+            return p;
+          }).join(' ')
+        }</li>`;
+
+        html += '</ul>';
       } else if (block.startsWith('!')) {
         block = block
           .replace(/!\[([^\]]*)\]\(([^.]*)\.svg\)/g, `
@@ -239,7 +296,7 @@ function tohtml(txt) {
           `);
         html += block;
       } else {
-        html += `<p>${processInline(block)}</p>`;
+        html += `<p>${processInline(block.replace('\n', ' '))}</p>`;
       }
     }
   }
@@ -279,7 +336,7 @@ function renderWebpages(dir) {
 
 function getAndRenderPosts() {
   fs.readdirSync('src/posts/').forEach(fp => {
-    if (path.extname(fp) == '.post') {
+    if (path.extname(fp) == '.md') {
       const [frontmatter, content] = tohtml(
         fs.readFileSync(`src/posts/${fp}`, 'utf8')
       );
@@ -289,7 +346,7 @@ function getAndRenderPosts() {
 
       posts.push(frontmatter);
 
-      if (!compileAll && 
+      if (!compileAll &&
         fs.statSync(path.join('src/posts/', fp)).mtime <
         fs.statSync(`build/posts/${fp.split('.', 2)[0]}/index.html`).mtime) {
         return;
