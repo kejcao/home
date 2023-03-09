@@ -10,10 +10,10 @@ I have an iPad Mini 2 that I use to read eBooks. I transfer the books to and fro
 
 I `cd`'d into the directory and there these subdirectories stood,
 
----bash
+```bash
 $ ls
 Books  DCIM  Downloads  iTunes_Control  PhotoData  Photos  Radio
----
+```
 
 Inside the directory `DCIM` was the subdirectory `100APPLE` and inside that directory were all of my photos and videos, in JPG and MOV format. Inside the directory `Books` was a subdirectory `Purchases` which contained all the books I had on my iPad. This is all merry and exciting but I wanted to use my iPad, in addition as a ebook reader, also as a MP3 player. I wanted to listen to audiobooks or music outside while sunbathing, but I can't well tug my heavy PC out everytime I did this. There wasn't an obvious folder to store audio, but I heard that I could jailbreak my device to store audio into Apple Music or something similar.
 
@@ -33,8 +33,8 @@ I ran `ffmpeg -i audiobook.mp3 -f lavfi -i color=c=0xff00ff:s=640x480:r=30 -shor
 
 By the way, I ran `select * from ZGENERICASSET order by Z_PK desc limit 1;` from the sqlite CLI to get the last row of the table, which looks like this:
 
----
+```
 51|23|4|0|0||||||0|0|1|0|0|1920|0|0|1|102|1|3|24|0|0|0|0|1080|51|||9||20480||689797057.443527|||||689797023|2.23333333333333||689797023|689797023.461807|||||||DCIM/100APPLE|IMG_0031.MOV||com.apple.quicktime-movie|CD4267DD-764C-4FF9-A400-4D05A02C29ED||||
----
+```
 
 That's it for this post, I'm planning to change the structure of my website by using React and Next.js or something similar, so this post may not be as polished as the other ones.

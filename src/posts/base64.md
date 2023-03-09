@@ -10,7 +10,7 @@ If the data being encoded does not fit neatly into chunks of 3, equal signs are 
 
 Here is my implementation of Base64 in C:
 
----c
+```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -91,13 +91,13 @@ int main(int argc, char **argv) {
 		fclose(fp);
 	}
 }
----
+```
 
 The script will encode any input fed to it from stdin. Any command line arguments will be read from and encoded. The script uses RFC 4648's Base64 alphabet, and produces line breaks every 76 characters.
 
 For example, here's the output of my program's encoding of a compressed, 256x256 WebP logo of my website:
 
----
+```
 $ ./a.out favicon.webp 
 UklGRpgKAABXRUJQVlA4WAoAAAASAAAA/wAA/wAAQU5JTQYAAAD/////AABBTk1GbAoAAAQAABYA
 AOwAAKIAAAAAAAJBTFBI1QkAAAGwh23bObnZM7O2N2w33SK2bRu1tXVj2zanKWJMUkZHGzv7pdqN
@@ -112,7 +112,7 @@ oGjIchcS5nz7YaNAMB5cu9/UH7Op3HbdzUJhVz9QtNp5FC/d2dcfiO3NZpwnyQHNPe8R8rwNir6Q
 h8L5Cx8DuY3Wlojd1lyLYhSeCGoGrEBh9xcVQX7CHqFLeqvyAIUdoGbYYRS+3AJY2k6KJGstLBWF
 d/mqEZ2MwquDgOlCkQM6s/+AwmdCQMnyqSha+BqwfUnkW50tQeGrcaBkwjUUzWoNfKuJrNfYWyh8
 ...
----
+```
 
 The ellipsis above isn't output from my program, but just to signify three more pages worth of gibberish. That gibberish can be appended to a Data URL. Data URL's begin with `data:`, then a MIME type indicating the type of data, then an optional `;base64` to hint that the data is in Base64, and is concluded by a comma and the data.
 

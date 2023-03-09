@@ -4,13 +4,13 @@ title: rep: A Tool for Repeating Commands
 
 When I needed to run a command multiple times, I would wrap that command into a loop.
 
----bash
+```bash
 for i in {1..10}; do ...; done
----
+```
 
 But it's a bother to type that out just to repeat a command a few times, so I wrote a simple C script that simplifies the process.
 
----c
+```c
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -79,13 +79,13 @@ int main(int argc, char **argv) {
 		}
 	}
 }
----
+```
 
 For example,
 
----bash
+```bash
 $ rep ls # repeat ls 20 times.
 $ rep 100 ./exe1 '$(./exe2)' # run exe1 100 times, with its first argument as the output of exe2.
----
+```
 
 If the first argument is fully parsable as an integer, it will be taken as the number of times to repeat. Otherwise, it's treated as the beginning of a command.

@@ -16,7 +16,7 @@ I unzipped two EPUB copies of Don Quixote, one with good formatting into the fol
 
 Also, I encountered this curious HTML code when browsing the two big volumes.
 
----html
+```html
 <blockquote class="calibre_class_19">
   <blockquote>
     <blockquote>
@@ -30,7 +30,7 @@ Also, I encountered this curious HTML code when browsing the two big volumes.
     </blockquote>
   </blockquote>
 </blockquote>
----
+```
 
 Every single line of every poem is entombed in this pyramid of unnecessary `<blockquote>` HTML tags. I suspect it's an artifact of the translation from MOBI to EPUB.
 
@@ -38,7 +38,7 @@ Every single line of every poem is entombed in this pyramid of unnecessary `<blo
 
 When I was exploring the two eBooks, I found the source of the problem: The superscript `<a>` tags which would bring me to a footnote whenever clicked, were linking to the wrong footnotes. So severe was the degree they were scrambled that they were overlapping each other—multiple `<a>` tags were linking to the same footnotes. I couldn't find any pattern to the madness; they appeared to be randomly muddled, so the only way I saw forward was to rip out the footnotes from the copy with the good formatting, replacing them then re-linking the `<a>` tags to these footnotes. The following is the script I wrote to perform this footnote transplant.
 
----py
+```py
 from bs4 import BeautifulSoup
 
 def read_footnote(path: str) -> str:
@@ -138,13 +138,13 @@ link_footnotes([
     'don-quixote-good/vol2_prologue.html',
     *[f'don-quixote-good/vol2_chap_{i:02}.html' for i in range(1, 75)],
 ])
----
+```
 
 The `assert`s are there to ensure that the footnotes are synced up. After running the script, I repacked the `don-quixote-good` directory and now I have a proper, pristine copy of Don Quixote to enjoy!
 
 Also, a trick: To transfer eBooks between the iPad I use for reading and my computer, I have an `index.html` file in my home folder. I wrote a bash script to append a link to the `index.html` file whenever ran.
 
----bash
+```bash
 #!/bin/bash
 
 set -e
@@ -153,13 +153,13 @@ cd ~
 fp=$(fzf)
 hf=$(echo $fp | he)
 echo "<!-- $fp --><a href='$hf'>$hf</a><br>" >> index.html
----
+```
 
 It goes into my home folder, then envokes `fzf` which prompts me to select a eBook from somewhere. The filename needs to be escaped so it's piped into the `he` command, which converts every character into a HTML entity. A HTML entity looks something like "`&#60`" which represents the "&amp;lt;" character.
 
 The `he` command is actually a C program I wrote.
 
----c
+```c
 #include <stdio.h>
 #include <wchar.h>
 #include <locale.h>
@@ -172,7 +172,7 @@ int main(void) {
 	}
 	puts("");
 }
----
+```
 
 Then compiled with `gcc main.c -O3 -o he` and turned into a globally executable program by creating a hard link to `/usr/bin/` with `sudo ln he /usr/bin/he`. Finally, the script, using the information, prints out a comment with the original, unescaped filename (so I can manually delete eBooks from the list when I'm done downloading them) then the download link.
 

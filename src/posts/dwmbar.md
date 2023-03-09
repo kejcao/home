@@ -6,7 +6,7 @@ DWM is a window manager and its status bar is a customizable piece of text on th
 
 The code to set the window manager's name using Xlib was copied from [dwmstatus](https://git.suckless.org/dwmstatus/). Compile with `gcc main.c $(pkg-config --cflags --libs x11 alsa) -O3 -o dwmbar`.
 
----c
+```c
 #include <X11/Xlib.h>
 #include <alsa/asoundlib.h>
 #include <alsa/mixer.h>
@@ -71,4 +71,4 @@ int main(void) {
 	snd_mixer_close(handle);
 	XCloseDisplay(dpy);
 }
----
+```

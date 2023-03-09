@@ -12,7 +12,7 @@ To generate the tree from text, create a sorted list of the letters by their fre
 
 Here's a Python script that does this:
 
----py
+```py
 import bisect
 import pickle
 import sys
@@ -102,23 +102,23 @@ Compresses data from stdin.
                     i += 1
                 txt.append(tree.lhs[0])
             print(''.join(txt), end='')
----
+```
 
 In the code, I could've also used a priority queue, instead of inserting into a sorted list. To use it:
 
----bash
+```bash
 $ echo 'beekeepers keep bees' | python3 huffman.py compress out.hm
 $ python3 huffman.py uncompress out.hm
 beekeepers keep bees
 $ wc -c out.hm # means file is 521 bytes
 521 out.hm
----
+```
 
 Wait, our input text is 21 bytes, but our output is 26 times larger? This is because we have to store the tree in addition to the compressed text, so Huffman coding actually enlarges short texts. Also, I'm using pickle, which is not the most space-efficient method.
 
 The program is slow, taking about 10 seconds to compress and uncompress the The Complete Works of William Shakespeare (which I downloaded from Gutenberg in plaintext--its 172420 lines and 5.5 megabytes) to 60% of its original size:
 
----bash
+```bash
 $ time cat shakespeare.txt | python3 huffman.py compress out.hm
 
 real    0m9.672s
@@ -132,7 +132,7 @@ sys     0m0.196s
 $ du -sh shakespeare.txt out.hm
 5.5M    shakespeare.txt
 3.3M    out.hm
----
+```
 
 Compare this with GNU Tar, which takes 0.4 seconds to compress and 0.1 seconds to uncompress, reducing the file to 37% percent of its original size.
 

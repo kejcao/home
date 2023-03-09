@@ -1,0 +1,14 @@
+---
+title: 'Bluetooth In Linux'
+desc: ''
+date: 2022-10-31
+---
+
+I don't need to use Bluetooth much, but when I do I keep forgetting how to connect my computer to the Bluetooth device because I don't do it enough. So this article is going to be a quick one about Bluetooth on Linux.
+chrome cast!
+
+The [ArchWiki](https://wiki.archlinux.org/title/bluetooth) as always, has a great section on Bluetooth which is mostly distro agnostic. But anyway, on Arch you have to install two packeges: `bluez` and `bluez-utils`. Remember to start the daemon! bluetooth
+
+1. For audio based Bluetooth devices, you must install a package called `pulseaudio-bluetooth`.
+2. `scan on` to scan for devices, then `devices` to list the devices. `info [MAC_ADDRESS]` to get information about a device.
+3. `trust [MAC_ADDRESS]`, `pair [MAC_ADDRESS]`, and `connect [MAC_ADDRESS]` to connect a device.

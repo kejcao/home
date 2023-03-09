@@ -1,0 +1,461 @@
+---
+title: "Tracking Key Press Frequencies and Mouse Movements"
+desc: "How many keys do I press in a month? How far do I move my mouse in a month? I answer these questions with a few Python scripts that track all of my keyboard and mouse events."
+date: 2023-02-28
+---
+
+Sorry if the graph is small and hard to read, you can click on it to get a larger view.
+
+<img src="monitor-hourly.svg" alt="graph of computer usage hourly">
+
+I got curious as to how much I type or how far I move my mouse in a day so I looked up online to see if there is any pre-existing software to do this tracking. I found WhatPulse, but everyway I install it it segfaults. I'd been messing around with a directory on my computer, called `/dev/input/`. In it was a bunch of character devices and two directories `by-id` and `by-path` that contained symlinks to the devices.
+
+When I catted a device named "mice," it spewed out nonsense whenever I did anything with my mouse:
+
+```
+$ sudo cat mice
+
+
+
+
+	(((�������888
+(
+((
+(
+ ((((88888����((((
+                  (
+��(88888�
+  (((((
+((((888^C���
+```
+
+I thought, if I could interpret or ungarble whatever it's spewing out, I could capture whatever my mouse was doing and store it somewhere. I could do the same with my keyboard. I found on the Internet some documentation that said the format the output was in is specified in a header file at `/usr/include/linux/input.h`. Lo and behold, right at the beginning of the file is
+
+```c
+/*
+ * The event structure itself
+ * Note that __USE_TIME_BITS64 is defined by libc based on
+ * application's request to use 64 bit time_t.
+ */
+
+struct input_event {
+#if (__BITS_PER_LONG != 32 || !defined(__USE_TIME_BITS64)) && !defined(__KERNEL__)
+	struct timeval time;
+#define input_event_sec time.tv_sec
+#define input_event_usec time.tv_usec
+#else
+	__kernel_ulong_t __sec;
+#if defined(__sparc__) && defined(__arch64__)
+	unsigned int __usec;
+	unsigned int __pad;
+#else
+	__kernel_ulong_t __usec;
+#endif
+#define input_event_sec  __sec
+#define input_event_usec __usec
+#endif
+	__u16 type;
+	__u16 code;
+	__s32 value;
+};
+```
+
+So the event files can be decoded simply enough, for example with this Python script
+
+```py
+import struct
+
+FMT = 'llHHI'
+
+with open('/dev/input/by-id/usb-04d9_USB_Keyboard-event-kbd', 'rb') as fp:
+    while event := fp.read(struct.calcsize(FMT)):
+        sec, usec, type, code, value = struct.unpack(FMT, event)
+        print(f'{sec}.{usec}: {type} {code} {value}')
+```
+
+it outputs something like
+
+```
+1674316107.405249: 4 4 458763
+1674316107.405249: 1 35 1
+1674316107.405249: 0 0 0
+h1674316107.507117: 4 4 458763
+1674316107.507117: 1 35 0
+1674316107.507117: 4 4 458760
+1674316107.507117: 1 18 1
+1674316107.507117: 0 0 0
+e1674316107.623161: 4 4 458767
+1674316107.623161: 1 38 1
+1674316107.623161: 0 0 0
+```
+
+But instead of doing it manually, I've heard of a tool called "evtest" that can do all of the work for you,
+
+```
+Event: time 1674316050.235804, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000b
+Event: time 1674316050.235804, type 1 (EV_KEY), code 35 (KEY_H), value 1
+Event: time 1674316050.235804, -------------- SYN_REPORT ------------
+hEvent: time 1674316050.316808, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000b
+Event: time 1674316050.316808, type 1 (EV_KEY), code 35 (KEY_H), value 0
+Event: time 1674316050.316808, -------------- SYN_REPORT ------------
+Event: time 1674316050.457786, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70008
+Event: time 1674316050.457786, type 1 (EV_KEY), code 18 (KEY_E), value 1
+Event: time 1674316050.457786, -------------- SYN_REPORT ------------
+eEvent: time 1674316050.550922, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70008
+Event: time 1674316050.550922, type 1 (EV_KEY), code 18 (KEY_E), value 0
+```
+
+As you can see evtest outputs things in much more detail. So I output 
+
+```bash
+#!/bin/bash
+
+sleep 5
+
+evtest /dev/input/by-id/usb-04d9_USB_Keyboard-event-kbd \
+	| stdbuf -o0 grep -o '(KEY_.*), value [12]' \
+	| stdbuf -o0 sed 's/^(\(.*\)).*$/\1/g' \
+	| python3 /home/kjc/py/monitor/keyboard.py &
+
+evtest /dev/input/by-id/usb-17ef_Lenovo_Optical_Mouse-event-mouse \
+	| stdbuf -o0 grep -o '(BTN_.*), value 1\|(REL_.*), value .*' \
+	| stdbuf -o0 sed 's/^(\(REL_.*\)), value \(.*\)/\1 \2/; s/^(\(.*\)).*$/\1/g' \
+	| python3 /home/kjc/py/monitor/mouse.py
+```
+
+which is ran on boot by this systemd unit.
+
+```ini
+[Unit]
+Description=Monitor keypresses and mouse clicks
+
+[Service]
+User=root
+ExecStart=/home/kjc/bash/monitor.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+In the Bash script I'm sleeping for 5 seconds because otherwise the script doesn't run. I suspected this is due to the operating system's need for some time load.
+
+The other two commands in the script pipes the output of something called "evtest" which decodes the output of event files on Linux. I could've done this manually, as I've done in this Python script—
+
+
+where the format of the structure of an input event is defined on my system in `/usr/include/linux/input.h` as:
+
+```c
+/*
+ * The event structure itself
+ * Note that __USE_TIME_BITS64 is defined by libc based on
+ * application's request to use 64 bit time_t.
+ */
+
+struct input_event {
+#if (__BITS_PER_LONG != 32 || !defined(__USE_TIME_BITS64)) && !defined(__KERNEL__)
+	struct timeval time;
+#define input_event_sec time.tv_sec
+#define input_event_usec time.tv_usec
+#else
+	__kernel_ulong_t __sec;
+#if defined(__sparc__) && defined(__arch64__)
+	unsigned int __usec;
+	unsigned int __pad;
+#else
+	__kernel_ulong_t __usec;
+#endif
+#define input_event_sec  __sec
+#define input_event_usec __usec
+#endif
+	__u16 type;
+	__u16 code;
+	__s32 value;
+};
+```
+
+Here's the output of evtest
+
+```
+Event: time 1674316050.235804, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000b
+Event: time 1674316050.235804, type 1 (EV_KEY), code 35 (KEY_H), value 1
+Event: time 1674316050.235804, -------------- SYN_REPORT ------------
+hEvent: time 1674316050.316808, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000b
+Event: time 1674316050.316808, type 1 (EV_KEY), code 35 (KEY_H), value 0
+Event: time 1674316050.316808, -------------- SYN_REPORT ------------
+Event: time 1674316050.457786, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70008
+Event: time 1674316050.457786, type 1 (EV_KEY), code 18 (KEY_E), value 1
+Event: time 1674316050.457786, -------------- SYN_REPORT ------------
+eEvent: time 1674316050.550922, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70008
+Event: time 1674316050.550922, type 1 (EV_KEY), code 18 (KEY_E), value 0
+Event: time 1674316050.550922, -------------- SYN_REPORT ------------
+Event: time 1674316050.590924, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000f
+Event: time 1674316050.590924, type 1 (EV_KEY), code 38 (KEY_L), value 1
+Event: time 1674316050.590924, -------------- SYN_REPORT ------------
+lEvent: time 1674316050.643925, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000f
+Event: time 1674316050.643925, type 1 (EV_KEY), code 38 (KEY_L), value 0
+Event: time 1674316050.643925, -------------- SYN_REPORT ------------
+Event: time 1674316050.728813, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000f
+Event: time 1674316050.728813, type 1 (EV_KEY), code 38 (KEY_L), value 1
+Event: time 1674316050.728813, -------------- SYN_REPORT ------------
+lEvent: time 1674316050.788924, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000f
+Event: time 1674316050.788924, type 1 (EV_KEY), code 38 (KEY_L), value 0
+Event: time 1674316050.788924, -------------- SYN_REPORT ------------
+Event: time 1674316050.939925, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70012
+Event: time 1674316050.939925, type 1 (EV_KEY), code 24 (KEY_O), value 1
+Event: time 1674316050.939925, -------------- SYN_REPORT ------------
+oEvent: time 1674316050.991829, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70012
+Event: time 1674316050.991829, type 1 (EV_KEY), code 24 (KEY_O), value 0
+Event: time 1674316050.991829, -------------- SYN_REPORT ------------
+Event: time 1674316051.856909, type 4 (EV_MSC), code 4 (MSC_SCAN), value 700e0
+Event: time 1674316051.856909, type 1 (EV_KEY), code 29 (KEY_LEFTCTRL), value 1
+Event: time 1674316051.856909, -------------- SYN_REPORT ------------
+Event: time 1674316051.901821, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70006
+Event: time 1674316051.901821, type 1 (EV_KEY), code 46 (KEY_C), value 1
+Event: time 1674316051.901821, -------------- SYN_REPORT ------------
+```
+
+and here is the output of my script
+
+```
+1674316107.405249: 4 4 458763
+1674316107.405249: 1 35 1
+1674316107.405249: 0 0 0
+h1674316107.507117: 4 4 458763
+1674316107.507117: 1 35 0
+1674316107.507117: 4 4 458760
+1674316107.507117: 1 18 1
+1674316107.507117: 0 0 0
+e1674316107.623161: 4 4 458767
+1674316107.623161: 1 38 1
+1674316107.623161: 0 0 0
+l1674316107.642097: 4 4 458760
+1674316107.642097: 1 18 0
+1674316107.642097: 0 0 0
+1674316107.666160: 4 4 458767
+1674316107.666160: 1 38 0
+1674316107.666160: 0 0 0
+1674316107.745119: 4 4 458767
+1674316107.745119: 1 38 1
+1674316107.745119: 0 0 0
+l1674316107.798145: 4 4 458767
+1674316107.798145: 1 38 0
+1674316107.798145: 0 0 0
+1674316107.956266: 4 4 458770
+1674316107.956266: 1 24 1
+1674316107.956266: 0 0 0
+o1674316108.33158: 4 4 458770
+1674316108.33158: 1 24 0
+1674316108.33158: 0 0 0
+1674316108.756280: 4 4 458976
+1674316108.756280: 1 29 1
+1674316108.756280: 0 0 0
+1674316108.826151: 4 4 458758
+1674316108.826151: 1 46 1
+1674316108.826151: 0 0 0
+```
+
+You can see evtest's output is more detailed and actually prints what key is being refered to (the mappings from numbers to keys in given as macros in `/usr/include/linux/input-event-codes.h`) and whether the key's being pressed or released.
+
+The output of evtest is piped into a series of greps and seds, where it is filtered to just the necessary information I want. I'm using `stdbuf -o0` so that the output streams will be unbuffered, because otherwise grep and sed will be reluctant to print anything. Finally, this is piped into the two Python scripts. For the keypresses
+
+```py
+import atexit
+import pickle
+from datetime import datetime, timedelta
+from pathlib import Path
+
+def save():
+    stats[1] = datetime.now()
+    with open('/home/kjc/keys.stat', 'wb') as fp:
+        pickle.dump(stats, fp)
+atexit.register(save)
+
+stats = [datetime.now(), None, {}]
+if Path('/home/kjc/keys.stat').exists():
+    with open('/home/kjc/keys.stat', 'rb') as fp:
+        stats = pickle.load(fp)
+
+t = datetime.now()
+while True:
+    if (key := input()) not in stats[2]:
+        stats[2][key] = 0
+    stats[2][key] += 1
+    if datetime.now() > t:
+        t = datetime.now() + timedelta(hours=1)
+        save()
+```
+
+It defines a variable named `stats` as a list with 3 items: the first and second represent the start and end times of the monitoring. The third item is an empty dictionary which will store the frequencies of each key pressed—although, if a file already exists with the variable it will open and load that into the variable instead.
+
+After it has loaded the variable it enters an infinite loop where it waits for input (from evtest and greps and seds, remember?) each line of which represents a key pressed. If this key doesn't have an entry int he dictionary, it creates one. It then increments the frequency. Then it checks if it has been an hour, if it has then the variable will be saved to a file and just in case I registered the save function to run if the script exits of whatever reason.
+
+The Python script for recording mouse events is essentially the same
+
+```py
+import atexit
+import pickle
+from datetime import datetime, timedelta
+from pathlib import Path
+
+def save():
+    stats[1] = datetime.now()
+    with open('/home/kjc/mouse.stat', 'wb') as fp:
+        pickle.dump(stats, fp)
+atexit.register(save)
+
+stats = [datetime.now(), None, {}]
+if Path('/home/kjc/mouse.stat').exists():
+    with open('/home/kjc/mouse.stat', 'rb') as fp:
+        stats = pickle.load(fp)
+
+t = datetime.now()
+while True:
+    event = input()
+    value = 1
+    if event.startswith('REL_'):
+        event, value = event.split()
+        value = abs(int(value))
+
+    if event not in stats[2]:
+        stats[2][event] = 0
+    stats[2][event] += value
+
+    if datetime.now() > t:
+        t = datetime.now() + timedelta(hours=1)
+        save()
+```
+
+
+
+```py
+import pickle
+from collections import Counter, defaultdict
+
+with open('/home/kjc/keys.stat', 'rb') as fp:
+    start, end, stats = pickle.load(fp)
+    print(f'from {start} to {end}')
+    for key, freq in Counter(stats).most_common():
+        print(f' {key: <16} {freq}')
+    print(' '*18 + f'{sum(stats.values())}')
+
+print()
+
+with open('/home/kjc/mouse.stat', 'rb') as fp:
+    start, end, stats = pickle.load(fp)
+    print(f'from {start} to {end}')
+    stats = defaultdict(lambda: 0, stats)
+    print(f' moved {stats["REL_X"] + stats["REL_Y"]} pixels')
+    print(f' scrolled {stats["REL_WHEEL"]} times')
+    print(f' L {stats["BTN_LEFT"]} | M {stats["BTN_MIDDLE"]} | R {stats["BTN_RIGHT"]}')
+```
+
+it outputs something like this
+
+```
+from 2022-11-29 07:19:18.638446 to 2023-01-12 18:54:39.591052
+ KEY_LEFTMETA     183401
+ KEY_LEFTCTRL     148602
+ KEY_LEFTBRACE    74244
+ KEY_LEFTSHIFT    73662
+ KEY_SPACE        68007
+ KEY_W            50675
+ KEY_J            46505
+ KEY_ENTER        42321
+ KEY_K            40678
+ KEY_BACKSPACE    38047
+ KEY_I            35940
+ KEY_E            34632
+ KEY_A            33963
+ KEY_L            33332
+ KEY_T            32711
+ KEY_C            30096
+ KEY_O            29312
+ KEY_D            28792
+ KEY_S            27699
+ KEY_N            27059
+ KEY_P            23496
+ KEY_TAB          23150
+ KEY_R            22594
+ KEY_RIGHTMETA    21590
+ KEY_B            20840
+ KEY_RIGHTBRACE   19358
+ KEY_H            17956
+ KEY_M            16135
+ KEY_U            14003
+ KEY_F            12366
+ KEY_G            12199
+ KEY_SEMICOLON    11610
+ KEY_V            11591
+ KEY_RIGHTSHIFT   9057
+ KEY_LEFT         8867
+ KEY_DOT          8637
+ KEY_Y            8104
+ KEY_X            7343
+ KEY_RIGHT        7082
+ KEY_4            6392
+ KEY_SLASH        5886
+ KEY_0            5592
+ KEY_Q            5220
+ KEY_COMMA        5129
+ KEY_MINUS        5002
+ KEY_Z            4684
+ KEY_1            4486
+ KEY_9            4202
+ KEY_APOSTROPHE   4032
+ KEY_2            3931
+ KEY_EQUAL        3639
+ KEY_LEFTALT      3599
+ KEY_ESC          2844
+ KEY_3            2754
+ KEY_8            1620
+ KEY_UP           1538
+ KEY_5            1299
+ KEY_6            1136
+ KEY_GRAVE        1116
+ KEY_BACKSLASH    1108
+ KEY_PAGEUP       854
+ KEY_DOWN         800
+ KEY_7            712
+ KEY_PAGEDOWN     590
+ KEY_INSERT       539
+ KEY_CAPSLOCK     179
+ KEY_RIGHTALT     157
+ KEY_DELETE       142
+ KEY_COMPOSE      86
+ KEY_F11          65
+ KEY_RIGHTCTRL    61
+ KEY_KP0          55
+ KEY_F1           51
+ KEY_KPENTER      48
+ KEY_KPMINUS      45
+ KEY_KP9          39
+ KEY_HOME         29
+ KEY_KPPLUS       28
+ KEY_KP7          23
+ KEY_F2           22
+ KEY_END          8
+ KEY_F4           8
+ KEY_F12          5
+ KEY_F3           5
+ KEY_F5           5
+ KEY_F6           4
+ KEY_NUMLOCK      4
+ KEY_SYSRQ        4
+ KEY_KPDOT        3
+ KEY_F8           3
+ KEY_KP4          2
+ KEY_KP1          2
+ KEY_PAUSE        2
+ KEY_F9           2
+ KEY_KP8          1
+ KEY_F10          1
+ KEY_KP3          1
+ KEY_SCROLLLOCK   1
+                  1435451
+
+from 2022-11-29 07:19:18.638448 to 2023-01-12 18:54:48.479239
+ moved 152290422 pixels
+ scrolled 557493 times
+ L 187689 | M 9583 | R 6414
+```
