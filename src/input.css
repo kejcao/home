@@ -1,3 +1,40 @@
 /* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
+
+ul {
+  list-style: none;
+}
+
+code,
+pre {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+pre {
+  overflow-x: auto;
+  margin: 0 2em;
+}
+
+.img+pre {
+  margin-top: 1em;
+}
+
+pre:has(+.img) {
+  margin-bottom: 1em;
+}
+
+img {
+  max-width: 80%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+input {
+  font: inherit;
+}
+
+/* article h1 { */
+/* 	font-size: 2em; */
+/* } */

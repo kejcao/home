@@ -19,31 +19,14 @@ print('''
 {% block head %}
   <title>Recent Readings - Kevin Cao</title>
   <meta name="description" content="" />
-  {% style %}
-    pre {
-      overflow-x: visible;
-      white-space: pre-wrap;
-      margin: 0;
-    }
-
-    .cards {
-      column-count: 4;
-      line-height: 1em;
-    }
-
-    .card {
-      display: inline-block;
-      margin-bottom: 1em;
-    }
-  {% endstyle %}
 {% endblock %}
 
 {% block content %}
-  <h1 class="center">Recent Reads</h1>
+  <h1 class="text-center">Recent Reads</h1>
   <p>A list of recent things on the Internet I have read/skimmed/watched and found entertaining.</p> 
 ''')
 
-print('<section class="cards">')
+print('<section class="columns-4 leading-4">')
 with open('/home/kjc/recent-reads', 'r') as fp:
     cards = []
     for l in fp.readlines():
@@ -52,7 +35,7 @@ with open('/home/kjc/recent-reads', 'r') as fp:
             date, url, desc = l.split(maxsplit=3)[1:]
             continue
         type, desc = desc.split(':', maxsplit=1)
-        cards.append(f'<div class="card"><a title="added on {date}" href="{url}"><b>{type}</b></a> {process(desc)}</div>')
+        cards.append(f'<div class="inline-block mb-4"><a title="added on {date}" href="{url}"><b>{type}</b></a> {process(desc)}</div>')
     print('<div>')
     for c in cards[::4]:
         print(c)

@@ -1,11 +1,11 @@
 Sentiment Analysis: Detecting The Sentiment of a Text | 3 | 2023-02-01 | interactive,NLP
 
-{% style %}
-#input {
-  width: 100%;
-  padding: .5em;
-}
-{% endstyle %}
+<style>
+  #input {
+    width: 100%;
+    padding: .5em;
+  }
+</style>
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
 

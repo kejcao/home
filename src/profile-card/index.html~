@@ -2,7 +2,7 @@
 
 {% block head %}
   <title>Profile Card - Kevin Cao</title>
-	<meta name="description" content="A simple profile card for Hacktoberfest 2022." />
+  <meta name="description" content="A simple profile card for Hacktoberfest 2022." />
 {% endblock %}
 
 {% block style %}

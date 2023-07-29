@@ -1,14 +1,14 @@
 Roots of Unity | 3 | 2023-03-14 | math,interactive
 
-{% style %}
-.roots input {
-  width: 4em;
-}
+<style>
+  .roots input {
+    width: 4em;
+  }
 
-.center {
-  text-align: center;
-}
-{% endstyle %}
+  .center {
+    text-align: center;
+  }
+</style>
 
 The $n$th roots of unity are the solutions to the equation
 

@@ -1,4 +1,4 @@
-Fuzzy File Completion in Bash | 4 | 2023-07-31 | linux,bash,C,algorithm
+Fuzzy File Completion in Bash | 2 | 2023-07-31 | linux,bash,C,algorithm
 
 A shell is basically a computer program that allows users to run other computer programs, which do different things depending on the inputs one gives it in the form of arguments. I use one of these shells called Bash and often I have the need to refer to a file or directory so the program I'm running can perform some action on it. To ease the strain of typing out a path/filename in full I can press the "tab" key to let Bash attempt to fill in (that is, complete) the filename for me. In the GIF below, you can see Bash tab completion in action.
 

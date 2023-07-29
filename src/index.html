@@ -3,56 +3,21 @@
 {% block head %}
   <title>Homepage</title>
   <meta name="description" content="The website of a computer geek. I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform." />
-  {% style %}
-    .post {
-      border: 3px solid black;
-      border-radius: 6px;
-      margin: 3em 0;
-      padding: 1em 1em;
-      box-shadow: .5em .5em lightblue, -.5em -.5em pink;
-      background-color: white;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    nav {
-      margin-top: 16px;
-    }
-
-    .grayout {
-      opacity: 0.6;
-    }
-
-    .posts {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .post-title {
-      text-align: center;
-      margin: 0;
-    }
-
-    .ellipsis {
-      text-align: center;
-      margin-bottom: 0;
-    }
-
-    .posts li:first-child {
-      margin-top: 2em;
-    }
-
-    .posts li:last-child {
-      margin-bottom: 2em;
-    }
-
-  {% endstyle %}
+    <!-- <style> -->
+    <!-- .post { -->
+    <!--   border: 3px solid black; -->
+    <!--   border-radius: 6px; -->
+    <!--   box-shadow: .5em .5em lightblue, -.5em -.5em pink; -->
+    <!--   background-color: white; -->
+    <!--   text-decoration: none; -->
+    <!--   color: inherit; -->
+    <!-- } -->
+    <!-- </style> -->
 {% endblock %}
 
 {% block header %}
   <header>
-    <nav class="center">
+    <nav class="text-center mt-4">
       <a href="/archive/">/archive/</a>
       <br>
       <a href="/recent-reads/">/recent-reads/</a>
@@ -61,23 +26,23 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="center">Homepage</h1>
-  <p class="center">Welcome!</p>
-  <p class="center">I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform. I know HTML, Python, C, Bash, C++, x86-64 assembly, CSS, and JavaScript.</p>
-  <p class="center">I hosted this website on a spare laptop running Apache but I've since moved to using Vercel. I wrote an SSG in C++ then switched around different web frameworks (Next.js, Svelte, etc.) before deciding to write another in Node.js—it crawls for Nunjucks templates and renders them, with the blog posts being written in my own Markdown-like document language. It uses Babel for JavaScript transcompilation, PostCSS to downgrade CSS, highlight.js for highlighting source code, svgo and sharp for optimizing SSG and other image files, and finally katex for rendering LaTex.</p>
-  <div class="center">
+  <h1 class="text-center">Homepage</h1>
+  <p class="text-center">Welcome!</p>
+  <p class="text-center">I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform. I know HTML, Python, C, Bash, C++, x86-64 assembly, CSS, and JavaScript.</p>
+  <p class="text-center">I used to host this website on a spare laptop running Apache but have since moved to Vercel—forwarding ports, fiddling with DNS records, generating HTTPS certificates with Let's Encrypt, configuring Postfix and Dovecot, etc. is all an absolute nightmare. I believe back then I was using a handwritten SSG in C++. I then hopped around different web frameworks (Next.js, Svelte, Vue.js, etc.) before deciding to write my own in Node.js. It crawls for Nunjucks templates and blog posts written in my own Markdown-like document language then renders these. It uses Babel for JavaScript transcompilation and miniaturization, highlight.js to highlight source code, KaTeX for rendering LaTeX math stuff, and Tailwind CSS to make styling easier. A handful of randomly scattered shell scripts aids development.</p>
+  <div class="text-center">
     <a href="mailto:&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;">&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;</a><br>
     <a href="https://github.com/kejcao">github.com</a><br>
     <a href="https://crackmes.one/user/kejcao">crackmes.one</a>
   </div>
-  <ul class="posts">
+  <ul class="m-0 p-0">
     {% for post in posts %}
-    <li class="post">
-      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/{{ post.slug }}">{{ post.title }}</a></h1>
-      <h4 class="center grayout">{{ post.tags | join(', ') }}</h4>
-      <p style="text-align: center"><i>{{ post.date }}</i></p>
+    <li class="{% if loop.first %}mt-8 {% endif %}{% if loop.last %} mt-8 {% endif %}rounded-lg border-black border-solid border-3 my-4 p-4">
+      <h1 class="text-center"><a class="no-underline text-inherit" href="/posts/{{ post.slug }}">{{ post.title }}</a></h1>
+      <h4 class="text-center opacity-60">{{ post.tags | join(', ') }}</h4>
+      <p class="text-center"><i>{{ post.date }}</i></p>
       <p>{{ post.desc | raw | safe }}</p>
-      <p class="ellipsis"><a href="/posts/{{ post.slug }}">...read more</a></p>
+      <p class="text-center m-0"><a href="/posts/{{ post.slug }}">...read more</a></p>
     </li>
     {% endfor %}
   </ul>

@@ -2,14 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const nunjucks = require('nunjucks');
 const hljs = require('highlight.js');
-const postcss = require('postcss');
 const babel = require('@babel/core');
-const svgo = require('svgo');
-const sharp = require('sharp');
 const katex = require('katex');
 
-const layout = 'layout.html';
-
+const GLOBAL_LAYOUT_FILE = 'layout.html';
 const POST_LAYOUT_FILE = 'post-layout.html';
 
 function shouldUpdate(src, dest) {
@@ -25,25 +21,25 @@ function shouldUpdate(src, dest) {
 
 let env = new nunjucks.Environment(new nunjucks.FileSystemLoader());
 
-env.addExtension('StyleExtension', new function() {
-  this.tags = ['style'];
+// env.addExtension('StyleExtension', new function() {
+//   this.tags = ['style'];
 
-  this.parse = function(parser, nodes, lexer) {
-    const tok = parser.nextToken().value;
-    const args = parser.parseSignature(null, true);
-    parser.advanceAfterBlockEnd(tok);
-    const body = parser.parseUntilBlocks('endstyle');
-    parser.advanceAfterBlockEnd();
-    return new nodes.CallExtension(this, 'run', args, [body]);
-  };
+//   this.parse = function(parser, nodes, lexer) {
+//     const tok = parser.nextToken().value;
+//     const args = parser.parseSignature(null, true);
+//     parser.advanceAfterBlockEnd(tok);
+//     const body = parser.parseUntilBlocks('endstyle');
+//     parser.advanceAfterBlockEnd();
+//     return new nodes.CallExtension(this, 'run', args, [body]);
+//   };
 
-  this.run = function(context, body) {
-    return new nunjucks.runtime.SafeString(`<style>
-      ${postcss([require('postcss-preset-env'), require('postcss-minify')])
-        .process(body(), { from: undefined, to: undefined }).css}
-    </style>`);
-  };
-}());
+//   this.run = function(context, body) {
+//     return new nunjucks.runtime.SafeString(`<style>
+//       ${postcss([require('postcss-preset-env'), require('postcss-minify')])
+//         .process(body(), { from: undefined, to: undefined }).css}
+//     </style>`);
+//   };
+// }());
 
 env.addExtension('ScriptExtension', new function() {
   this.tags = ['script'];
@@ -317,7 +313,7 @@ function renderWebpages(dir, frontmatters) {
       } catch (_) { }
       fs.writeFile(
         out,
-        env.render(absfp, { posts: frontmatters, layout }),
+        env.render(absfp, { posts: frontmatters, layout: GLOBAL_LAYOUT_FILE }),
         err => {
           if (err) {
             console.error(err);
@@ -333,6 +329,7 @@ function renderPosts() {
   let metadata = [];
   fs.readdirSync('src/posts/').forEach(fp => {
     if (path.extname(fp) == '.md') {
+      console.log(fp)
       let frontmatter, content;
       try {
         [frontmatter, content] = postToHTML(
@@ -360,7 +357,7 @@ function renderPosts() {
 
       fs.writeFile(
         path.join(outdir, 'index.html'),
-        env.render(POST_LAYOUT_FILE, { post: frontmatter, layout }),
+        env.render(POST_LAYOUT_FILE, { post: frontmatter, layout: GLOBAL_LAYOUT_FILE }),
         err => {
           if (err) {
             console.error(err);
@@ -373,60 +370,11 @@ function renderPosts() {
   return metadata;
 }
 
-// function compileImages() {
-//   fs.readdirSync('images/').forEach(fp => {
-//     const absfp = path.join('images/', fp);
-
-//     if (path.extname(fp) == '.svg') {
-//       const out = path.join('static/media/', fp);
-//       if (shouldUpdate(absfp, out)) {
-//         fs.readFile(absfp, 'utf8', (err, data) => {
-//           if (err) {
-//             console.error(err);
-//             process.exit(1);
-//           }
-//           fs.writeFile(
-//             out,
-//             svgo.optimize(data, { path: fp, multipass: true }).data,
-//             err => {
-//               if (err) {
-//                 console.error(err);
-//                 process.exit(1);
-//               }
-//             }
-//           );
-//         });
-//       }
-//     } else {
-//       function pathNameFor(width) {
-//         return path.join(
-//           'static/media/',
-//           `${fp.split('.', 2)[0]}-${width}w.jpeg`
-//         );
-//       }
-//       const out = path.join('static/media/', fp);
-//       if (shouldUpdate(absfp, out)) {
-//         sharp(absfp).toFile(out);
-//       }
-//       // [320, 640, 1280].forEach(width => {
-//       //   const out = path.join(
-//       //     'static/media/',
-//       //     `${fp.split('.', 2)[0]}-${width}w.jpeg`
-//       //   );
-//       //   if (shouldUpdate(absfp, out)) {
-//       //     sharp(absfp).resize(width).toFile(out);
-//       //   }
-//       // });
-//     }
-//   });
-// }
-
 let start = performance.now()
-// compileImages();
 const frontmatters = renderPosts();
 frontmatters.sort((a, b) => {
   return new Date(b['date']).getTime() - new Date(a['date']).getTime();
 });
 renderWebpages('src/', frontmatters);
 let duration = performance.now() - start;
-console.log(`finished in ${(duration/1000).toFixed(2)} secs.`);
+console.log(`finished in ${(duration / 1000).toFixed(2)} secs.`);

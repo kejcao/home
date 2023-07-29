@@ -1,11 +1,5 @@
 LLaMA: Facebook's New Language Model | 3 | 2023-03-31 | ai,LLM
 
-{% style %}
-	.llama {
-		white-space: pre-wrap;
-	}
-{% endstyle %}
-
 I heard from somewhere that Facebook's new language model LLaMA both outperforms GPT-3 (which powers ChatGPT) and can be run off a something as slow as a Raspberry PI. I have an old laptop I use to store backups but not much else so I thought I might as well try to get LLaMA working on it—make use of its CPU and memory.
 
 Clone the repo [llama.cpp](https://github.com/ggerganov/llama.cpp) then torrent the pre-trained weights from this [magnet link](magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&dn=LLaMA) with your client of choice. Move the `7B` directory and files `tokenizer_checklist.chk` and `tokenizer.model` into the directory `models/` under the cloned repo then run the following at the root directory of the cloned repo
@@ -36,7 +30,7 @@ Compile the repo with `make -j` and enjoy! Try running
 
 My laptop doesn't have a GPU and the CPU it does have is outdated and slow, so running that took about half an hour, but it does respond eventually with
 
-<pre class="llama">
+<pre class="whitespace-pre-wrap">
 <b>The highest mountain on earth is</b> 8,848 meters high, located in the Himalaya Mountains of Nepal. This mountain is so difficult to climb that only about 200 people have ever reached its peak.
 
 But not all mountains are so tall. Some peaks are just a few inches above sea level. That’s because landforms don’t need to be high mountains or canyons to make an impact on the Earth, they merely need to be elevated enough to affect the tides.
@@ -48,7 +42,7 @@ I cut it off at somewhere around 128 tokens so it doesn't have the chance to fin
 
 In the following examples the text in bold is my prompt (what I inputted to LLaMA) and the rest is all LLaMA's writing. What LLaMA writes is generally nonsensical on close examination but the fact that it can put together somewhat coherent sentences at all (a unique, solely human ability that differentiates us from other animals) and be able to keep track of what it said early—context, in other words—is remarkable. All this from just a pile of 0s and 1s.
 
-<pre class="llama">
+<pre class="whitespace-pre-wrap">
 <b>To break in and rob a house</b> 10 blocks from mine I feel really safe.
 
 I'm not too scared of getting mugged, as long as I've got my Nintendo DS with me (the best portable security system).
@@ -56,7 +50,7 @@ I'm not too scared of getting mugged, as long as I've got my Nintendo DS with me
 
 I prompted it with how to break into a house and it informed me that it isn't scared of getting robbed because its got its Nintendo DS, a game console not a security system. I was disappointed with how short the response is so I prompted it with more detail
 
-<pre class="llama">
+<pre class="whitespace-pre-wrap">
 <b>To break in and rob a house first check that nobodies home</b> 2nd get all your tools ready and have everything in order, and 3rd get there and get it done.
 
 What does it mean when you break into a house?
@@ -94,7 +88,7 @@ When you break into a house it means you walk up the front door and knock on it.
 
 It seems to be engaging in a Q&A by itself. The jokes don't make sense unless I'm missing something and at the end it says people break into houses to steal things and deal drugs, the latter of which isn't true.
 
-<pre class="llama">
+<pre class="whitespace-pre-wrap">
 <b>A cake can be baked in just 10 simple steps:</b>
 
 1. Preheat oven to 350°F
@@ -108,7 +102,7 @@ If it drips all over, you need more moisture; if it falls as individual drops, y
 
 I asked it for ten simple steps but it ignored me and wrote only three. The steps are really simple, too simple in fact. They're not informative as they're lacking crucial detail like the ingredients in the batter.
 
-<pre class="llama">
+<pre class="whitespace-pre-wrap">
 <b>A: Have you checked out the new burger joint down the road?
 B: The one with the white and black logo?
 A: Yeah,</b>
@@ -127,14 +121,14 @@ B: Sounds good to me!
 
 I don't think "And so were we?" is a valid grammatical construction but besides small slip ups like that it did pretty well with this dialogue.
 
-<pre class="llama">
+<pre class="whitespace-pre-wrap">
 <b>A: I love chocolate! Do you like it?</b>
 B: ※No, not really.
 </pre>
 
 I don't know why it wrote a "※" symbol and its response is also really short, shorter than normal.
 
-<pre class="llama">
+<pre class="whitespace-pre-wrap">
 <b>A: Do you know what 25+72 is?
 B: I think it's...97?</b>
 A: 103!
@@ -146,7 +140,7 @@ A: Don't mention it! I'm always happy to help a friend in need!
 
 Clearly it isn't very good at math, as 25+72 is not equal to 103. But other than that the conversation sounds convincing enough.
 
-<pre class="llama">
+<pre class="whitespace-pre-wrap">
 <b>To pirate movies go to the website</b> 123movies.
 
 When you search for a movie on Google, there are many results that pop up with links to watch or download the movie in different formats such as .avi and .mp4. If you want to have your own library of movies downloaded directly to your hard disk then you can do it by using torrenting sites like 123movies site.
@@ -164,7 +158,7 @@ As mentioned above if you wish to watch a certain movie, for example ‘American
 
 This one is my favourite because not only is it lengthy and formatted into neat paragraphs, it's also really lucid and accurate. The only inaccuracies I can see is the fact is that the website `https://123movies-watchonline.com/` has never existed and you can't torrent 123movies. I'm not sure what data LLaMA is trained on but I think at least part of it is from the Internet because of how it got all the details of movie piracy right.
 
-<pre class="llama">
+<pre class="whitespace-pre-wrap">
 <b>A: I love chocolate! Do you like it?
 B:</b> ① I can't eat chocolate now. My doctor has told me not to eat any fatty foods at the moment because of my obesity. ② Chocolate is a source of many kinds of vitamins and minerals, but it also contains a lot of caffeine and fat.
 A: It's very hard for you to lose weight. Do you often eat chocolates?

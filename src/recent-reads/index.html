@@ -4,114 +4,99 @@
 {% block head %}
   <title>Recent Readings - Kevin Cao</title>
   <meta name="description" content="" />
-  {% style %}
-    pre {
-      overflow-x: visible;
-      white-space: pre-wrap;
-      margin: 0;
-    }
-
-    .cards {
-      column-count: 4;
-      line-height: 1em;
-    }
-
-    .card {
-      display: inline-block;
-      margin-bottom: 1em;
-    }
-  {% endstyle %}
 {% endblock %}
 
 {% block content %}
-  <h1 class="center">Recent Reads</h1>
+  <h1 class="text-center">Recent Reads</h1>
   <p>A list of recent things on the Internet I have read/skimmed/watched and found entertaining.</p> 
 
-<section class="cards">
+<section class="columns-4 leading-4">
 <div>
-<div class="card"><a title="added on 2023-07-29" href="https://root-servers.org/"><b>app</b></a>  Map of all 13 root nameservers. I was surprised that there are only 13 IP addresses, considering every machine accessing the Internet queries these servers to translate domain names to addresses.
+<div class="inline-block mb-4"><a title="added on 2023-07-29" href="https://randoma11y.com/"><b>app</b></a>  Color palette generator that maximizes contrast and thus accessibility. The domain name could be interpreted in 3 ways: As randomly, random ally, or random accessibility.
 </div>
-<div class="card"><a title="added on 2023-07-28" href="https://tldr.sh/"><b>article</b></a>  tldr <a href="https://tldr.inbrowser.app/">live demo</a>.
+<div class="inline-block mb-4"><a title="added on 2023-07-28" href="https://manned.org/"><b>article</b></a>  Man pages. There isn&#x27;t anything special about that, like the site <a href="https://linux.die.net/man/">linux.die.net</a> but I love the blue colorscheme and dig the web design.
 </div>
-<div class="card"><a title="added on 2023-07-28" href="https://www.chisso.co.jp/"><b>article</b></a> 
+<div class="inline-block mb-4"><a title="added on 2023-07-28" href="https://jvns.ca/perf-cheat-sheet.pdf"><b>pdf</b></a>  
 </div>
-<div class="card"><a title="added on 2023-07-28" href="https://www.smartmontools.org/"><b>article</b></a>  CLI tool to control and monitor storage systems through the Self-Monitoring, Analysis and Reporting Technology System (SMART) built into most modern disks.
+<div class="inline-block mb-4"><a title="added on 2023-07-28" href="https://www.happyscribe.com/subtitle-tools/convert-vtt-to-srt"><b>app</b></a>  Online tool to convert subtitles from VTT to SRT. I think the site is capable of other conversions too.
 </div>
-<div class="card"><a title="added on 2023-07-26" href="https://11l-lang.org/"><b>article</b></a>  An overly laconic and pithy semi-esoteric programming language. It can be used as an intermediate representation to transcompile from Python to C++, thus improving performance.
+<div class="inline-block mb-4"><a title="added on 2023-07-27" href="https://en.wikipedia.org/wiki/2_nm_process"><b>article</b></a>  2 nm process . 8000 of these in a red blood cell or 100000 of these in the 
 </div>
-<div class="card"><a title="added on 2023-07-25" href="https://github.com/oubiwann/metaphone/blob/master/metaphone/word.py"><b>code</b></a>  Python code for the metaphone 2 algorithm.
+<div class="inline-block mb-4"><a title="added on 2023-07-25" href="https://www.youtube.com/watch?v=5u7euN1HTuU"><b>video</b></a>  LEMMiNO on the Kennedy assassination, focusing in particular on the inside of the Texas School Book Depository, where Lee Harvey Oswald fired his shots. As is the par for his videos, it is absolutely gorgeous. Complete eye-candy.
 </div>
-<div class="card"><a title="added on 2023-07-24" href="https://www.wired.com/2007/03/bemore/"><b>article</b></a>  DARPA human enhancement projects like using a glove that cools blood pulled to the hand, which recirculates throughout the body, thus cooling the whole body with great efficacy.
+<div class="inline-block mb-4"><a title="added on 2023-07-24" href="https://www.youtube.com/watch?v=AE3iXR1JFak"><b>video</b></a>  Fireship talks about Twitter&#x27;s rebranding to X and privacy infringing technologies, including Google&#x27;s web DRM proposal.
 </div>
-<div class="card"><a title="added on 2023-07-21" href="https://wiki.archlinux.org/title/system_maintenance#Upgrading_the_system"><b>article</b></a>  Arch Linux wiki article on upgrading systems.
+<div class="inline-block mb-4"><a title="added on 2023-07-22" href="https://www.icelandguide.is/information/2013/06/skaftareldar_fires_1.html"><b>article</b></a>  Skaftár-fires, a series of volcanic eruptions that devastated Iceland.
 </div>
-<div class="card"><a title="added on 2023-07-20" href="https://www.youtube.com/watch?v=mEml7kTDHqY"><b>video</b></a>  Microscopic forams. Very relaxing atmosphere.
+<div class="inline-block mb-4"><a title="added on 2023-07-20" href="https://www.youtube.com/watch?v=LDFMmZ4IvX4"><b>video</b></a>  Middle 8&#x27;s analysis of a catchy song. Very nice fluid visuals.
 </div>
-<div class="card"><a title="added on 2023-07-20" href="https://www.thefreedictionary.com/The-Farlex-Grammar-Book.htm"><b>article</b></a>  A comprehensive website on English grammar—ever heard of a factitive verb or evaluative adverb?
-</div>
-</div>
-<div>
-<div class="card"><a title="added on 2023-07-29" href="https://www.youtube.com/watch?v=FqR5vESuKe0"><b>video</b></a>  Latency of common computer operations. L1 cache access takes .5 nanoseconds and it only takes 200 nanoseconds to MD5 hash a 64 bit number but it takes microseconds for Linux to context-switch processes.
-</div>
-<div class="card"><a title="added on 2023-07-28" href="https://visionscreening.zeiss.com/en-CA"><b>app</b></a>  A really quick online vision test. I doubt it&#x27;s very accurate, but it does say my vision is good so that&#x27;s reassuring.
-</div>
-<div class="card"><a title="added on 2023-07-28" href="https://ransomwatch.telemetry.ltd/#/recentposts"><b>article</b></a>  
-</div>
-<div class="card"><a title="added on 2023-07-27" href="https://www.youtube.com/watch?v=bKLFUMrNDpQ"><b>video</b></a>  How Iraqis got so good at liquidating US soldiers and blowing up vehicles.
-</div>
-<div class="card"><a title="added on 2023-07-26" href="https://www.youtube.com/watch?v=PH9q0HNBjT4"><b>video</b></a>  Adding sine waves together to emulate the motion of relatively stationary and calm ocean waves.
-</div>
-<div class="card"><a title="added on 2023-07-25" href="https://www.youtube.com/watch?v=fahujLokim4"><b>video</b></a>  Sun vanished twitter horror ARG. I remember watching his video on this a while back—good to see that the series is still going.
-</div>
-<div class="card"><a title="added on 2023-07-24" href="https://www.youtube.com/watch?v=4YuNvIfM-YA"><b>video</b></a>  Kowloon Walled City, the densest city on Earth. It mentions how the city could be viewed either as a dystopia or a utopia.
-</div>
-<div class="card"><a title="added on 2023-07-21" href="https://speed.cloudflare.com/"><b>app</b></a>  There are many Internet speed tests one can find online but this one by Cloudflare gives the most detail.
-</div>
-<div class="card"><a title="added on 2023-07-20" href="https://en.wikipedia.org/wiki/List_of_impact_craters_on_Earth"><b>article</b></a>  List of big impact craters on Earth. I thought Chicxulub (the one that wiped out the dinosaurs) was the largest but apparently not.
-</div>
-<div class="card"><a title="added on 2023-07-20" href="https://peps.python.org/pep-0401/"><b>article</b></a>  PEP 401 April fools.
+<div class="inline-block mb-4"><a title="added on 2023-07-20" href="https://x-team.com/blog/inserting-unicode-characters-in-vim/"><b>article</b></a>  Inserting arbitrary Unicode characters in Vim. I always use &quot;&lt;C-k&gt;-M&quot; to insert emdashes.
 </div>
 </div>
 <div>
-<div class="card"><a title="added on 2023-07-29" href="https://howdns.works/"><b>article</b></a>  A great paid option is this <a href="https://wizardzines.com/zines/dns/">zine</a>.
+<div class="inline-block mb-4"><a title="added on 2023-07-29" href="https://root-servers.org/"><b>app</b></a>  Map of all 13 root nameservers. I was surprised that there are only 13 IP addresses, considering every machine accessing the Internet queries these servers to translate domain names to addresses.
 </div>
-<div class="card"><a title="added on 2023-07-28" href="https://www.sanrio.com/collections/pompompurin"><b>article</b></a>  I didn&#x27;t realize the relatively recently arrested BreachForums owner&#x27;s username &quot;Pompompurin&quot; is an actual character from Sanrio, the same company that made Hello Kitty.
+<div class="inline-block mb-4"><a title="added on 2023-07-28" href="https://tldr.sh/"><b>article</b></a>  tldr <a href="https://tldr.inbrowser.app/">live demo</a>.
 </div>
-<div class="card"><a title="added on 2023-07-28" href="https://github.com/evilsocket/opensnitch"><b>code</b></a>  An interactive linux firewall GUI for blocking outbound connections. It is fun to see what applications do.
+<div class="inline-block mb-4"><a title="added on 2023-07-28" href="https://www.chisso.co.jp/"><b>article</b></a> 
 </div>
-<div class="card"><a title="added on 2023-07-27" href="https://www.youtube.com/watch?v=euTSMgWexEo"><b>video</b></a>  SunnyV2 on Salt Bae losing popularity ever since his claim to fame in 2017 with the video of him sprinkling salt in an unconventional manner onto a steak.
+<div class="inline-block mb-4"><a title="added on 2023-07-28" href="https://www.smartmontools.org/"><b>article</b></a>  CLI tool to control and monitor storage systems through the Self-Monitoring, Analysis and Reporting Technology System (SMART) built into most modern disks.
 </div>
-<div class="card"><a title="added on 2023-07-26" href="https://pycon.switowski.com/02-packages/pipx/"><b>article</b></a>  pipx, a tool to safely install Python packages globally. Except you can&#x27;t install libraries with it, only executables. I find it much more convenient to just risk it and install packages globally the normal way.
+<div class="inline-block mb-4"><a title="added on 2023-07-26" href="https://11l-lang.org/"><b>article</b></a>  An overly laconic and pithy semi-esoteric programming language. It can be used as an intermediate representation to transcompile from Python to C++, thus improving performance.
 </div>
-<div class="card"><a title="added on 2023-07-25" href="https://www.youtube.com/watch?v=wsNdYD8DODo"><b>video</b></a>  Aztec childhood explained. I might pick up a book on the Aztecs, they seem to be an interesting culture.
+<div class="inline-block mb-4"><a title="added on 2023-07-25" href="https://github.com/oubiwann/metaphone/blob/master/metaphone/word.py"><b>code</b></a>  Python code for the metaphone 2 algorithm.
 </div>
-<div class="card"><a title="added on 2023-07-22" href="https://news.uchicago.edu/explainer/origin-life-earth-explained"><b>article</b></a>  Possible origins of the life on earth. Didn&#x27;t know meteor crashes were a possibility.
+<div class="inline-block mb-4"><a title="added on 2023-07-24" href="https://www.wired.com/2007/03/bemore/"><b>article</b></a>  DARPA human enhancement projects like using a glove that cools blood pulled to the hand, which recirculates throughout the body, thus cooling the whole body with great efficacy.
 </div>
-<div class="card"><a title="added on 2023-07-20" href="https://www.youtube.com/watch?v=gFzqqaBA9wQ"><b>video</b></a>  TED Ed animation on orangutans. TED Ed&#x27;s animations are some of best found on YouTube.
+<div class="inline-block mb-4"><a title="added on 2023-07-21" href="https://wiki.archlinux.org/title/system_maintenance#Upgrading_the_system"><b>article</b></a>  Arch Linux wiki article on upgrading systems.
 </div>
-<div class="card"><a title="added on 2023-07-20" href="https://www.youtube.com/watch?v=CuNgLZiWkm8"><b>video</b></a>  Faking JPEG compression for a post processing effect in a video game.
+<div class="inline-block mb-4"><a title="added on 2023-07-20" href="https://www.youtube.com/watch?v=mEml7kTDHqY"><b>video</b></a>  Microscopic forams. Very relaxing atmosphere.
 </div>
-<div class="card"><a title="added on 2023-07-19" href="https://docs.python.org/3/library/turtle.html"><b>article</b></a>  Python turtle graphics module&#x27;s documentation is highly readable.
+<div class="inline-block mb-4"><a title="added on 2023-07-20" href="https://www.thefreedictionary.com/The-Farlex-Grammar-Book.htm"><b>article</b></a>  A comprehensive website on English grammar—ever heard of a factitive verb or evaluative adverb?
 </div>
 </div>
 <div>
-<div class="card"><a title="added on 2023-07-28" href="https://manned.org/"><b>article</b></a>  Man pages. There isn&#x27;t anything special about that, like the site <a href="https://linux.die.net/man/">linux.die.net</a> but I love the blue colorscheme and dig the web design.
+<div class="inline-block mb-4"><a title="added on 2023-07-29" href="https://www.youtube.com/watch?v=FqR5vESuKe0"><b>video</b></a>  Latency of common computer operations. L1 cache access takes .5 nanoseconds and it only takes 200 nanoseconds to MD5 hash a 64 bit number but it takes microseconds for Linux to context-switch processes.
 </div>
-<div class="card"><a title="added on 2023-07-28" href="https://jvns.ca/perf-cheat-sheet.pdf"><b>pdf</b></a>  
+<div class="inline-block mb-4"><a title="added on 2023-07-28" href="https://visionscreening.zeiss.com/en-CA"><b>app</b></a>  A really quick online vision test. I doubt it&#x27;s very accurate, but it does say my vision is good so that&#x27;s reassuring.
 </div>
-<div class="card"><a title="added on 2023-07-28" href="https://www.happyscribe.com/subtitle-tools/convert-vtt-to-srt"><b>app</b></a>  Online tool to convert subtitles from VTT to SRT. I think the site is capable of other conversions too.
+<div class="inline-block mb-4"><a title="added on 2023-07-28" href="https://ransomwatch.telemetry.ltd/#/recentposts"><b>article</b></a>  
 </div>
-<div class="card"><a title="added on 2023-07-27" href="https://en.wikipedia.org/wiki/2_nm_process"><b>article</b></a>  2 nm process . 8000 of these in a red blood cell or 100000 of these in the 
+<div class="inline-block mb-4"><a title="added on 2023-07-27" href="https://www.youtube.com/watch?v=bKLFUMrNDpQ"><b>video</b></a>  How Iraqis got so good at liquidating US soldiers and blowing up vehicles.
 </div>
-<div class="card"><a title="added on 2023-07-25" href="https://www.youtube.com/watch?v=5u7euN1HTuU"><b>video</b></a>  LEMMiNO on the Kennedy assassination, focusing in particular on the inside of the Texas School Book Depository, where Lee Harvey Oswald fired his shots. As is the par for his videos, it is absolutely gorgeous. Complete eye-candy.
+<div class="inline-block mb-4"><a title="added on 2023-07-26" href="https://www.youtube.com/watch?v=PH9q0HNBjT4"><b>video</b></a>  Adding sine waves together to emulate the motion of relatively stationary and calm ocean waves.
 </div>
-<div class="card"><a title="added on 2023-07-24" href="https://www.youtube.com/watch?v=AE3iXR1JFak"><b>video</b></a>  Fireship talks about Twitter&#x27;s rebranding to X and privacy infringing technologies, including Google&#x27;s web DRM proposal.
+<div class="inline-block mb-4"><a title="added on 2023-07-25" href="https://www.youtube.com/watch?v=fahujLokim4"><b>video</b></a>  Sun vanished twitter horror ARG. I remember watching his video on this a while back—good to see that the series is still going.
 </div>
-<div class="card"><a title="added on 2023-07-22" href="https://www.icelandguide.is/information/2013/06/skaftareldar_fires_1.html"><b>article</b></a>  Skaftár-fires, a series of volcanic eruptions that devastated Iceland.
+<div class="inline-block mb-4"><a title="added on 2023-07-24" href="https://www.youtube.com/watch?v=4YuNvIfM-YA"><b>video</b></a>  Kowloon Walled City, the densest city on Earth. It mentions how the city could be viewed either as a dystopia or a utopia.
 </div>
-<div class="card"><a title="added on 2023-07-20" href="https://www.youtube.com/watch?v=LDFMmZ4IvX4"><b>video</b></a>  Middle 8&#x27;s analysis of a catchy song. Very nice fluid visuals.
+<div class="inline-block mb-4"><a title="added on 2023-07-21" href="https://speed.cloudflare.com/"><b>app</b></a>  There are many Internet speed tests one can find online but this one by Cloudflare gives the most detail.
 </div>
-<div class="card"><a title="added on 2023-07-20" href="https://x-team.com/blog/inserting-unicode-characters-in-vim/"><b>article</b></a>  Inserting arbitrary Unicode characters in Vim. I always use &quot;&lt;C-k&gt;-M&quot; to insert emdashes.
+<div class="inline-block mb-4"><a title="added on 2023-07-20" href="https://en.wikipedia.org/wiki/List_of_impact_craters_on_Earth"><b>article</b></a>  List of big impact craters on Earth. I thought Chicxulub (the one that wiped out the dinosaurs) was the largest but apparently not.
+</div>
+<div class="inline-block mb-4"><a title="added on 2023-07-20" href="https://peps.python.org/pep-0401/"><b>article</b></a>  PEP 401 April fools.
+</div>
+</div>
+<div>
+<div class="inline-block mb-4"><a title="added on 2023-07-29" href="https://howdns.works/"><b>article</b></a>  A great paid option is this <a href="https://wizardzines.com/zines/dns/">zine</a>.
+</div>
+<div class="inline-block mb-4"><a title="added on 2023-07-28" href="https://www.sanrio.com/collections/pompompurin"><b>article</b></a>  I didn&#x27;t realize the relatively recently arrested BreachForums owner&#x27;s username &quot;Pompompurin&quot; is an actual character from Sanrio, the same company that made Hello Kitty.
+</div>
+<div class="inline-block mb-4"><a title="added on 2023-07-28" href="https://github.com/evilsocket/opensnitch"><b>code</b></a>  An interactive linux firewall GUI for blocking outbound connections. It is fun to see what applications do.
+</div>
+<div class="inline-block mb-4"><a title="added on 2023-07-27" href="https://www.youtube.com/watch?v=euTSMgWexEo"><b>video</b></a>  SunnyV2 on Salt Bae losing popularity ever since his claim to fame in 2017 with the video of him sprinkling salt in an unconventional manner onto a steak.
+</div>
+<div class="inline-block mb-4"><a title="added on 2023-07-26" href="https://pycon.switowski.com/02-packages/pipx/"><b>article</b></a>  pipx, a tool to safely install Python packages globally. Except you can&#x27;t install libraries with it, only executables. I find it much more convenient to just risk it and install packages globally the normal way.
+</div>
+<div class="inline-block mb-4"><a title="added on 2023-07-25" href="https://www.youtube.com/watch?v=wsNdYD8DODo"><b>video</b></a>  Aztec childhood explained. I might pick up a book on the Aztecs, they seem to be an interesting culture.
+</div>
+<div class="inline-block mb-4"><a title="added on 2023-07-22" href="https://news.uchicago.edu/explainer/origin-life-earth-explained"><b>article</b></a>  Possible origins of the life on earth. Didn&#x27;t know meteor crashes were a possibility.
+</div>
+<div class="inline-block mb-4"><a title="added on 2023-07-20" href="https://www.youtube.com/watch?v=gFzqqaBA9wQ"><b>video</b></a>  TED Ed animation on orangutans. TED Ed&#x27;s animations are some of best found on YouTube.
+</div>
+<div class="inline-block mb-4"><a title="added on 2023-07-20" href="https://www.youtube.com/watch?v=CuNgLZiWkm8"><b>video</b></a>  Faking JPEG compression for a post processing effect in a video game.
+</div>
+<div class="inline-block mb-4"><a title="added on 2023-07-19" href="https://docs.python.org/3/library/turtle.html"><b>article</b></a>  Python turtle graphics module&#x27;s documentation is highly readable.
 </div>
 </div>
 </section>
