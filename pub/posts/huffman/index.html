@@ -1,64 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kevin Cao's Website</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    
-      <style>
-      
-        body {
-          padding: 0 1em;
-          margin: 0 auto;
-          font-family: "Merriweather", serif;
-          color: rgb(0, 0, 0, 0.7);
-          max-width: 50em;
-          -moz-tab-size: 4;
-            -o-tab-size: 4;
-               tab-size: 4;
-        }
 
-        code,
-        pre {
-          font-family: "Inconsolata", monospace;
-        }
-
-        pre {
-          overflow-x: auto;
-        }
-
-        img {
-          max-width: 100%;
-          height: auto;
-        }
-
-        input {
-          width: 100%;
-          font: inherit;
-          padding: .5em;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        .navbar ul {
-          list-style: none;
-          padding: .5em 0 0 0;
-          margin: 0;
-        }
-
-        .navbar li {
-          display: inline;
-        }
-      
-    </style>
-    
-    
-  <title>Experimenting with Huffman Coding - Kevin Cao</title>
-  <meta name="description" content="I created a Python script for compressing and uncompressing text using Huffman coding. It can shrink The Complete Works of William Shakespeare (from Gutenberg, in plaintext, 5.5 megabytes) down to 60% its original size in 10 seconds." />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kevin Cao's Website</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
   <style>
 pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
   Theme: a11y-light
@@ -68,38 +22,39 @@ pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5p
   Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
 */.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
   </style>
-
-  </head>
-  <body>
   
-    <header>
-      <nav class="navbar">
-        <ul>
-          <li><a href="/">homepage</a></li>
-          |
-          <li><a href="/posts/">posts</a></li>
-        </ul>
-      </nav>
-    </header>
+    <style>
+      body{padding:0 1em;margin:0 auto;font-family:"Merriweather",serif;color:rgb(0,0,0,0.7);max-width:50em;-moz-tab-size:4;-o-tab-size:4;tab-size:4}code,pre{font-family:"IBM Plex Mono",monospace}pre{overflow-x:auto;margin:0 2em}.img+pre{margin-top:1em}pre:has(+.img){margin-bottom:1em}img{max-width:80%;height:auto;display:block;margin:0 auto}input{font:inherit}*{box-sizing:border-box}article h1{font-size:2em}.navbar ul{list-style:none;padding:.5em 0 0 0;margin:0}.navbar li{display:inline}.center{text-align:center}
     
-  <h1>Experimenting with Huffman Coding</h1>
-  <i>2023-01-03</i>
-  <p>Huffman coding generates a tree from text and uses this tree to optimally and losslessly compress the text. Here is the tree generated from the text "beekeepers keep bees":</p>
-            <a href="/media/huffman-tree-1280w.jpeg">
-              <img
-                loading="lazy"
-                decoding="async"
-                sizes="(max-width: 50em) 100vw, 50em"
-                srcset="
-                  /media/huffman-tree-320w.jpeg 320w,
-                  /media/huffman-tree-640w.jpeg 640w,
-                  /media/huffman-tree-1280w.jpeg 1280w
-                "
-                src="/media/huffman-tree-640w.jpeg"
-                alt="huffman tree example"
-              />
-            </a>
-          <p>You can see the letter "E" occurs in the phrase frequently, so it's near the top. To compress text, follow the branches (colored lines) down to each letter. Each time you take a right, write down 1; each time you take a left, write down 0. For example, using the tree, the word "bees" would be encoded as <code>001110111</code>. This is smaller than <code>1100010110010111001011110011</code>, which is how it's represented uncompressed.</p><p>To generate the tree from text, create a sorted list of the letters by their frequencies. Repeatedly take the two elements with the lowest frequencies, make them the children of a parent (whose frequency is the combined frequency of its children), and then insert this back into the list. Continue until only one element is left, which is your tree.</p><p>Here's a Python script that does this:</p><pre><code><span class="hljs-keyword">import</span> bisect
+    </style>
+  
+  
+  <title>Experimenting with Huffman Coding - Kevin Cao</title>
+  <meta name="description" content="" />
+
+</head>
+<body>
+  
+    
+      <header>
+        <p style="text-align: center"><a href="/">back to homepage</a></p>
+      </header>
+    
+    <main>
+      
+  <article>
+    <h1 style="text-align: center">Experimenting with Huffman Coding</h1>
+    <p style="text-align: center"><i>2023-01-03</i></p>
+    <p>Huffman coding generates a tree from text and uses this tree to optimally and losslessly compress the text. Here is the tree generated from the text &quot;beekeepers keep bees&quot;:</p>
+          <a class="img" href="/media/huffman-tree.png">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/media/huffman-tree.png"
+              alt="huffman tree"
+            />
+          </a>
+        <p>You can see the letter &quot;E&quot; occurs in the phrase frequently, so it&#039;s near the top. To compress text, follow the branches (colored lines) down to each letter. Each time you take a right, write down 1; each time you take a left, write down 0. For example, using the tree, the word &quot;bees&quot; would be encoded as <code>001110111</code>. This is smaller than <code>1100010110010111001011110011</code>, which is how it&#039;s represented uncompressed.</p><p>To generate the tree from text, create a sorted list of the letters by their frequencies. Repeatedly take the two elements with the lowest frequencies, make them the children of a parent (whose frequency is the combined frequency of its children), and then insert this back into the list. Continue until only one element is left, which is your tree.</p><p>Here&#039;s a Python script that does this:</p><pre><code><span class="hljs-keyword">import</span> bisect
 <span class="hljs-keyword">import</span> pickle
 <span class="hljs-keyword">import</span> sys
 <span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter
@@ -187,11 +142,11 @@ Compresses data from stdin.
                         tree = tree.lhs
                     i += <span class="hljs-number">1</span>
                 txt.append(tree.lhs[<span class="hljs-number">0</span>])
-            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(txt), end=<span class="hljs-string">&#x27;&#x27;</span>)</code></pre><p>In the code, I could've also used a priority queue, instead of inserting into a sorted list. To use it:</p><pre><code>$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;beekeepers keep bees&#x27;</span> | python3 huffman.py compress out.hm
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(txt), end=<span class="hljs-string">&#x27;&#x27;</span>)</code></pre><p>In the code, I could&#039;ve also used a priority queue, instead of inserting into a sorted list. To use it:</p><pre><code>$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;beekeepers keep bees&#x27;</span> | python3 huffman.py compress out.hm
 $ python3 huffman.py uncompress out.hm
 beekeepers keep bees
 $ <span class="hljs-built_in">wc</span> -c out.hm <span class="hljs-comment"># means file is 521 bytes</span>
-521 out.hm</code></pre><p>Wait, our input text is 21 bytes, but our output is 26 times larger? This is because we have to store the tree in addition to the compressed text, so Huffman coding actually enlarges short texts. Also, I'm using pickle, which is not the most space-efficient method.</p><p>The program is slow, taking about 10 seconds to compress and uncompress the The Complete Works of William Shakespeare (which I downloaded from Gutenberg in plaintext--its 172420 lines and 5.5 megabytes) to 60% of its original size:</p><pre><code>$ time <span class="hljs-built_in">cat</span> shakespeare.txt | python3 huffman.py compress out.hm
+521 out.hm</code></pre><p>Wait, our input text is 21 bytes, but our output is 26 times larger? This is because we have to store the tree in addition to the compressed text, so Huffman coding actually enlarges short texts. Also, I&#039;m using pickle, which is not the most space-efficient method.</p><p>The program is slow, taking about 10 seconds to compress and uncompress the The Complete Works of William Shakespeare (which I downloaded from Gutenberg in plaintext--its 172420 lines and 5.5 megabytes) to 60% of its original size:</p><pre><code>$ time <span class="hljs-built_in">cat</span> shakespeare.txt | python3 huffman.py compress out.hm
 
 real    0m9.672s
 user    0m8.611s
@@ -203,8 +158,15 @@ user    0m10.480s
 sys     0m0.196s
 $ <span class="hljs-built_in">du</span> -sh shakespeare.txt out.hm
 5.5M    shakespeare.txt
-3.3M    out.hm</code></pre><p>Compare this with GNU Tar, which takes 0.4 seconds to compress and 0.1 seconds to uncompress, reducing the file to 37% percent of its original size.</p><p>I've made the script run faster by adding <code>@cached_property</code> and using other techniques. Originally, I used a series of bit operations on integers with masks and such to compress and uncompress, but doing so is significantly slower than what I'm currently doing. I can't simply pickle the list because that results in a file much larger than the original file.</p>
+3.3M    out.hm</code></pre><p>Compare this with GNU Tar, which takes 0.4 seconds to compress and 0.1 seconds to uncompress, reducing the file to 37% percent of its original size.</p><p>I&#039;ve made the script run faster by adding <code>@cached_property</code> and using other techniques. Originally, I used a series of bit operations on integers with masks and such to compress and uncompress, but doing so is significantly slower than what I&#039;m currently doing. I can&#039;t simply pickle the list because that results in a file much larger than the original file.</p>
+  </article>
+  <footer style="text-align: center">
+    <hr style="margin-top: 1.5em">
+    <p>this is the end; return to <a href="/">homepage</a>.</p>
+  </footer>
 
+    </main>
   
-  </body>
+</body>
+
 </html>

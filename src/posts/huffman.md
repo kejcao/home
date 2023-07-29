@@ -1,10 +1,8 @@
-title: Experimenting with Huffman Coding
- desc: I created a Python script for compressing and uncompressing text using Huffman coding. It can shrink The Complete Works of William Shakespeare (from Gutenberg, in plaintext, 5.5 megabytes) down to 60% its original size in 10 seconds.
- date: 2023-01-03
+Experimenting with Huffman Coding | 3 | 2023-01-03 | algorithm,python
 
 Huffman coding generates a tree from text and uses this tree to optimally and losslessly compress the text. Here is the tree generated from the text "beekeepers keep bees":
 
-![huffman tree example](huffman-tree.png)
+!huffman-tree.png
 
 You can see the letter "E" occurs in the phrase frequently, so it's near the top. To compress text, follow the branches (colored lines) down to each letter. Each time you take a right, write down 1; each time you take a left, write down 0. For example, using the tree, the word "bees" would be encoded as `001110111`. This is smaller than `1100010110010111001011110011`, which is how it's represented uncompressed.
 

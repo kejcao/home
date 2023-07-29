@@ -1,0 +1,74 @@
+/* @tailwind base; */
+
+.visible {
+  visibility: visible
+}
+
+.static {
+  position: static
+}
+
+.fixed {
+  position: fixed
+}
+
+.isolate {
+  isolation: isolate
+}
+
+.block {
+  display: block
+}
+
+.inline {
+  display: inline
+}
+
+.flex {
+  display: flex
+}
+
+.table {
+  display: table
+}
+
+.contents {
+  display: contents
+}
+
+.hidden {
+  display: none
+}
+
+.border {
+  border-width: 1px
+}
+
+.p-1 {
+  padding: 0.25rem
+}
+
+.text-center {
+  text-align: center
+}
+
+.italic {
+  font-style: italic
+}
+
+.overline {
+  text-decoration-line: overline
+}
+
+.outline {
+  outline-style: solid
+}
+
+.blur {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
+}
+
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
+}

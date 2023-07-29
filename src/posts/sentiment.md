@@ -1,6 +1,11 @@
-title: Sentiment Analysis: Detecting The Sentiment of a Text
- desc: I wrote a machine learning model that tells you whether a text is positive or negative. The model is trained on the sentiment140 dataset. It's correct 78% of the time, which isn't that good but beats random guessing.
- date: 2023-02-01
+Sentiment Analysis: Detecting The Sentiment of a Text | 3 | 2023-02-01 | interactive,NLP
+
+{% style %}
+#input {
+  width: 100%;
+  padding: .5em;
+}
+{% endstyle %}
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
 

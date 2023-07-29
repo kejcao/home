@@ -2,28 +2,83 @@
 
 {% block head %}
   <title>Homepage</title>
-  <meta name="description" content="" />
+  <meta name="description" content="The website of a computer geek. I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform." />
+  {% style %}
+    .post {
+      border: 3px solid black;
+      border-radius: 6px;
+      margin: 3em 0;
+      padding: 1em 1em;
+      box-shadow: .5em .5em lightblue, -.5em -.5em pink;
+      background-color: white;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    nav {
+      margin-top: 16px;
+    }
+
+    .grayout {
+      opacity: 0.6;
+    }
+
+    .posts {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .post-title {
+      text-align: center;
+      margin: 0;
+    }
+
+    .ellipsis {
+      text-align: center;
+      margin-bottom: 0;
+    }
+
+    .posts li:first-child {
+      margin-top: 2em;
+    }
+
+    .posts li:last-child {
+      margin-bottom: 2em;
+    }
+
+  {% endstyle %}
+{% endblock %}
+
+{% block header %}
+  <header>
+    <nav class="center">
+      <a href="/archive/">/archive/</a>
+      <br>
+      <a href="/recent-reads/">/recent-reads/</a>
+    </nav>
+  </header>
 {% endblock %}
 
 {% block content %}
-  <h1>Homepage</h1>
-  <p>Welcome! If you have any comments or questions send them to <a href="mailto:&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;">&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;</a>. My GitHub is <a href="https://github.com/kejcao">kejcao</a>.</p>
-  <section>
-    <h2>Projects</h2>
-    <ul>
-      <li><a href="/profile-card/">/profile-card/</a> is a simple profile card I made for Hacktoberfest 2022.</li>
-    </ul>
-  </section>
-  <section>
-    <h2>Posts</h2>
-    <ul>
+  <h1 class="center">Homepage</h1>
+  <p class="center">Welcome!</p>
+  <p class="center">I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform. I know HTML, Python, C, Bash, C++, x86-64 assembly, CSS, and JavaScript.</p>
+  <p class="center">I hosted this website on a spare laptop running Apache but I've since moved to using Vercel. I wrote an SSG in C++ then switched around different web frameworks (Next.js, Svelte, etc.) before deciding to write another in Node.js—it crawls for Nunjucks templates and renders them, with the blog posts being written in my own Markdown-like document language. It uses Babel for JavaScript transcompilation, PostCSS to downgrade CSS, highlight.js for highlighting source code, svgo and sharp for optimizing SSG and other image files, and finally katex for rendering LaTex.</p>
+  <div class="center">
+    <a href="mailto:&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;">&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;</a><br>
+    <a href="https://github.com/kejcao">github.com</a><br>
+    <a href="https://crackmes.one/user/kejcao">crackmes.one</a>
+  </div>
+  <ul class="posts">
     {% for post in posts %}
-      <li>
-        <a href="/posts/{{ post.slug }}">{{ post.title }}</a> - <i>{{ post.date }}</i>
-        <br>
-        {{ post.desc }}
-      </li>
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/{{ post.slug }}">{{ post.title }}</a></h1>
+      <h4 class="center grayout">{{ post.tags | join(', ') }}</h4>
+      <p style="text-align: center"><i>{{ post.date }}</i></p>
+      <p>{{ post.desc | raw | safe }}</p>
+      <p class="ellipsis"><a href="/posts/{{ post.slug }}">...read more</a></p>
+    </li>
     {% endfor %}
-    </ul>
-  </section>
+  </ul>
 {% endblock %}

@@ -1,64 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kevin Cao's Website</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    
-      <style>
-      
-        body {
-          padding: 0 1em;
-          margin: 0 auto;
-          font-family: "Merriweather", serif;
-          color: rgb(0, 0, 0, 0.7);
-          max-width: 50em;
-          -moz-tab-size: 4;
-            -o-tab-size: 4;
-               tab-size: 4;
-        }
 
-        code,
-        pre {
-          font-family: "Inconsolata", monospace;
-        }
-
-        pre {
-          overflow-x: auto;
-        }
-
-        img {
-          max-width: 100%;
-          height: auto;
-        }
-
-        input {
-          width: 100%;
-          font: inherit;
-          padding: .5em;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        .navbar ul {
-          list-style: none;
-          padding: .5em 0 0 0;
-          margin: 0;
-        }
-
-        .navbar li {
-          display: inline;
-        }
-      
-    </style>
-    
-    
-  <title>Fixing A Don Quixote EPUB Book&#39;s Footnotes - Kevin Cao</title>
-  <meta name="description" content="Repairing a Don Quixote (Grossman&#39;s translation) EPUB book&#39;s footnotes by using another copy of the same book." />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kevin Cao's Website</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
   <style>
 pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
   Theme: a11y-light
@@ -68,23 +22,30 @@ pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5p
   Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
 */.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
   </style>
-
-  </head>
-  <body>
   
-    <header>
-      <nav class="navbar">
-        <ul>
-          <li><a href="/">homepage</a></li>
-          |
-          <li><a href="/posts/">posts</a></li>
-        </ul>
-      </nav>
-    </header>
+    <style>
+      body{padding:0 1em;margin:0 auto;font-family:"Merriweather",serif;color:rgb(0,0,0,0.7);max-width:50em;-moz-tab-size:4;-o-tab-size:4;tab-size:4}code,pre{font-family:"IBM Plex Mono",monospace}pre{overflow-x:auto;margin:0 2em}.img+pre{margin-top:1em}pre:has(+.img){margin-bottom:1em}img{max-width:80%;height:auto;display:block;margin:0 auto}input{font:inherit}*{box-sizing:border-box}article h1{font-size:2em}.navbar ul{list-style:none;padding:.5em 0 0 0;margin:0}.navbar li{display:inline}.center{text-align:center}
     
-  <h1>Fixing A Don Quixote EPUB Book&#39;s Footnotes</h1>
-  <i>2022-10-07</i>
-  <p>I wanted to read Don Quixote, specifically the Grossman translation, but I couldn't find any high-quality eBook copies. The majority of the copies I previewed had their footnotes jumbled up, but I really wanted the translator's commentary. After searching more, I found a copy with proper footnotes, but the formatting was abysmal—the text was unreadably minuscule in some places, and the table of contents contained a total of seven nonsensical entries. I took it upon myself to somehow extract the proper footnotes from this and overlay them on a copy with better formatting.</p><p>EPUB is a very common file format for eBooks. EPUB files are really just packed websites; EPUB files are ZIP archives, and so unzipping them with <code>unzip ebook.epub -d ebook/</code> would reveal HTML and CSS files, much like a website. However, a EPUB file has three additional, special files: the <code>toc.ncx</code> documentating the table of contents; a file ending in <code>.opf</code> listing all the files and what order to display them in; and the <code>mimetype</code> file containing <code>application/epub+zip</code> which states that this is, in fact, an EPUB file.</p><p>To repack an EPUB file, you can't just zip it back up again. You need to first zip the <code>mimetype</code> file without compression and without file attributes. <code>mimetype</code> must be there so as to immediately announce the file as an EPUB. Only then can you add the rest of your files to the zip archive. To do all that, you run <code>zip -Xr "../ebook.epub" mimetype $(ls | sed '/^mimetype$/d')</code> in the directory you unzipped your EPUB to. The <code>-X</code> flag ensures ZIP doesn't store any attributes, and <code>-r</code> means to zip recursively. We copy <code>mimetype</code> first, then everything else.</p><p>Now, every EPUB copy of Don Quixote looks to be converted from the original MOBI (yet another eBook file format) because a lot of classes and ids in the HTML have "calibre" contained in them, and Calibre is a common tool used for conversion between eBook formats. Also, I checked, the MOBI copy has the same footnotes problem as the EPUB copies, and besides, I can't get the MOBI copies to display on an old iPad of mine which I use as a makeshift eReader. I didn't try fixing the footnotes for the MOBI file because MOBI files aren't as easy to manipulate as EPUB files are.</p><p>I unzipped two EPUB copies of Don Quixote, one with good formatting into the folder <code>don-quixote-good</code> and the copy with the appropriate footnotes into <code>don-quixote</code>.</p><p><code>don-quixote</code> has a subdirectory <code>content/</code> and in this subdirectory are hundreds of HTML files named <code>Don_Quixote_split_xxx.html</code> where <code>xxx</code> is a number. Two of those HTML files are behemoth volumes; a few are the epigraph, prologue, and introductions. The rest are all individual footnotes.</p><p>Also, I encountered this curious HTML code when browsing the two big volumes.</p><pre><code><span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;calibre_class_19&quot;</span>&gt;</span>
+    </style>
+  
+  
+  <title>Fixing A Don Quixote EPUB Book&#39;s Footnotes - Kevin Cao</title>
+  <meta name="description" content="" />
+
+</head>
+<body>
+  
+    
+      <header>
+        <p style="text-align: center"><a href="/">back to homepage</a></p>
+      </header>
+    
+    <main>
+      
+  <article>
+    <h1 style="text-align: center">Fixing A Don Quixote EPUB Book&#39;s Footnotes</h1>
+    <p style="text-align: center"><i>2022-10-07</i></p>
+    <p>I wanted to read Don Quixote, specifically the Grossman translation, but I couldn&#039;t find any high-quality eBook copies. The majority of the copies I previewed had their footnotes jumbled up, but I really wanted the translator&#039;s commentary. After searching more, I found a copy with proper footnotes, but the formatting was abysmal—the text was unreadably minuscule in some places, and the table of contents contained a total of seven nonsensical entries. I took it upon myself to somehow extract the proper footnotes from this and overlay them on a copy with better formatting.</p><p>EPUB is a very common file format for eBooks. EPUB files are really just packed websites; EPUB files are ZIP archives, and so unzipping them with <code>unzip ebook.epub -d ebook/</code> would reveal HTML and CSS files, much like a website. However, a EPUB file has three additional, special files: the <code>toc.ncx</code> documentating the table of contents; a file ending in <code>.opf</code> listing all the files and what order to display them in; and the <code>mimetype</code> file containing <code>application/epub+zip</code> which states that this is, in fact, an EPUB file.</p><p>To repack an EPUB file, you can&#039;t just zip it back up again. You need to first zip the <code>mimetype</code> file without compression and without file attributes. <code>mimetype</code> must be there so as to immediately announce the file as an EPUB. Only then can you add the rest of your files to the zip archive. To do all that, you run <code>zip -Xr &quot;../ebook.epub&quot; mimetype $(ls | sed &#039;/^mimetype$/d&#039;)</code> in the directory you unzipped your EPUB to. The <code>-X</code> flag ensures ZIP doesn&#039;t store any attributes, and <code>-r</code> means to zip recursively. We copy <code>mimetype</code> first, then everything else.</p><p>Now, every EPUB copy of Don Quixote looks to be converted from the original MOBI (yet another eBook file format) because a lot of classes and ids in the HTML have &quot;calibre&quot; contained in them, and Calibre is a common tool used for conversion between eBook formats. Also, I checked, the MOBI copy has the same footnotes problem as the EPUB copies, and besides, I can&#039;t get the MOBI copies to display on an old iPad of mine which I use as a makeshift eReader. I didn&#039;t try fixing the footnotes for the MOBI file because MOBI files aren&#039;t as easy to manipulate as EPUB files are.</p><p>I unzipped two EPUB copies of Don Quixote, one with good formatting into the folder <code>don-quixote-good</code> and the copy with the appropriate footnotes into <code>don-quixote</code>.</p><p><code>don-quixote</code> has a subdirectory <code>content/</code> and in this subdirectory are hundreds of HTML files named <code>Don_Quixote_split_xxx.html</code> where <code>xxx</code> is a number. Two of those HTML files are behemoth volumes; a few are the epigraph, prologue, and introductions. The rest are all individual footnotes.</p><p>Also, I encountered this curious HTML code when browsing the two big volumes.</p><pre><code><span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;calibre_class_19&quot;</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span>
@@ -96,7 +57,7 @@ pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5p
       <span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></code></pre><p>Every single line of every poem is entombed in this pyramid of unnecessary <code>&lt;blockquote&gt;</code> HTML tags. I suspect it's an artifact of the translation from MOBI to EPUB.</p><p><code>don-quixote-good</code> has many reasonably named and organized HTML files at the top level directory. There is the <code>translatornote.html</code> file, the <code>praise.html</code> file, the <code>introduction.html</code> file, and the volumes are split up into chapters named in the pattern <code>vol1_chap_xx.html</code>, where <code>vol1</code> may be <code>vol2</code> and <code>xx</code> is the chapter number.</p><p>When I was exploring the two eBooks, I found the source of the problem: The superscript <code>&lt;a&gt;</code> tags which would bring me to a footnote whenever clicked, were linking to the wrong footnotes. So severe was the degree they were scrambled that they were overlapping each other—multiple <code>&lt;a&gt;</code> tags were linking to the same footnotes. I couldn't find any pattern to the madness; they appeared to be randomly muddled, so the only way I saw forward was to rip out the footnotes from the copy with the good formatting, replacing them then re-linking the <code>&lt;a&gt;</code> tags to these footnotes. The following is the script I wrote to perform this footnote transplant.</p><pre><code><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup
+<span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></code></pre><p>Every single line of every poem is entombed in this pyramid of unnecessary <code>&lt;blockquote&gt;</code> HTML tags. I suspect it&#039;s an artifact of the translation from MOBI to EPUB.</p><p><code>don-quixote-good</code> has many reasonably named and organized HTML files at the top level directory. There is the <code>translatornote.html</code> file, the <code>praise.html</code> file, the <code>introduction.html</code> file, and the volumes are split up into chapters named in the pattern <code>vol1_chap_xx.html</code>, where <code>vol1</code> may be <code>vol2</code> and <code>xx</code> is the chapter number.</p><p>When I was exploring the two eBooks, I found the source of the problem: The superscript <code>&lt;a&gt;</code> tags which would bring me to a footnote whenever clicked, were linking to the wrong footnotes. So severe was the degree they were scrambled that they were overlapping each other—multiple <code>&lt;a&gt;</code> tags were linking to the same footnotes. I couldn&#039;t find any pattern to the madness; they appeared to be randomly muddled, so the only way I saw forward was to rip out the footnotes from the copy with the good formatting, replacing them then re-linking the <code>&lt;a&gt;</code> tags to these footnotes. The following is the script I wrote to perform this footnote transplant.</p><pre><code><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup
 
 <span class="hljs-keyword">def</span> <span class="hljs-title function_">read_footnote</span>(<span class="hljs-params">path: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:
     <span class="hljs-string">&quot;&quot;&quot;
@@ -201,7 +162,7 @@ link_footnotes([
 <span class="hljs-built_in">cd</span> ~
 fp=$(fzf)
 hf=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$fp</span> | he)
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&lt;!-- <span class="hljs-variable">$fp</span> --&gt;&lt;a href=&#x27;<span class="hljs-variable">$hf</span>&#x27;&gt;<span class="hljs-variable">$hf</span>&lt;/a&gt;&lt;br&gt;&quot;</span> &gt;&gt; index.html</code></pre><p>It goes into my home folder, then envokes <code>fzf</code> which prompts me to select a eBook from somewhere. The filename needs to be escaped so it's piped into the <code>he</code> command, which converts every character into a HTML entity. A HTML entity looks something like "<code>&#60</code>" which represents the "&amp;lt;" character.</p><p>The <code>he</code> command is actually a C program I wrote.</p><pre><code><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&lt;!-- <span class="hljs-variable">$fp</span> --&gt;&lt;a href=&#x27;<span class="hljs-variable">$hf</span>&#x27;&gt;<span class="hljs-variable">$hf</span>&lt;/a&gt;&lt;br&gt;&quot;</span> &gt;&gt; index.html</code></pre><p>It goes into my home folder, then envokes <code>fzf</code> which prompts me to select a eBook from somewhere. The filename needs to be escaped so it&#039;s piped into the <code>he</code> command, which converts every character into a HTML entity. A HTML entity looks something like &quot;<code>&amp;#60</code>&quot; which represents the &quot;&amp;amp;lt;&quot; character.</p><p>The <code>he</code> command is actually a C program I wrote.</p><pre><code><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;wchar.h&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale.h&gt;</span></span>
 
@@ -212,8 +173,15 @@ hf=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$fp</sp
 		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&amp;#%d;&quot;</span>, wch);
 	}
 	<span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;&quot;</span>);
-}</code></pre><p>Then compiled with <code>gcc main.c -O3 -o he</code> and turned into a globally executable program by creating a hard link to <code>/usr/bin/</code> with <code>sudo ln he /usr/bin/he</code>. Finally, the script, using the information, prints out a comment with the original, unescaped filename (so I can manually delete eBooks from the list when I'm done downloading them) then the download link.</p><p>Once I've added eBooks, I run <code>python3 -m http.server</code> on my computer then <code>ip a</code> to find my computer's IP address. I enter this IP address into the searchbar of the Safari browser on my iPad and just click on the links that popup to download them onto the iPad.</p>
+}</code></pre><p>Then compiled with <code>gcc main.c -O3 -o he</code> and turned into a globally executable program by creating a hard link to <code>/usr/bin/</code> with <code>sudo ln he /usr/bin/he</code>. Finally, the script, using the information, prints out a comment with the original, unescaped filename (so I can manually delete eBooks from the list when I&#039;m done downloading them) then the download link.</p><p>Once I&#039;ve added eBooks, I run <code>python3 -m http.server</code> on my computer then <code>ip a</code> to find my computer&#039;s IP address. I enter this IP address into the searchbar of the Safari browser on my iPad and just click on the links that popup to download them onto the iPad.</p>
+  </article>
+  <footer style="text-align: center">
+    <hr style="margin-top: 1.5em">
+    <p>this is the end; return to <a href="/">homepage</a>.</p>
+  </footer>
 
+    </main>
   
-  </body>
+</body>
+
 </html>

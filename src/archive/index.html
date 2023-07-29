@@ -1,0 +1,14 @@
+{% extends layout %}	
+
+{% block head %}
+  <title>Archive</title>
+  <meta name="description" content="A dump of every one of my posts. Not very pretty." />
+{% endblock %}
+
+{% block content %}
+  <h1 class="center">Archive</h1>
+  <p>To search for all posts that have a certain tag, find all occurrences of the text "<code>tag;</code>" by pressing Ctrl+F.</p>
+  <pre><code>cat &lt;&lt;EOF
+{% for post in posts %}<i>{{ post.date }}</i> <a href="/posts/{{ post.slug }}">{{ post.title }}</a> <b>|</b> {{ post.tags | join(';') }};
+{% endfor %}EOF</code></pre>
+{% endblock %}

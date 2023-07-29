@@ -1,84 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kevin Cao's Website</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kevin Cao's Website</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <link rel="stylesheet" href="/stylesheet.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
   <style>
-      
-  main {
-    font-family: 'Inconsolata', monospace;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
+  Theme: a11y-light
+  Author: @ericwbailey
+  Maintainer: @ericwbailey
 
-  :global(body) {
-    overflow: hidden;
-  }
-
-  .icon {
-    margin: .2em;
-  }
+  Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
+*/.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
+  </style>
   
-  .name {
-    margin-top: 0;
-  }
-
-  .card {
-    background: white;
-    text-align: center;
-    padding: 1em;
-    border-radius: 1em;
-    border: .2em solid black;
-    box-shadow: 5px 5px black;
-  }
-
-  @keyframes scale {
-    from { scale: .6; }
-    to   { scale: 1; }
-  }
-
-  .blob {
-    --blob-size: 70svmax;
-
-    border-radius: 100%;
-    width: 70svmax;
-    width: var(--blob-size);
-    height: 70svmax;
-    height: var(--blob-size);
-    position: fixed;
-    z-index: -1;
-    border: .2em solid black;
-    animation: scale 1s;
-  }
-
-  .blue {
-    background: lightblue;
-    bottom: calc(var(--blob-size) / -2);
-    right: calc(var(--blob-size) / -2);
-  }
-
-  .pink {
-    background: pink;
-    top: calc(var(--blob-size) / -2);
-    left: calc(var(--blob-size) / -2);
-  }
+  <style>
+      main{font-family:'Inconsolata',monospace;display:flex;justify-content:center;align-items:center;height:100vh}:global(body){overflow:hidden}.icon{margin:.2em}.name{margin-top:0}.card{background:white;text-align:center;padding:1em;border-radius:1em;border:.2em solid black;box-shadow:5px 5px black}@keyframes scale{from{scale:.6}to{scale:1}}.blob{--blob-size:70svmax;border-radius:100%;width:70svmax;width:var(--blob-size);height:70svmax;height:var(--blob-size);position:fixed;z-index:-1;border:.2em solid black;animation:scale 1s}.blue{background:lightblue;bottom:calc(var(--blob-size) / -2);right:calc(var(--blob-size) / -2)}.pink{background:pink;top:calc(var(--blob-size) / -2);left:calc(var(--blob-size) / -2)}
   
     </style>
 
-    
+  
   <title>Profile Card - Kevin Cao</title>
 	<meta name="description" content="A simple profile card for Hacktoberfest 2022." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
 
-  </head>
-  <body>
+</head>
+<body>
   
   <div class="pink blob" />
   <main>
@@ -94,5 +50,6 @@
   </main>
   <div class="blue blob" />
 
-  </body>
+</body>
+
 </html>

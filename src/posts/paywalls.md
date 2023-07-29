@@ -1,6 +1,4 @@
-title: Circumventing Online Paywalls
- desc: Bypassing paywalls put in place by online newspapers and other services with a variety of different methods.
- date: 2023-10-31
+Circumventing Online Paywalls | 3 | 2023-03-09 | piracy
 
 Many paywalls on the Internet can be easily circumvented. There are two types of
 paywalls: Hard paywalls which require a paid subscription before any content can

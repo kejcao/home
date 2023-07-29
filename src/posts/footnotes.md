@@ -1,6 +1,4 @@
-title: Fixing A Don Quixote EPUB Book's Footnotes
- desc: Repairing a Don Quixote (Grossman's translation) EPUB book's footnotes by using another copy of the same book.
- date: 2022-10-07
+Fixing A Don Quixote EPUB Book's Footnotes | 3 | 2022-10-07 | ebook,python
 
 I wanted to read Don Quixote, specifically the Grossman translation, but I couldn't find any high-quality eBook copies. The majority of the copies I previewed had their footnotes jumbled up, but I really wanted the translator's commentary. After searching more, I found a copy with proper footnotes, but the formatting was abysmal—the text was unreadably minuscule in some places, and the table of contents contained a total of seven nonsensical entries. I took it upon myself to somehow extract the proper footnotes from this and overlay them on a copy with better formatting.
 
@@ -165,12 +163,12 @@ The `he` command is actually a C program I wrote.
 #include <locale.h>
 
 int main(void) {
-	setlocale(LC_ALL, "");
-	wint_t wch;
-	while((wch=fgetwc(stdin)) != WEOF) {
-		printf("&#%d;", wch);
-	}
-	puts("");
+    setlocale(LC_ALL, "");
+    wint_t wch;
+    while((wch=fgetwc(stdin)) != WEOF) {
+        printf("&#%d;", wch);
+    }
+    puts("");
 }
 ```
 

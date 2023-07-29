@@ -34,9 +34,7 @@
         }
 
         input {
-          width: 100%;
           font: inherit;
-          padding: .5em;
         }
 
         * {
@@ -84,15 +82,22 @@ pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5p
     
   <h1>Nuemral Systems</h1>
   <i>2023-03-31</i>
-  <div>
+  <style>
+      
+.hieroglyphic {
+	padding: 0 2px;
+}
+
+    </style><div>
   <input id="input" type="number" value="24">
   <p>
-	  <span id="n1">XXIV</span>
-	  <span id="n2">2.4e1</span>
+    <h3>Roman Numerals</h3>
+	<span id="n1"></span>
+    <h3>Egyptian Hieroglyphics</h3>
+	<span id="n2"></span>
   </p>
 </div><script>
-    "use strict";function digits(a){for(var b=[];0<a;)b.push(a%10),a/=10;return b}function toRomanNumerals(a){if(3e3<a)return"N/A";var b=digits(a);return{1:"M",2:"MM",3:"MMM",0:""}[b[3]]+{1:"C",2:"CC",3:"CCC",4:"CD",5:"D",6:"DC",7:"DCC",8:"DCCC",9:"CM",0:""}[b[2]]+{1:"X",2:"XX",3:"XXX",4:"XL",5:"L",6:"LX",7:"LXX",8:"LXXX",9:"XC",0:""}[b[1]]+{1:"I",2:"II",3:"III",4:"IV",5:"V",6:"VI",7:"VII",8:"VIII",9:"IX",0:""}[b[0]]}//function toScientificTheory(n) {
-function toEgyptianNumerals(a){return"<img src=\"".concat(Math.trunc(a/1)%10*{1:"/media/hieroglyphic-z1.png"}[1],"\">")}window.addEventListener("load",function(){document.querySelector("#input").addEventListener("input",function(a){document.querySelector("#n1").innerHTML=toRomanNumerals(a.target.value),document.querySelector("#n2").innerHTML=toEgyptianNumerals(a.target.value)})});
+    "use strict";function digits(a){for(var b=Math.trunc,c=[];0<a;)c.push(a%10),a=b(a/10);return c}function toRomanNumerals(a){if(4e3<=a)return"N/A";var b=digits(a),c="";return null!=b[3]&&(c+={1:"M",2:"MM",3:"MMM"}[b[3]]),null!=b[2]&&(c+={1:"C",2:"CC",3:"CCC",4:"CD",5:"D",6:"DC",7:"DCC",8:"DCCC",9:"CM",0:""}[b[2]]),null!=b[1]&&(c+={1:"X",2:"XX",3:"XXX",4:"XL",5:"L",6:"LX",7:"LXX",8:"LXXX",9:"XC",0:""}[b[1]]),null!=b[0]&&(c+={1:"I",2:"II",3:"III",4:"IV",5:"V",6:"VI",7:"VII",8:"VIII",9:"IX",0:""}[b[0]]),c}function toEgyptianNumerals(a){if(1e7<=a)return"N/A";var b=["<img class=\"hieroglyphic\" alt=\"z1\" src=\"/media/hieroglyphics-z1.png\">","<img class=\"hieroglyphic\" alt=\"v20\" src=\"/media/hieroglyphics-v20.png\">","<img class=\"hieroglyphic\" alt=\"v1\" src=\"/media/hieroglyphics-v1.png\">","<img class=\"hieroglyphic\" alt=\"m12\" src=\"/media/hieroglyphics-m12.png\">","<img class=\"hieroglyphic\" alt=\"d50\" src=\"/media/hieroglyphics-d50.png\">","<img class=\"hieroglyphic\" alt=\"i8\" src=\"/media/hieroglyphics-i8.png\">","<img class=\"hieroglyphic\" alt=\"c11\" src=\"/media/hieroglyphics-c11.png\">"],c=digits(a),d="";return null!=c[6]&&(d+=b[6].repeat(c[6])),null!=c[5]&&(d+=b[5].repeat(c[5])),null!=c[4]&&(d+=b[4].repeat(c[4])),null!=c[3]&&(d+=b[3].repeat(c[3])),null!=c[2]&&(d+=b[2].repeat(c[2])),null!=c[1]&&(d+=b[1].repeat(c[1])),null!=c[0]&&(d+=b[0].repeat(c[0])),d}function render(a){document.querySelector("#n1").innerHTML=toRomanNumerals(a),document.querySelector("#n2").innerHTML=toEgyptianNumerals(a)}window.addEventListener("load",function(){render(input.value),document.querySelector("#input").addEventListener("input",function(a){render(parseInt(a.target.value))})});
     </script>
 
   

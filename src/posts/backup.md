@@ -1,6 +1,4 @@
-title: Backing Up My Desktop
- desc: I had a disused laptop and an Ethernet cable; I used those to backup my files.
- date: 2022-09-04
+Backing Up My Desktop | 3 | 2022-09-04 | linux,backup
 
 I recently acquired an Ethernet cable and had a spare laptop that was gathering dust with a 500GB hard drive in it. I've been meaning to backup my desktop since I've had troublesome moments where I accidentally deleted important files of mine or was on the precipice of deleting important files of mine. I thought, why not hook my desktop up to that old laptop with the Ethernet cable and copy my files and directories over using something like `rsync`?
 
@@ -31,9 +29,9 @@ I then authorize two keys on the laptop: The first is my GitHub SSH key so the e
 
 ```
 Host backup
-	User kjc
-	Hostname 10.0.0.20
-	IdentityFile ~/.ssh/backup
+        User kjc
+        Hostname 10.0.0.20
+        IdentityFile ~/.ssh/backup
 ```
 
 So I can SSH as root to the laptop without password prompts or any other hassles. To automatically backup my system at time increments, I edit root's crontab by running `sudo EDITOR=vim crontab -e`, then write:

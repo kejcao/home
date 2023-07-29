@@ -1,6 +1,4 @@
-title: Base64: Encoding Binary Data
- desc: Encoding WebP images and creating Data URLs with my own implementation of Base64 in C.
- date: 2022-06-09
+Base64: Encoding Binary Data | 3 | 2022-06-09 | C,algorithm
 
 Base64 is a binary-to-text encoding scheme that transforms 8-bit binary data, in chunks of 3, into 6-bit ASCII characters. This is useful for the transfer of data in environments that are restricted to ASCII, or to avoid accidentally triggering control characters. It is used to create Data URLs, which allow the embedding of media—such as images—or other binary assets into textual HTML, XML, and CSS files; Earlier forms of SMTP only supported 7-bit ASCII, and Base64 was used to transfer attachments.
 
@@ -19,77 +17,77 @@ const int WRAP_AT = 76;
 const char *B64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 void encode_block(char buf[3], char out[4]) {
-	out[0] = B64_CHARS[buf[0] >> 2 & 0x3f];
-	out[1] = B64_CHARS[(buf[0] & 0x03) << 4 | buf[1] >> 4 & 0x0f];
-	out[2] = B64_CHARS[(buf[1] & 0x0f) << 2 | buf[2] >> 6 & 0x03];
-	out[3] = B64_CHARS[buf[2] & 0x3f];
+    out[0] = B64_CHARS[buf[0] >> 2 & 0x3f];
+    out[1] = B64_CHARS[(buf[0] & 0x03) << 4 | buf[1] >> 4 & 0x0f];
+    out[2] = B64_CHARS[(buf[1] & 0x0f) << 2 | buf[2] >> 6 & 0x03];
+    out[3] = B64_CHARS[buf[2] & 0x3f];
 }
 
 void putchar_wrap(char c, int *read) {
-	if(*read >= WRAP_AT) {
-		putchar('\n');
-		*read = 0;
-	}
-	putchar(c);
-	++*read;
+    if(*read >= WRAP_AT) {
+        putchar('\n');
+        *read = 0;
+    }
+    putchar(c);
+    ++*read;
 }
 
 void encode_to_stdout(FILE *fp) {
-	int read = 0;
-	char buf[3], out[4];
+    int read = 0;
+    char buf[3], out[4];
 
-	while(1) {
-		/* read */
-		for(int i=0; i<3; ++i) {
-			int c;
-			if((c=fgetc(fp)) == EOF) {
-				if(ferror(fp)) {
-					perror("fgetc");
-					exit(EXIT_FAILURE);
-				}
+    while(1) {
+        /* read */
+        for(int i=0; i<3; ++i) {
+            int c;
+            if((c=fgetc(fp)) == EOF) {
+                if(ferror(fp)) {
+                    perror("fgetc");
+                    exit(EXIT_FAILURE);
+                }
 
-				/* last few bits: encode, pad, and finish. */
-				if(i != 0) {
-					memset(buf+i, 0, 3-i);
-					encode_block(buf, out);
+                /* last few bits: encode, pad, and finish. */
+                if(i != 0) {
+                    memset(buf+i, 0, 3-i);
+                    encode_block(buf, out);
 
-					for(int j=0; j<4; ++j) {
-						putchar_wrap(j < i+1 ? out[j] : '=', &read);
-					}
-				}
-				putchar('\n');
-				goto finish;
-			}
-			buf[i] = c;
-		}
+                    for(int j=0; j<4; ++j) {
+                        putchar_wrap(j < i+1 ? out[j] : '=', &read);
+                    }
+                }
+                putchar('\n');
+                goto finish;
+            }
+            buf[i] = c;
+        }
 
-		/* encode */
-		encode_block(buf, out);
-		for(int i=0; i<4; ++i) {
-			putchar_wrap(out[i], &read);
-		}
-	}
+        /* encode */
+        encode_block(buf, out);
+        for(int i=0; i<4; ++i) {
+            putchar_wrap(out[i], &read);
+        }
+    }
 finish:
 }
 
 int main(int argc, char **argv) {
-	if(argc == 1) {
-		if(!freopen(NULL, "rb", stdin)) {
-			perror("freopen");
-			exit(EXIT_FAILURE);
-		}
-		encode_to_stdout(stdin);
-	}
+    if(argc == 1) {
+        if(!freopen(NULL, "rb", stdin)) {
+            perror("freopen");
+            exit(EXIT_FAILURE);
+        }
+        encode_to_stdout(stdin);
+    }
 
-	for(int i=1; i<argc; ++i) {
-		FILE *fp = fopen(argv[i], "rb");
-		if(!fp) {
-			perror("fopen");
-			exit(EXIT_FAILURE);
-		}
-		encode_to_stdout(fp);
-		fclose(fp);
-	}
+    for(int i=1; i<argc; ++i) {
+        FILE *fp = fopen(argv[i], "rb");
+        if(!fp) {
+            perror("fopen");
+            exit(EXIT_FAILURE);
+        }
+        encode_to_stdout(fp);
+        fclose(fp);
+    }
 }
 ```
 

@@ -1,166 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kevin Cao's Website</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kevin Cao's Website</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
+  <style>
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
+  Theme: a11y-light
+  Author: @ericwbailey
+  Maintainer: @ericwbailey
+
+  Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
+*/.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
+  </style>
+  
+    <style>
+      
+      body {
+        padding: 0 1em;
+        margin: 0 auto;
+        font-family: "Merriweather", serif;
+        color: rgb(0, 0, 0, 0.7);
+        max-width: 50em;
+        -moz-tab-size: 4;
+          -o-tab-size: 4;
+             tab-size: 4;
+      }
+
+      code,
+      pre {
+        font-family: "IBM Plex Mono", monospace;
+      }
+
+      pre {
+        overflow-x: auto;
+        margin: 0 2em;
+      }
+
+      img {
+        max-width: 80%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+
+      input {
+        font: inherit;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .navbar ul {
+        list-style: none;
+        padding: .5em 0 0 0;
+        margin: 0;
+      }
+
+      .navbar li {
+        display: inline;
+      }
+
+      .center {
+      	text-align: center;
+      }
     
-      <style>
-      
-        body {
-          padding: 0 1em;
-          margin: 0 auto;
-          font-family: "Merriweather", serif;
-          color: rgb(0, 0, 0, 0.7);
-          max-width: 50em;
-          -moz-tab-size: 4;
-            -o-tab-size: 4;
-               tab-size: 4;
-        }
-
-        code,
-        pre {
-          font-family: "Inconsolata", monospace;
-        }
-
-        pre {
-          overflow-x: auto;
-        }
-
-        img {
-          max-width: 100%;
-          height: auto;
-        }
-
-        input {
-          width: 100%;
-          font: inherit;
-          padding: .5em;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        .navbar ul {
-          list-style: none;
-          padding: .5em 0 0 0;
-          margin: 0;
-        }
-
-        .navbar li {
-          display: inline;
-        }
-      
     </style>
-    
-    
+  
+  
   <title>Posts</title>
   <meta name="description" content="All of my posts, where I talk about things relating to computers." />
 
-  </head>
-  <body>
+</head>
+<body>
   
-    <header>
-      <nav class="navbar">
-        <ul>
-          <li><a href="/">homepage</a></li>
-          |
-          <li><a href="/posts/">posts</a></li>
-        </ul>
-      </nav>
-    </header>
     
+      <header>
+        <p style="text-align: center"><a href="/">back to homepage</a></p>
+      </header>
+      
+      
   <h1>Posts</h1>
   <ul>
   
     <li>
-      <a href="/posts/paywalls">Circumventing Online Paywalls</a> - <i>2023-10-31</i>
+      <a href="/posts/wget-and-curl">Curl: Tips &amp; Tricks</a> - <i>2023-06-20</i>
       <br>
-      Bypassing paywalls put in place by online newspapers and other services with a variety of different methods.
+      &lt;p&gt;I&#39;ve been using the command line tools &lt;code&gt;curl&lt;/code&gt; and &lt;code&gt;wget&lt;/code&gt; to do HTTP stuff for a while now. I&#39;ve picked up a few tricks. Most of these tips will focus on &lt;code&gt;curl&lt;/code&gt;, since I use that the most.&lt;/p&gt;&lt;p&gt;By the way, this doesn&#39;t have much to do with &lt;code&gt;curl&lt;/code&gt; or &lt;code&gt;wget&lt;/code&gt; but I often forget the more esoteric HTTP status codes, but typing &lt;a href=&quot;https://http.cat/403&quot;&gt;http.cat/403&lt;/a&gt; into my browser search bar gives me a quick and cute reminder of what it means.&lt;/p&gt;&lt;h1&gt;The Basics&lt;/h1&gt;&lt;p&gt;&lt;code&gt;wget&lt;/code&gt; has the flag &lt;code&gt;-O&lt;/code&gt; to specify a file to output to, and a lone hyphen stands for stdout. &lt;code&gt;-q&lt;/code&gt; is to prevent progress bars and other outputs from getting mixed into the actual content. Essentially we can use &lt;code&gt;wget&lt;/code&gt; like we would &lt;code&gt;curl&lt;/code&gt;.&lt;/p&gt;
     </li>
   
     <li>
-      <a href="/posts/newton">Newton</a> - <i>2023-03-31</i>
+      <a href="/posts/chrome-extension">Writing a Chrome Extension to Count Open Tabs</a> - <i>2023-06-04</i>
       <br>
-      newton
+      &lt;p&gt;I was curious as to how many Google Chrome tabs I have open (I estimated at least 100) but I couldn&#39;t think of any way to have a precise count except to manually tally each tab—which with at least 100 tabs is going to be a very menial task, so I searched online for alternative solutions. I found a Stack Exchange &lt;a href=&quot;https://superuser.com/questions/967064/how-to-get-tab-count-in-chrome-desktop-without-app-extension&quot;&gt;question&lt;/a&gt; with many different answers but the only one that worked for me was the extension someone was promoting. I don&#39;t trust extensions (the only one I have is uBlock Origin), especially ones with low userbases. Beyond that I&#39;ve never coded a web browser extension before so writing one that counts tabs seems like an easy first project to get into this area of development.&lt;/p&gt;&lt;p&gt;I wrote the extension in a night, extrapolating from Google Chrome&#39;s series of well-written introductory &lt;a href=&quot;https://developer.chrome.com/docs/extensions/mv3/getstarted/&quot;&gt;articles&lt;/a&gt; for people like me. My code is available on a &lt;a href=&quot;https://github.com/kejcao/tabs&quot;&gt;GitHub repo&lt;/a&gt;. The extension shows the number of tabs you have open as text on a blue background below the icon. When you click on the icon it will show a popup with more information, including the number of windows, how many of which are incognito (this only works if you enable the extension on incognito windows) and the most commonly used sites you have open.&lt;/p&gt;
+              &lt;a href=&quot;/media/tabs-chrome-extension-1280w.jpeg&quot;&gt;
+                &lt;img
+                  loading=&quot;lazy&quot;
+                  decoding=&quot;async&quot;
+                  sizes=&quot;(max-width: 50em) 100vw, 50em&quot;
+                  srcset=&quot;
+                    /media/tabs-chrome-extension-320w.jpeg 320w,
+                    /media/tabs-chrome-extension-640w.jpeg 640w,
+                    /media/tabs-chrome-extension-1280w.jpeg 1280w
+                  &quot;
+                  src=&quot;/media/tabs-chrome-extension-640w.jpeg&quot;
+                  alt=&quot;the chrome extension in action&quot;
+                /&gt;
+              &lt;/a&gt;
+            &lt;p&gt;It isn&#39;t shown in the screenshot, but if you hover over the icon you should get a popup giving you a summary of how many tabs and windows are open.&lt;/p&gt;
     </li>
   
     <li>
-      <a href="/posts/numeral-systems">Nuemral Systems</a> - <i>2023-03-31</i>
+      <a href="/posts/hex-words">Writing English Words as Hexadecimal</a> - <i>2023-05-25</i>
       <br>
-      newton
+      &lt;p&gt;I was curious as to what English words could be written solely with the 6 letters available in the hexadecimal numerical system, so I hammered together a short Python script which takes as its sole argument a filename of newline separated words and regurgitates the words that consist of only letters A–F.&lt;/p&gt;&lt;pre&gt;&lt;code&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;import&lt;/span&gt; sys
+
+&lt;span class=&quot;hljs-keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;len&lt;/span&gt;(sys.argv) != &lt;span class=&quot;hljs-number&quot;&gt;2&lt;/span&gt;:
+    &lt;span class=&quot;hljs-built_in&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;hljs-string&quot;&gt;&amp;#x27;usage: onlyhex [FILE]&amp;#x27;&lt;/span&gt;)
+    quit()
+
+&lt;span class=&quot;hljs-keyword&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;open&lt;/span&gt;(sys.argv[&lt;span class=&quot;hljs-number&quot;&gt;1&lt;/span&gt;]) &lt;span class=&quot;hljs-keyword&quot;&gt;as&lt;/span&gt; fp:
+    &lt;span class=&quot;hljs-keyword&quot;&gt;for&lt;/span&gt; word &lt;span class=&quot;hljs-keyword&quot;&gt;in&lt;/span&gt; fp.readlines():
+        word = word.strip()
+        &lt;span class=&quot;hljs-keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;len&lt;/span&gt;(word) &amp;gt; &lt;span class=&quot;hljs-number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;set&lt;/span&gt;(word).issubset(&lt;span class=&quot;hljs-built_in&quot;&gt;set&lt;/span&gt;(&lt;span class=&quot;hljs-string&quot;&gt;&amp;quot;abcdef&amp;quot;&lt;/span&gt;)):
+            &lt;span class=&quot;hljs-built_in&quot;&gt;print&lt;/span&gt;(word)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Running the script on some 400K English words in text files from a &lt;a href=&quot;https://github.com/dwyl/english-words&quot;&gt;git repo&lt;/a&gt; returns numerous but obscure results. Instead you may want to run it on a list from another &lt;a href=&quot;https://github.com/first20hours/google-10000-english&quot;&gt;git repo&lt;/a&gt; of the 10-20K most common English words. This winnows the results into interesting words like cafe, ace, face, deaf, add, decaf, and fade. This means numbers like &lt;code&gt;0xfadedface&lt;/code&gt; and &lt;code&gt;0xdecafcafe&lt;/code&gt; are valid hexadecimal, corresponding to 67342564046 and 59805518590 in our familiar decimal system, respectively.&lt;/p&gt;
     </li>
   
     <li>
-      <a href="/posts/math">Mathematical Oddities</a> - <i>2023-03-01</i>
+      <a href="/posts/c-hello-world">A Strange Hello World Program in C</a> - <i>2023-05-11</i>
       <br>
-      Fun mathematics
+      &lt;pre&gt;&lt;code&gt;__attribute__((section(&lt;span class=&quot;hljs-string&quot;&gt;&amp;quot;.text&amp;quot;&lt;/span&gt;))) &lt;span class=&quot;hljs-type&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;hljs-type&quot;&gt;char&lt;/span&gt; main[] = {
+    &lt;span class=&quot;hljs-number&quot;&gt;0x55&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x89&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xe5&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x83&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xec&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x10&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xb8&lt;/span&gt;,
+    &lt;span class=&quot;hljs-number&quot;&gt;0x68&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x65&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x6c&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x6c&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x6f&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x2c&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x20&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x77&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x89&lt;/span&gt;,
+    &lt;span class=&quot;hljs-number&quot;&gt;0x45&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xf1&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xb8&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x77&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x6f&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x72&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x6c&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x64&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x21&lt;/span&gt;,
+    &lt;span class=&quot;hljs-number&quot;&gt;0x0a&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x89&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x45&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xf8&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x8d&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x45&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xf1&lt;/span&gt;,
+    &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x89&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xc6&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xc7&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xc0&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x01&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;,
+    &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xc7&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xc7&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x01&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x48&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xc7&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xc2&lt;/span&gt;,
+    &lt;span class=&quot;hljs-number&quot;&gt;0x0f&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x0f&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x05&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xb8&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;,
+    &lt;span class=&quot;hljs-number&quot;&gt;0x00&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xc9&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;0xc3&lt;/span&gt;
+};&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Compiling the above C code with either GCC or Clang on my x86-64 Linux platform yields&lt;/p&gt;&lt;pre&gt;&lt;code&gt;$ gcc main.c
+/tmp/ccJRPyPq.s: Assembler messages:
+/tmp/ccJRPyPq.s:4: Warning: ignoring changed section attributes for .text
+$ clang main.c
+main.c:1:1: warning: variable named &#39;main&#39; with external linkage has undefined behavior [-Wmain]
+__attribute__((section(&quot;.text&quot;))) const char main[] = {
+^
+1 warning generated.
+$ ./a.out
+hello, world!&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Both compilers emit warnings but if we ignore them and run the executable anyway it prints &quot;hello, world!&quot;. This is surprising as we&#39;re seemingly assigning random bytes to a variable called &lt;code&gt;main&lt;/code&gt;, and the fact that it compiles at all is astonishing.&lt;/p&gt;
     </li>
   
     <li>
-      <a href="/posts/snake-os">Snake OS</a> - <i>2023-02-26</i>
+      <a href="/posts/ruler">A Digital Ruler in Python</a> - <i>2023-05-02</i>
       <br>
-      I write a simple OS whose only purpose is to play snake.
+      &lt;p&gt;I occasionally need to measure something in the corporeal world but never seem to have a ruler handy, so I wrote a bit of Python code that uses the &lt;code&gt;turtle&lt;/code&gt; graphics module to draw a to-life scale digital ruler. The &lt;code&gt;turtle&lt;/code&gt; module is a wrapper around a Tkinter canvas and is meant for introducing kids to programming so it isn&#39;t powerful, but for the simple use case of drawing a ruler &lt;code&gt;turtle&lt;/code&gt; can handle it. It&#39;s been a while since I&#39;ve used the module so the code isn&#39;t very clean.&lt;/p&gt;
+              &lt;a href=&quot;/media/digital-ruler-1280w.jpeg&quot;&gt;
+                &lt;img
+                  loading=&quot;lazy&quot;
+                  decoding=&quot;async&quot;
+                  sizes=&quot;(max-width: 50em) 100vw, 50em&quot;
+                  srcset=&quot;
+                    /media/digital-ruler-320w.jpeg 320w,
+                    /media/digital-ruler-640w.jpeg 640w,
+                    /media/digital-ruler-1280w.jpeg 1280w
+                  &quot;
+                  src=&quot;/media/digital-ruler-640w.jpeg&quot;
+                  alt=&quot;a yellow ruler&quot;
+                /&gt;
+              &lt;/a&gt;
+            &lt;p&gt;The code shown below should draw the above image of a standard yellow ruler onto an unresizable pop up window.&lt;/p&gt;
+    </li>
+  
+    <li>
+      <a href="/posts/blanking-display">Blanking Displays on Linux</a> - <i>2023-04-26</i>
+      <br>
+      &lt;p&gt;I blank my displays when I go to sleep since I don&#39;t want sharp blue light cast on my bed as I try to doze. My Linux PC can be put to sleep with the command &lt;code&gt;systemctl suspend&lt;/code&gt; which also blanks the display, but often I need my PC computing some time-consuming code overnight, rendering 3D models, or transferring files to my backup so I need it still run, just with the display off. I could just turn off my only monitor hooked to the PC with the power button, but the 2K monitor takes maybe 3-4 seconds to load back up and I&#39;m too impatient to wait that long each morning so instead I found that I can run &lt;code&gt;xset dpms force off&lt;/code&gt; to turn off the screen.&lt;/p&gt;&lt;p&gt;If that doesn&#39;t work for you try the command &lt;code&gt;sleep 1 &amp;&amp; xset dpms force off&lt;/code&gt; which just waits a second but seems to fix things.&lt;/p&gt;&lt;p&gt;I also have a laptop which isn&#39;t running Xorg or any other graphical display so I can&#39;t use the &lt;code&gt;xset&lt;/code&gt; command. I&#39;ve tried doing what some Stack Overflow Q&amp;As suggest, like using the command &lt;code&gt;setterm -powerdown 1&lt;/code&gt; which doesn&#39;t work on my laptop or using &lt;code&gt;vbetool&lt;/code&gt; which isn&#39;t in OpenSUSE&#39;s repos, so I can&#39;t install it on my laptop. Instead I followed an OpenSUSE &lt;a href=&quot;https://forums.opensuse.org/t/how-to-turn-off-monitor-in-multi-user-mode/149732/4&quot;&gt;forum&lt;/a&gt; in which OP has the same problem I have. In the file &lt;code&gt;/etc/systemd/logind.conf&lt;/code&gt; I set &lt;code&gt;HandleLidSwitch&lt;/code&gt; to &lt;code&gt;ignore&lt;/code&gt;, then the file looks like&lt;/p&gt;
+    </li>
+  
+    <li>
+      <a href="/posts/ioli-crackmes">Reverse Engineering IOLI Crackmes</a> - <i>2023-04-20</i>
+      <br>
+      &lt;p&gt;A crackme is an executable program that people reverse engineer for fun. The executable usually prompts the user for a password, and the game is figuring out what that password is by reverse engineering the executable. IOLI crackmes are a series of 10 introductory crackmes we&#39;ll be reverse engineering today. They look like this&lt;/p&gt;&lt;pre&gt;&lt;code&gt;$ ./crackme0x00
+IOLI Crackme Level 0x00
+Password: 346234
+Invalid Password!
+$ ./crackme0x00
+IOLI Crackme Level 0x00
+Password: 250382
+Password OK :)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Our goal is to get the &lt;code&gt;Password OK :)&lt;/code&gt; message for every program. You can download the crackmes at &lt;a href=&quot;https://dustri.org/b/files/IOLI-crackme.tar.gz&quot;&gt;IOLI-crackme.tar.gz&lt;/a&gt;.&lt;/p&gt;
+    </li>
+  
+    <li>
+      <a href="/posts/quicksort">A Decent Quicksort Function in C</a> - <i>2023-04-13</i>
+      <br>
+      &lt;p&gt;We&#39;ll be writing a quicksort function whose header file looks like this&lt;/p&gt;&lt;pre&gt;&lt;code&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;ifndef&lt;/span&gt; SORT_H&lt;/span&gt;
+&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;define&lt;/span&gt; SORT_H&lt;/span&gt;
+
+&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;hljs-string&quot;&gt;&amp;lt;stddef.h&amp;gt;&lt;/span&gt;&lt;/span&gt;
+
+&lt;span class=&quot;hljs-keyword&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;hljs-title function_&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;hljs-params&quot;&gt;(*&lt;span class=&quot;hljs-type&quot;&gt;cmpfn_t&lt;/span&gt;)&lt;/span&gt;&lt;span class=&quot;hljs-params&quot;&gt;(&lt;span class=&quot;hljs-type&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;hljs-type&quot;&gt;void&lt;/span&gt; *, &lt;span class=&quot;hljs-type&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;hljs-type&quot;&gt;void&lt;/span&gt; *)&lt;/span&gt;;
+&lt;span class=&quot;hljs-type&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;hljs-title function_&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;hljs-params&quot;&gt;(&lt;span class=&quot;hljs-type&quot;&gt;void&lt;/span&gt; *base, &lt;span class=&quot;hljs-type&quot;&gt;size_t&lt;/span&gt; nmemb, &lt;span class=&quot;hljs-type&quot;&gt;size_t&lt;/span&gt; size, &lt;span class=&quot;hljs-type&quot;&gt;cmpfn_t&lt;/span&gt; cmp)&lt;/span&gt;;
+
+&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;endif&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The header file defines the type &lt;code&gt;cmpfn_t&lt;/code&gt; as a function pointer that returns an integer and takes two void pointers. You can see the function signature of the &lt;code&gt;sort&lt;/code&gt; function we&#39;ll be implementing; it takes a void pointer to an array, the number of elements in this array, the size of each element, and a function to compare elements. For &lt;code&gt;cmp(a,b)&lt;/code&gt; it should return an integer less than zero if a&amp;lt;b, equal to zero if a=b, and greater than zero if a&amp;gt;b.&lt;/p&gt;
+    </li>
+  
+    <li>
+      <a href="/posts/llama">LLaMA: Facebook&#39;s New Language Model</a> - <i>2023-03-31</i>
+      <br>
+      {% style %}
+	.llama {
+		white-space: pre-wrap;
+	}
+{% endstyle %}&lt;p&gt;I heard from somewhere that Facebook&#39;s new language model LLaMA both outperforms GPT-3 (which powers ChatGPT) and can be run off a something as slow as a Raspberry PI. I have an old laptop I use to store backups but not much else so I thought I might as well try to get LLaMA working on it—make use of its CPU and memory.&lt;/p&gt;&lt;p&gt;Clone the repo &lt;a href=&quot;https://github.com/ggerganov/llama.cpp&quot;&gt;llama.cpp&lt;/a&gt; then torrent the pre-trained weights from this &lt;a href=&quot;magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&amp;dn=LLaMA&quot;&gt;magnet link&lt;/a&gt; with your client of choice. Move the &lt;code&gt;7B&lt;/code&gt; directory and files &lt;code&gt;tokenizer_checklist.chk&lt;/code&gt; and &lt;code&gt;tokenizer.model&lt;/code&gt; into the directory &lt;code&gt;models/&lt;/code&gt; under the cloned repo then run the following at the root directory of the cloned repo&lt;/p&gt;
+    </li>
+  
+    <li>
+      <a href="/posts/roots-of-unity">Roots of Unity</a> - <i>2023-03-14</i>
+      <br>
+      {% style %}
+.roots input {
+  width: 4em;
+}
+
+.center {
+  text-align: center;
+}
+{% endstyle %}&lt;p&gt;The &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;n&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.4306em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;th roots of unity are the solutions to the equation&lt;/p&gt;&lt;span class=&quot;katex-display&quot;&gt;&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msup&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+x^n-1=0
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.7977em;vertical-align:-0.0833em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.7144em;&quot;&gt;&lt;span style=&quot;top:-3.113em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mbin&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.6444em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.6444em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;
+    </li>
+  
+    <li>
+      <a href="/posts/paywalls">Circumventing Online Paywalls</a> - <i>2023-03-09</i>
+      <br>
+      &lt;p&gt;Many paywalls on the Internet can be easily circumvented. There are two types of paywalls: Hard paywalls which require a paid subscription before any content can
+be accessed and soft paywalls which grant the customer a preview first, a
+limited amount of content, before demanding payment.&lt;/p&gt;&lt;p&gt;Soft paywalls usually rely on cookies to track how much content you&#39;ve already consumed. Simply clear your cookies and the site will have no idea you were ever
+there. To do this on Chrome click the three vertically stacked dots on the very
+right of the search bar, then click on the item that says &quot;Settings.&quot; Click the
+&quot;Privacy and security&quot; tab to the left, then click the &quot;Cookies and other site
+data&quot; menu item. Then click &quot;See all site data and permissions.&quot; Search with the
+search bar at the top-right for whatever website you want and click on the trash
+icon to the right to delete it.&lt;/p&gt;&lt;p&gt;Hard paywalls like &lt;em&gt;The Times&lt;/em&gt; or &lt;em&gt;The Wall Street Journal&lt;/em&gt; are forced to display their content in full to web crawlers to rank high on Google&#39;s search
+reuslts, so simply archive the page on an archive site like
+&lt;a href=&quot;https://archive.ph/&quot;&gt;archive.ph&lt;/a&gt;; This work because archive sites archive pages
+in a similar way Google does.&lt;/p&gt;
     </li>
   
     <li>
       <a href="/posts/sentiment">Sentiment Analysis: Detecting The Sentiment of a Text</a> - <i>2023-02-01</i>
       <br>
-      I wrote a machine learning model that tells you whether a text is positive or negative. The model is trained on the sentiment140 dataset. It&#39;s correct 78% of the time, which isn&#39;t that good but beats random guessing.
+      {% style %}
+#input {
+  width: 100%;
+  padding: .5em;
+}
+{% endstyle %}&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js&quot;&gt;&lt;/script&gt;&lt;p&gt;I&#39;ve been doing a bit of machine learning lately and have been messing around with TensorFlow&#39;s Keras API. As a fun little project I used their sentiment140 dataset to train a model to classify text as either positive or negative. I trained this model with Python and wrote it in a &lt;a href=&quot;/tfjs/twitter.ipynb&quot;&gt;Jupyter notebook&lt;/a&gt;. I saved the model and used TensorFlow.js to load the model onto my website, which you can play around with below.&lt;/p&gt;
     </li>
   
     <li>
       <a href="/posts/huffman">Experimenting with Huffman Coding</a> - <i>2023-01-03</i>
       <br>
-      I created a Python script for compressing and uncompressing text using Huffman coding. It can shrink The Complete Works of William Shakespeare (from Gutenberg, in plaintext, 5.5 megabytes) down to 60% its original size in 10 seconds.
+      &lt;p&gt;Huffman coding generates a tree from text and uses this tree to optimally and losslessly compress the text. Here is the tree generated from the text &quot;beekeepers keep bees&quot;:&lt;/p&gt;
+              &lt;a href=&quot;/media/huffman-tree-1280w.jpeg&quot;&gt;
+                &lt;img
+                  loading=&quot;lazy&quot;
+                  decoding=&quot;async&quot;
+                  sizes=&quot;(max-width: 50em) 100vw, 50em&quot;
+                  srcset=&quot;
+                    /media/huffman-tree-320w.jpeg 320w,
+                    /media/huffman-tree-640w.jpeg 640w,
+                    /media/huffman-tree-1280w.jpeg 1280w
+                  &quot;
+                  src=&quot;/media/huffman-tree-640w.jpeg&quot;
+                  alt=&quot;huffman tree example&quot;
+                /&gt;
+              &lt;/a&gt;
+            &lt;p&gt;You can see the letter &quot;E&quot; occurs in the phrase frequently, so it&#39;s near the top. To compress text, follow the branches (colored lines) down to each letter. Each time you take a right, write down 1; each time you take a left, write down 0. For example, using the tree, the word &quot;bees&quot; would be encoded as &lt;code&gt;001110111&lt;/code&gt;. This is smaller than &lt;code&gt;1100010110010111001011110011&lt;/code&gt;, which is how it&#39;s represented uncompressed.&lt;/p&gt;
     </li>
   
     <li>
       <a href="/posts/ipad">Having Fun with an iPad</a> - <i>2022-12-04</i>
       <br>
-      Poking and peeking into the internals of an iPad Mini 2.
+      &lt;p&gt;I have an iPad Mini 2 that I use to read eBooks. I transfer the books to and from my iPad using the technique I outlined on one of my recent posts: I create a temporary HTTP server on my desktop that broadcasts a &lt;code&gt;index.html&lt;/code&gt; file with a list of hyperlinks, then I click on one of them from the iPad to download the book. It took me a ludicrous amount of time to find out that you could mount the iPad just like any other USB. The Arch Linux Wiki has a guide­as it does for everything­on iOS. I followed the Wiki&#39;s instructions:&lt;/p&gt;&lt;ol&gt;&lt;li&gt; I installed &lt;code&gt;libimobiledevice&lt;/code&gt; and &lt;code&gt;usbmuxd&lt;/code&gt;, both of which I apparently already had.&lt;/li&gt;
+&lt;li&gt; I ran &lt;code&gt;idevicepair pair&lt;/code&gt;. The command exited, printing something like &quot;please trust the device,&quot; then a little bubbly box pops up on the center of my iPad, asking me whether it should trust the device. I clicked &quot;trust.&quot; I ran the pairing command again. It doesn&#39;t print out an error, which I assumed meant the pairing went well.&lt;/li&gt;
+&lt;li&gt; I mounted it, with &lt;code&gt;ifuse ~/ipad&lt;/code&gt;. It worked!&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;I &lt;code&gt;cd&lt;/code&gt;&#39;d into the directory and there these subdirectories stood,&lt;/p&gt;
     </li>
   
     <li>
       <a href="/posts/mandelbrot">Drawing the Mandelbrot Set</a> - <i>2022-10-31</i>
       <br>
-      I write a small C program to play around with the Mandelbrot set.
+      &lt;p&gt;The Mandelbrot set is generated by iterating the function &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;f(x)=x^2+c&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.10764em;&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.8974em;vertical-align:-0.0833em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8141em;&quot;&gt;&lt;span style=&quot;top:-3.063em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mbin&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.4306em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;c&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;. Let &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;x&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.4306em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;x&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; (called the seed) be 0 and &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;c&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.4306em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;c&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; (called the constant) be 1.&lt;/p&gt;&lt;span class=&quot;katex-display&quot;&gt;&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt; f(0)=0^2+1=1 &lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.10764em;&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.9474em;vertical-align:-0.0833em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8641em;&quot;&gt;&lt;span style=&quot;top:-3.113em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mbin&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.6444em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.6444em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;p&gt;Let&#39;s use the previous computation as the input for the next.&lt;/p&gt;
     </li>
   
     <li>
       <a href="/posts/footnotes">Fixing A Don Quixote EPUB Book&#39;s Footnotes</a> - <i>2022-10-07</i>
       <br>
-      Repairing a Don Quixote (Grossman&#39;s translation) EPUB book&#39;s footnotes by using another copy of the same book.
+      &lt;p&gt;I wanted to read Don Quixote, specifically the Grossman translation, but I couldn&#39;t find any high-quality eBook copies. The majority of the copies I previewed had their footnotes jumbled up, but I really wanted the translator&#39;s commentary. After searching more, I found a copy with proper footnotes, but the formatting was abysmal—the text was unreadably minuscule in some places, and the table of contents contained a total of seven nonsensical entries. I took it upon myself to somehow extract the proper footnotes from this and overlay them on a copy with better formatting.&lt;/p&gt;&lt;p&gt;EPUB is a very common file format for eBooks. EPUB files are really just packed websites; EPUB files are ZIP archives, and so unzipping them with &lt;code&gt;unzip ebook.epub -d ebook/&lt;/code&gt; would reveal HTML and CSS files, much like a website. However, a EPUB file has three additional, special files: the &lt;code&gt;toc.ncx&lt;/code&gt; documentating the table of contents; a file ending in &lt;code&gt;.opf&lt;/code&gt; listing all the files and what order to display them in; and the &lt;code&gt;mimetype&lt;/code&gt; file containing &lt;code&gt;application/epub+zip&lt;/code&gt; which states that this is, in fact, an EPUB file.&lt;/p&gt;&lt;p&gt;To repack an EPUB file, you can&#39;t just zip it back up again. You need to first zip the &lt;code&gt;mimetype&lt;/code&gt; file without compression and without file attributes. &lt;code&gt;mimetype&lt;/code&gt; must be there so as to immediately announce the file as an EPUB. Only then can you add the rest of your files to the zip archive. To do all that, you run &lt;code&gt;zip -Xr &quot;../ebook.epub&quot; mimetype $(ls | sed &#39;/^mimetype$/d&#39;)&lt;/code&gt; in the directory you unzipped your EPUB to. The &lt;code&gt;-X&lt;/code&gt; flag ensures ZIP doesn&#39;t store any attributes, and &lt;code&gt;-r&lt;/code&gt; means to zip recursively. We copy &lt;code&gt;mimetype&lt;/code&gt; first, then everything else.&lt;/p&gt;
     </li>
   
     <li>
       <a href="/posts/backup">Backing Up My Desktop</a> - <i>2022-09-04</i>
       <br>
-      I had a disused laptop and an Ethernet cable; I used those to backup my files.
+      &lt;p&gt;I recently acquired an Ethernet cable and had a spare laptop that was gathering dust with a 500GB hard drive in it. I&#39;ve been meaning to backup my desktop since I&#39;ve had troublesome moments where I accidentally deleted important files of mine or was on the precipice of deleting important files of mine. I thought, why not hook my desktop up to that old laptop with the Ethernet cable and copy my files and directories over using something like &lt;code&gt;rsync&lt;/code&gt;?&lt;/p&gt;&lt;p&gt;In case you&#39;re unfamiliar, backing up a computer means copying its files and folders over to another computer, so in case something happens to your files that makes them inaccessible—like a corrupted hard drive, ransomware, or your clumsy fingers irreparably damaging them—you still have a copy on the other machine. &lt;code&gt;rsync&lt;/code&gt; is a tool to copy files and folders that&#39;s smart and fast: It doesn&#39;t copy everything, it just copies the things it &lt;em&gt;must&lt;/em&gt; copy.&lt;/p&gt;&lt;p&gt;I install Ubuntu Server on that laptop and create the user &lt;code&gt;kjc&lt;/code&gt;. I make three directories in the home folder of &lt;code&gt;kjc&lt;/code&gt;: &lt;code&gt;daily&lt;/code&gt;, &lt;code&gt;weekly&lt;/code&gt;, and &lt;code&gt;monthly&lt;/code&gt;, to store my backups at those time increments. I notice that Ubuntu wasn&#39;t using the full 500GB that the hard drive was capable of, instead only registering around 100GB. It turns out I needed to expand the LVM, which is as simple as just two commands:&lt;/p&gt;
     </li>
   
     <li>
       <a href="/posts/dwmbar">dwmbar: Create a DWM Status Bar</a> - <i>2022-08-15</i>
       <br>
-      A C program that creates and updates every second a DWM status bar with the current time and ALSA volume.
+      &lt;p&gt;DWM is a window manager and its status bar is a customizable piece of text on the top right of the screen. I wrote a C program that populates the status bar with the time and ALSA volume, in the format of &lt;code&gt;Thu Aug 11 11:03:23 AM EDT 2022 [ 36% ]&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;The code to set the window manager&#39;s name using Xlib was copied from &lt;a href=&quot;https://git.suckless.org/dwmstatus/&quot;&gt;dwmstatus&lt;/a&gt;. Compile with &lt;code&gt;gcc main.c $(pkg-config --cflags --libs x11 alsa) -O3 -o dwmbar&lt;/code&gt;.&lt;/p&gt;&lt;pre&gt;&lt;code&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;hljs-string&quot;&gt;&amp;lt;X11/Xlib.h&amp;gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;hljs-string&quot;&gt;&amp;lt;alsa/asoundlib.h&amp;gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;hljs-string&quot;&gt;&amp;lt;alsa/mixer.h&amp;gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;hljs-string&quot;&gt;&amp;lt;signal.h&amp;gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;hljs-string&quot;&gt;&amp;lt;stdbool.h&amp;gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;hljs-string&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;hljs-string&quot;&gt;&amp;lt;time.h&amp;gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;hljs-meta&quot;&gt;#&lt;span class=&quot;hljs-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;hljs-string&quot;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;/span&gt;
+
+&lt;span class=&quot;hljs-type&quot;&gt;bool&lt;/span&gt; run = &lt;span class=&quot;hljs-literal&quot;&gt;true&lt;/span&gt;;
+
+&lt;span class=&quot;hljs-type&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;hljs-title function_&quot;&gt;sigint_handler&lt;/span&gt;&lt;span class=&quot;hljs-params&quot;&gt;()&lt;/span&gt; {
+	run = &lt;span class=&quot;hljs-literal&quot;&gt;false&lt;/span&gt;;
+}
+
+&lt;span class=&quot;hljs-type&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;hljs-title function_&quot;&gt;get_volume&lt;/span&gt;&lt;span class=&quot;hljs-params&quot;&gt;(&lt;span class=&quot;hljs-type&quot;&gt;snd_mixer_t&lt;/span&gt; *handle)&lt;/span&gt; {
+	snd_mixer_handle_events(handle);
+
+	&lt;span class=&quot;hljs-type&quot;&gt;snd_mixer_selem_id_t&lt;/span&gt; *sid;
+	snd_mixer_selem_id_alloca(&amp;amp;sid);
+	snd_mixer_selem_id_set_index(sid, &lt;span class=&quot;hljs-number&quot;&gt;0&lt;/span&gt;);
+	snd_mixer_selem_id_set_name(sid, &lt;span class=&quot;hljs-string&quot;&gt;&amp;quot;Master&amp;quot;&lt;/span&gt;);
+
+	&lt;span class=&quot;hljs-type&quot;&gt;long&lt;/span&gt; min, max, volume;
+	&lt;span class=&quot;hljs-type&quot;&gt;snd_mixer_elem_t&lt;/span&gt; *elem = snd_mixer_find_selem(handle, sid);
+	snd_mixer_selem_get_playback_volume_range(elem, &amp;amp;min, &amp;amp;max);
+	snd_mixer_selem_get_playback_volume(elem, SND_MIXER_SCHN_FRONT_LEFT, &amp;amp;volume);
+
+	&lt;span class=&quot;hljs-keyword&quot;&gt;return&lt;/span&gt; (&lt;span class=&quot;hljs-type&quot;&gt;double&lt;/span&gt;)volume / (max/&lt;span class=&quot;hljs-number&quot;&gt;100&lt;/span&gt;);
+}
+
+&lt;span class=&quot;hljs-type&quot;&gt;snd_mixer_t&lt;/span&gt; *&lt;span class=&quot;hljs-title function_&quot;&gt;create_handle&lt;/span&gt;&lt;span class=&quot;hljs-params&quot;&gt;(&lt;span class=&quot;hljs-type&quot;&gt;void&lt;/span&gt;)&lt;/span&gt; {
+	&lt;span class=&quot;hljs-type&quot;&gt;snd_mixer_t&lt;/span&gt; *handle;
+	snd_mixer_open(&amp;amp;handle, &lt;span class=&quot;hljs-number&quot;&gt;0&lt;/span&gt;);
+	snd_mixer_attach(handle, &lt;span class=&quot;hljs-string&quot;&gt;&amp;quot;default&amp;quot;&lt;/span&gt;);
+	snd_mixer_selem_register(handle, &lt;span class=&quot;hljs-literal&quot;&gt;NULL&lt;/span&gt;, &lt;span class=&quot;hljs-literal&quot;&gt;NULL&lt;/span&gt;);
+	snd_mixer_load(handle);
+	&lt;span class=&quot;hljs-keyword&quot;&gt;return&lt;/span&gt; handle;
+}
+
+&lt;span class=&quot;hljs-type&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;hljs-title function_&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;hljs-params&quot;&gt;(&lt;span class=&quot;hljs-type&quot;&gt;void&lt;/span&gt;)&lt;/span&gt; {
+	Display *dpy = XOpenDisplay(&lt;span class=&quot;hljs-literal&quot;&gt;NULL&lt;/span&gt;);
+	&lt;span class=&quot;hljs-type&quot;&gt;snd_mixer_t&lt;/span&gt; *handle = create_handle();
+
+	signal(SIGINT, sigint_handler);
+
+	&lt;span class=&quot;hljs-keyword&quot;&gt;while&lt;/span&gt;(run) {
+		&lt;span class=&quot;hljs-type&quot;&gt;char&lt;/span&gt; bar[&lt;span class=&quot;hljs-number&quot;&gt;128&lt;/span&gt;];
+
+		&lt;span class=&quot;hljs-type&quot;&gt;time_t&lt;/span&gt; t = time(&lt;span class=&quot;hljs-literal&quot;&gt;NULL&lt;/span&gt;);
+		&lt;span class=&quot;hljs-class&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;hljs-title&quot;&gt;tm&lt;/span&gt; *&lt;span class=&quot;hljs-title&quot;&gt;tm&lt;/span&gt; =&lt;/span&gt; localtime(&amp;amp;t);
+		&lt;span class=&quot;hljs-type&quot;&gt;int&lt;/span&gt; n = strftime(bar, &lt;span class=&quot;hljs-keyword&quot;&gt;sizeof&lt;/span&gt;(bar), &lt;span class=&quot;hljs-string&quot;&gt;&amp;quot; %a %b %d %r %Z %Y &amp;quot;&lt;/span&gt;, tm);
+
+		&lt;span class=&quot;hljs-built_in&quot;&gt;sprintf&lt;/span&gt;(bar+n, &lt;span class=&quot;hljs-string&quot;&gt;&amp;quot;[ %.0f%% ]&amp;quot;&lt;/span&gt;, get_volume(handle));
+
+		XStoreName(dpy, DefaultRootWindow(dpy), bar);
+		XSync(dpy, False);
+
+		usleep(&lt;span class=&quot;hljs-number&quot;&gt;1000000&lt;/span&gt;);
+	}
+
+	snd_mixer_close(handle);
+	XCloseDisplay(dpy);
+}&lt;/code&gt;&lt;/pre&gt;
     </li>
   
     <li>
       <a href="/posts/rep">rep: A Tool for Repeating Commands</a> - <i>2022-07-18</i>
       <br>
-      A small tool written in C to repeat commands.
+      &lt;p&gt;When I needed to run a command multiple times, I would wrap that command into a loop.&lt;/p&gt;&lt;pre&gt;&lt;code&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;for&lt;/span&gt; i &lt;span class=&quot;hljs-keyword&quot;&gt;in&lt;/span&gt; {1..10}; &lt;span class=&quot;hljs-keyword&quot;&gt;do&lt;/span&gt; ...; &lt;span class=&quot;hljs-keyword&quot;&gt;done&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;But it&#39;s a bother to type that out just to repeat a command a few times, so I wrote a simple C script that simplifies the process.&lt;/p&gt;
     </li>
   
     <li>
       <a href="/posts/base64">Base64: Encoding Binary Data</a> - <i>2022-06-09</i>
       <br>
-      Encoding WebP images and creating Data URLs with my own implementation of Base64 in C.
+      &lt;p&gt;Base64 is a binary-to-text encoding scheme that transforms 8-bit binary data, in chunks of 3, into 6-bit ASCII characters. This is useful for the transfer of data in environments that are restricted to ASCII, or to avoid accidentally triggering control characters. It is used to create Data URLs, which allow the embedding of media—such as images—or other binary assets into textual HTML, XML, and CSS files; Earlier forms of SMTP only supported 7-bit ASCII, and Base64 was used to transfer attachments.&lt;/p&gt;&lt;p&gt;Data encoded with Base64 experience around a 33 percent increase in size, about 2 percent more if line breaks occur every 76 characters, as enforced by MIME.&lt;/p&gt;&lt;p&gt;If the data being encoded does not fit neatly into chunks of 3, equal signs are commonly used to pad the output. The 64 characters used for Base64 are, in order from 0–63: A–Z, a–z, 0–9, then two symbols that vary. RFC 4648 specifies those two symbols as the plus sign, then the forward slash.&lt;/p&gt;
     </li>
   
   </ul>
 
   
-  </body>
+</body>
+
 </html>

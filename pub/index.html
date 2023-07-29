@@ -1,176 +1,458 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kevin Cao's Website</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kevin Cao's Website</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <link rel="stylesheet" href="/stylesheet.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
+  <style>
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
+  Theme: a11y-light
+  Author: @ericwbailey
+  Maintainer: @ericwbailey
+
+  Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
+*/.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
+  </style>
+  
+    <style>
+      body{padding:0 1em;margin:0 auto;font-family:"Merriweather",serif;color:rgb(0,0,0,0.7);max-width:50em;-moz-tab-size:4;-o-tab-size:4;tab-size:4}code,pre{font-family:"IBM Plex Mono",monospace}pre{overflow-x:auto;margin:0 2em}.img+pre{margin-top:1em}pre:has(+.img){margin-bottom:1em}img{max-width:80%;height:auto;display:block;margin:0 auto}input{font:inherit}*{box-sizing:border-box}article h1{font-size:2em}.navbar ul{list-style:none;padding:.5em 0 0 0;margin:0}.navbar li{display:inline}.center{text-align:center}
     
-      <style>
-      
-        body {
-          padding: 0 1em;
-          margin: 0 auto;
-          font-family: "Merriweather", serif;
-          color: rgb(0, 0, 0, 0.7);
-          max-width: 50em;
-          -moz-tab-size: 4;
-            -o-tab-size: 4;
-               tab-size: 4;
-        }
-
-        code,
-        pre {
-          font-family: "Inconsolata", monospace;
-        }
-
-        pre {
-          overflow-x: auto;
-        }
-
-        img {
-          max-width: 100%;
-          height: auto;
-        }
-
-        input {
-          width: 100%;
-          font: inherit;
-          padding: .5em;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        .navbar ul {
-          list-style: none;
-          padding: .5em 0 0 0;
-          margin: 0;
-        }
-
-        .navbar li {
-          display: inline;
-        }
-      
     </style>
-    
-    
+  
+  
   <title>Homepage</title>
-  <meta name="description" content="" />
-
-  </head>
-  <body>
-  
-    <header>
-      <nav class="navbar">
-        <ul>
-          <li><a href="/">homepage</a></li>
-          |
-          <li><a href="/posts/">posts</a></li>
-        </ul>
-      </nav>
-    </header>
-    
-  <h1>Homepage</h1>
-  <p>Welcome! If you have any comments or questions send them to <a href="mailto:&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;">&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;</a>. My GitHub is <a href="https://github.com/kejcao">kejcao</a>.</p>
-  <section>
-    <h2>Projects</h2>
-    <ul>
-      <li><a href="/profile-card/">/profile-card/</a> is a simple profile card I made for Hacktoberfest 2022.</li>
-    </ul>
-  </section>
-  <section>
-    <h2>Posts</h2>
-    <ul>
-    
-      <li>
-        <a href="/posts/paywalls">Circumventing Online Paywalls</a> - <i>2023-10-31</i>
-        <br>
-        Bypassing paywalls put in place by online newspapers and other services with a variety of different methods.
-      </li>
-    
-      <li>
-        <a href="/posts/newton">Newton</a> - <i>2023-03-31</i>
-        <br>
-        newton
-      </li>
-    
-      <li>
-        <a href="/posts/numeral-systems">Nuemral Systems</a> - <i>2023-03-31</i>
-        <br>
-        newton
-      </li>
-    
-      <li>
-        <a href="/posts/math">Mathematical Oddities</a> - <i>2023-03-01</i>
-        <br>
-        Fun mathematics
-      </li>
-    
-      <li>
-        <a href="/posts/snake-os">Snake OS</a> - <i>2023-02-26</i>
-        <br>
-        I write a simple OS whose only purpose is to play snake.
-      </li>
-    
-      <li>
-        <a href="/posts/sentiment">Sentiment Analysis: Detecting The Sentiment of a Text</a> - <i>2023-02-01</i>
-        <br>
-        I wrote a machine learning model that tells you whether a text is positive or negative. The model is trained on the sentiment140 dataset. It&#39;s correct 78% of the time, which isn&#39;t that good but beats random guessing.
-      </li>
-    
-      <li>
-        <a href="/posts/huffman">Experimenting with Huffman Coding</a> - <i>2023-01-03</i>
-        <br>
-        I created a Python script for compressing and uncompressing text using Huffman coding. It can shrink The Complete Works of William Shakespeare (from Gutenberg, in plaintext, 5.5 megabytes) down to 60% its original size in 10 seconds.
-      </li>
-    
-      <li>
-        <a href="/posts/ipad">Having Fun with an iPad</a> - <i>2022-12-04</i>
-        <br>
-        Poking and peeking into the internals of an iPad Mini 2.
-      </li>
-    
-      <li>
-        <a href="/posts/mandelbrot">Drawing the Mandelbrot Set</a> - <i>2022-10-31</i>
-        <br>
-        I write a small C program to play around with the Mandelbrot set.
-      </li>
-    
-      <li>
-        <a href="/posts/footnotes">Fixing A Don Quixote EPUB Book&#39;s Footnotes</a> - <i>2022-10-07</i>
-        <br>
-        Repairing a Don Quixote (Grossman&#39;s translation) EPUB book&#39;s footnotes by using another copy of the same book.
-      </li>
-    
-      <li>
-        <a href="/posts/backup">Backing Up My Desktop</a> - <i>2022-09-04</i>
-        <br>
-        I had a disused laptop and an Ethernet cable; I used those to backup my files.
-      </li>
-    
-      <li>
-        <a href="/posts/dwmbar">dwmbar: Create a DWM Status Bar</a> - <i>2022-08-15</i>
-        <br>
-        A C program that creates and updates every second a DWM status bar with the current time and ALSA volume.
-      </li>
-    
-      <li>
-        <a href="/posts/rep">rep: A Tool for Repeating Commands</a> - <i>2022-07-18</i>
-        <br>
-        A small tool written in C to repeat commands.
-      </li>
-    
-      <li>
-        <a href="/posts/base64">Base64: Encoding Binary Data</a> - <i>2022-06-09</i>
-        <br>
-        Encoding WebP images and creating Data URLs with my own implementation of Base64 in C.
-      </li>
-    
-    </ul>
-  </section>
+  <meta name="description" content="The website of a computer geek. I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform." />
+  <style>
+      .post{border:3px solid black;border-radius:6px;margin:3em 0;padding:1em 1em;box-shadow:.5em .5em lightblue,-.5em -.5em pink;background-color:white;-webkit-text-decoration:none;text-decoration:none;color:inherit}nav{margin-top:16px}.grayout{opacity:0.6}.posts{list-style:none;margin:0;padding:0}.post-title{text-align:center;margin:0}.ellipsis{text-align:center;margin-bottom:0}.posts li:first-child{margin-top:2em}.posts li:last-child{margin-bottom:2em}
 
   
-  </body>
+    </style>
+
+</head>
+<body>
+  
+    
+  <header>
+    <nav class="center">
+      <a href="/archive/">/archive/</a>
+      <br>
+      <a href="/recent-reads/">/recent-reads/</a>
+    </nav>
+  </header>
+
+    <main>
+      
+  <h1 class="center">Homepage</h1>
+  <p class="center">Welcome!</p>
+  <p class="center">I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform. I know HTML, Python, C, Bash, C++, x86-64 assembly, CSS, and JavaScript.</p>
+  <p class="center">I hosted this website on a spare laptop running Apache but I've since moved to using Vercel. I wrote an SSG in C++ then switched around different web frameworks (Next.js, Svelte, etc.) before deciding to write another in Node.js—it crawls for Nunjucks templates and renders them, with the blog posts being written in my own Markdown-like document language. It uses Babel for JavaScript transcompilation, PostCSS to downgrade CSS, highlight.js for highlighting source code, svgo and sharp for optimizing SSG and other image files, and finally katex for rendering LaTex.</p>
+  <div class="center">
+    <a href="mailto:&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;">&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;</a><br>
+    <a href="https://github.com/kejcao">github.com</a><br>
+    <a href="https://crackmes.one/user/kejcao">crackmes.one</a>
+  </div>
+  <ul class="posts">
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/fuzzy-file-completion-in-bash.md">Fuzzy File Completion in Bash</a></h1>
+      <h4 class="center grayout">C, algorithm, bash, linux</h4>
+      <p style="text-align: center"><i>2023-07-31</i></p>
+      <p><p>A shell is basically a computer program that allows users to run other computer programs, which do different things depending on the inputs one gives it in the form of arguments. I use one of these shells called Bash and often I have the need to refer to a file or directory so the program I&#039;m running can perform some action on it. To ease the strain of typing out a path/filename in full I can press the &quot;tab&quot; key to let Bash attempt to fill in (that is, complete) the filename for me. In the GIF below, you can see Bash tab completion in action.</p>
+          <a class="img" href="/media/regular-bash-file-completion-demo.gif">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/media/regular-bash-file-completion-demo.gif"
+              alt="regular bash-file-completion-demo.gif"
+            />
+          </a>
+        <p>I had to press tab 3 times to complete the filename &quot;<code>a-file-with-a-really-long-name3</code>.&quot; This is because Bash tab completion strictly matches prefixes. Projects like <a href="https://github.com/junegunn/fzf#fuzzy-completion-for-bash-and-zsh">fzf</a> and <a href="https://github.com/peco/peco">peco</a> offer fuzzy completion, which means they use more forgiving and smarter matching algorithms. Think of fuzzy file completion as Google searching your files—the algorithms tolerate typos and words written in the wrong order. None of them (to my knowledge) integrate very naturally with Bash tab completion. With fzf one has to press Ctrl+T to fuzzy complete files, double asterisks then tab to fuzzy complete, and Alt+C to jump to directories. They also have a more interactive and disruptive interface, as shown in the GIF below.</p>
+          <a class="img" href="/media/fzf-bash-file-completion-demo.gif">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/media/fzf-bash-file-completion-demo.gif"
+              alt="fzf bash-file-completion-demo.gif"
+            />
+          </a>
+        </p>
+      <p class="ellipsis"><a href="/posts/fuzzy-file-completion-in-bash.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/chatgpt-to-generate-colorschemes.md">Using ChatGPT to Generate Vim/Neovim Colorschemes</a></h1>
+      <h4 class="center grayout">AI, ChatGPT, LLM, python, vim</h4>
+      <p style="text-align: center"><i>2023-07-23</i></p>
+      <p><p>ChatGPT is &quot;the fastest-growing consumer application in history,&quot; so no doubt you have already heard of it. I saw a Reddit <a href="https://www.reddit.com/r/neovim/comments/14an2bu/texttocolorscheme_a_new_plugin_that_uses/">post</a> that promotes an extension that makes very creative use of ChatGPT to generate colorschemes for the Vim/Neovim text editors. I&#039;d love to add a little flair and eye candy to the editor I spend most of my days in—but I don&#039;t what to learn the commands and keyboard shortcuts of of yet another wholly unnecessary extension. I also don&#039;t have an API key for ChatGPT nor do I want to go through the trouble of getting one. I do have an account I made on the website a while ago though, so I logged in and used the web interface to prompt it. I don&#039;t know what exactly to prompt it with, so I looked through the <a href="https://github.com/svermeulen/text-to-colorscheme">source code</a> of the extension and found the prompt it uses stored in a <a href="https://github.com/svermeulen/text-to-colorscheme/blob/a6226a2d771b52dfadea81b308069a8655e0c978/lua/text-to-colorscheme/internal/openai.lua#L99C1-L99C1">string literal</a>. I wrote my own prompt, using the extension&#039;s as a template. The original prompt told ChatGPT to return Lua code, but I tell it to return Python code so I can copy then paste and feed its response into a script.</p></p>
+      <p class="ellipsis"><a href="/posts/chatgpt-to-generate-colorschemes.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/downloading-comic-books.md">Scraping Graphic Novels/Comics with Selenium</a></h1>
+      <h4 class="center grayout">ebook, piracy, python, scraping, selenium</h4>
+      <p style="text-align: center"><i>2023-07-12</i></p>
+      <p><h2>Background Information</h2><p>File formats like CBR and CBZ are used to store comic books which are represented as a sequential series of images. CBR stores these images in a RAR archive while CBZ stores them in a ZIP archive. Torrenting is basically a way of sharing files, where these files are often copyrighted material such as movies or TV shows. DC++ is a popular client for a P2P file-sharing protocol like BitTorrent called Direct Connect—basically it&#039;s like torrenting. Selenium is a library with bindings for Python that allows someone to code a robot to automatically interact with a web browser—like a magic spell a necromancer can use to animate undead metal to use a web browser.</p><h2>Scraping Comics</h2><p><a href="https://readcomiconline.li/">readcomiconline.li</a> and websites like it are the 123movies (a popular website for watching free movies) of the graphic novel/comic book world. Someone could obtain movies by torrenting them, often of higher resolution and quality, but 123movies makes it less of a hassle and presents the movies in an easily accessible environment. Likewise, someone could probably obtain comics from DC++ but readcomiconline makes it trivially easy. I like to have a local copy of the books I read, however, and using DC++ is too complicated and difficult for me. It is much easier for me to scrape the website <a href="https://readcomiconline.li/">readcomiconline.li</a> automatically using Selenium, then download and combine the images I get into a CBZ file (like a webrip if you know what that is but for comics instead of movies).</p></p>
+      <p class="ellipsis"><a href="/posts/downloading-comic-books.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/viewing-csv-files.md">Viewing CSV Files</a></h1>
+      <h4 class="center grayout">linux</h4>
+      <p style="text-align: center"><i>2023-07-05</i></p>
+      <p><p>A CSV file is a file representing a table or 2D array by storing each row in its own line and separating columns with commas. For the rest of this post, I will consider a file that contains a table stored in columns separated by any delimiter, not just a comma, as a CSV file.</p><p>I sometimes need to take a peek at a large or wide CSV file—but when I try, it is very unclear what each row&#039;s columns correspond to. For example, the following CSV file from a 2019 Facebook data leak is a pile of indistinguishable gibberish. You can&#039;t tell what&#039;s what, there&#039;s no padding.</p><pre><code>Phone Number::First Name:Last Name:Gender:Residence:Birth Place:Marital Status:Occupation:Join Date:::Email
+12042029560:100028502372576:Barb:Hitching:female:Winnipeg, Manitoba:Winnipeg, Manitoba::Self-Employed:9/3/2018 12:00:00 AM::
+12042029642:100023805675861:Sheldon:Fink:male:::::4/3/2019 12:00:00 AM::
+12042050007:629430006:Cynthia:Brown:female:Winnipeg, Manitoba::::6/7/2018 12:00:00 AM::
+12042050072:706920609:Mitchell:James:male:::::7/10/2017 12:00:00 AM::08/24
+12042050077:100027346872216:Dirk:Sjoberg:male:::::1/1/0001 12:00:00 AM::
+12042050085:100026825255757:Zahra:Moh:female:::::12/19/2018 12:00:00 AM::
+12042050087:542043613:Brent:Lott:male:Beauséjour, Manitoba:Beauséjour, Manitoba::Self-Employed:11/4/2018 12:00:00 AM::
+12042050092:100000711126229:Herb:Waldner Jr:male:Beauséjour, Manitoba:Beauséjour, Manitoba:::8/17/2015 12:00:00 AM::
+12042050105:100034889205619:Sherrie Lynn:Wassing:female:::::3/20/2019 12:00:00 AM::</code></pre></p>
+      <p class="ellipsis"><a href="/posts/viewing-csv-files.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/wget-and-curl.md">Curl: Tips &amp; Tricks</a></h1>
+      <h4 class="center grayout">linux</h4>
+      <p style="text-align: center"><i>2023-06-23</i></p>
+      <p><p>I&#039;ve been using the command line tools <code>curl</code> and <code>wget</code> for a while now. I&#039;ve picked up a few tricks. Most of them will be on <code>curl</code>, since I use that the most.</p><p>I often forget the more esoteric HTTP status codes. For a quick and cute reminder, one can enter something like &quot;<a href="https://http.cat/403">http.cat/403</a>&quot; into the browser search bar and you get a cute cat describing that status code.</p><h2>The Basics</h2><p>We can use <code>wget</code> like we would <code>curl</code> by using the <code>-O</code> flag which specifies a file to output to, where a lone hyphen stands for stdout. <code>-q</code> suppresses the output of progress bars and other unnecessary information.</p><pre><code>$ wget -qO - example.org
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Example Domain&lt;/title&gt;
+
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta http-equiv=&quot;Content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    body {
+...</code></pre></p>
+      <p class="ellipsis"><a href="/posts/wget-and-curl.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/chrome-extension.md">Writing a Chrome Extension to Count Open Tabs</a></h1>
+      <h4 class="center grayout">chrome, javascript</h4>
+      <p style="text-align: center"><i>2023-06-04</i></p>
+      <p><p>I was curious as to how many Google Chrome tabs I have open (I estimated at least 100) but I couldn&#039;t think of any way to have a precise count except to manually tally each tab—which with at least 100 tabs is going to be a very menial task, so I searched online for alternative solutions. I found a Stack Exchange <a href="https://superuser.com/questions/967064/how-to-get-tab-count-in-chrome-desktop-without-app-extension">question</a> with many different answers but the only one that worked for me was the extension someone was promoting. I don&#039;t trust extensions (the only one I have is uBlock Origin), especially ones with low userbases. Beyond that I&#039;ve never coded a web browser extension before so writing one that counts tabs seems like an easy first project to get into this area of development.</p><p>I wrote the extension in a night, extrapolating from Google Chrome&#039;s series of well-written introductory <a href="https://developer.chrome.com/docs/extensions/mv3/getstarted/">articles</a> for people like me. My code is available on a <a href="https://github.com/kejcao/tabs">GitHub repo</a>. The extension shows the number of tabs you have open as text on a blue background below the icon. When you click on the icon it will show a popup with more information, including the number of windows, how many of which are incognito (this only works if you enable the extension on incognito windows) and the most commonly used sites you have open.</p>
+          <a class="img" href="/media/tabs-chrome-extension.png">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/media/tabs-chrome-extension.png"
+              alt="tabs chrome-extension.png"
+            />
+          </a>
+        <p>It isn&#039;t shown in the screenshot, but if you hover over the icon you should get a popup giving you a summary of how many tabs and windows are open.</p></p>
+      <p class="ellipsis"><a href="/posts/chrome-extension.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/hex-words.md">Writing English Words as Hexadecimal</a></h1>
+      <h4 class="center grayout">nlp, python</h4>
+      <p style="text-align: center"><i>2023-05-25</i></p>
+      <p><p>I was curious as to what English words could be written solely with the 6 letters available in the hexadecimal numerical system, so I hammered together a short Python script which takes as its sole argument a filename of newline separated words and regurgitates the words that consist of only letters A–F.</p><pre><code><span class="hljs-keyword">import</span> sys
+
+<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv) != <span class="hljs-number">2</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;usage: onlyhex [FILE]&#x27;</span>)
+    quit()
+
+<span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(sys.argv[<span class="hljs-number">1</span>]) <span class="hljs-keyword">as</span> fp:
+    <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> fp.readlines():
+        word = word.strip()
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(word) &gt; <span class="hljs-number">2</span> <span class="hljs-keyword">and</span> <span class="hljs-built_in">set</span>(word).issubset(<span class="hljs-built_in">set</span>(<span class="hljs-string">&quot;abcdef&quot;</span>)):
+            <span class="hljs-built_in">print</span>(word)</code></pre><p>Running the script on some 400K English words in text files from a <a href="https://github.com/dwyl/english-words">git repo</a> returns numerous but obscure results. Instead you may want to run it on a list from another <a href="https://github.com/first20hours/google-10000-english">git repo</a> of the 10-20K most common English words. This winnows the results into interesting words like cafe, ace, face, deaf, add, decaf, and fade. This means numbers like <code>0xfadedface</code> and <code>0xdecafcafe</code> are valid hexadecimal, corresponding to 67342564046 and 59805518590 in our familiar decimal system, respectively.</p></p>
+      <p class="ellipsis"><a href="/posts/hex-words.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/c-hello-world.md">A Strange Hello World Program in C</a></h1>
+      <h4 class="center grayout">C, assembly, linux, low-level</h4>
+      <p style="text-align: center"><i>2023-05-11</i></p>
+      <p><pre><code>__attribute__((section(<span class="hljs-string">&quot;.text&quot;</span>))) <span class="hljs-type">const</span> <span class="hljs-type">char</span> main[] = {
+    <span class="hljs-number">0x55</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>, <span class="hljs-number">0xe5</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x83</span>, <span class="hljs-number">0xec</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xb8</span>,
+    <span class="hljs-number">0x68</span>, <span class="hljs-number">0x65</span>, <span class="hljs-number">0x6c</span>, <span class="hljs-number">0x6c</span>, <span class="hljs-number">0x6f</span>, <span class="hljs-number">0x2c</span>, <span class="hljs-number">0x20</span>, <span class="hljs-number">0x77</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>,
+    <span class="hljs-number">0x45</span>, <span class="hljs-number">0xf1</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xb8</span>, <span class="hljs-number">0x77</span>, <span class="hljs-number">0x6f</span>, <span class="hljs-number">0x72</span>, <span class="hljs-number">0x6c</span>, <span class="hljs-number">0x64</span>, <span class="hljs-number">0x21</span>,
+    <span class="hljs-number">0x0a</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>, <span class="hljs-number">0x45</span>, <span class="hljs-number">0xf8</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x8d</span>, <span class="hljs-number">0x45</span>, <span class="hljs-number">0xf1</span>,
+    <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>, <span class="hljs-number">0xc6</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0xc0</span>, <span class="hljs-number">0x01</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>,
+    <span class="hljs-number">0x48</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0x01</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0xc2</span>,
+    <span class="hljs-number">0x0f</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x0f</span>, <span class="hljs-number">0x05</span>, <span class="hljs-number">0xb8</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>,
+    <span class="hljs-number">0x00</span>, <span class="hljs-number">0xc9</span>, <span class="hljs-number">0xc3</span>
+};</code></pre><p>Compiling the above C code with either GCC or Clang on my x86-64 Linux platform yields</p><pre><code>$ gcc main.c
+/tmp/ccJRPyPq.s: Assembler messages:
+/tmp/ccJRPyPq.s:4: Warning: ignoring changed section attributes for .text
+$ clang main.c
+main.c:1:1: warning: variable named &#039;main&#039; with external linkage has undefined behavior [-Wmain]
+__attribute__((section(&quot;.text&quot;))) const char main[] = {
+^
+1 warning generated.
+$ ./a.out
+hello, world!</code></pre><p>Both compilers emit warnings but if we ignore them and run the executable anyway it prints &quot;hello, world!&quot;. This is surprising as we&#039;re seemingly assigning random bytes to a variable called <code>main</code>, and the fact that it compiles at all is astonishing.</p></p>
+      <p class="ellipsis"><a href="/posts/c-hello-world.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/ruler.md">A Digital Ruler in Python</a></h1>
+      <h4 class="center grayout">GUI, python</h4>
+      <p style="text-align: center"><i>2023-05-02</i></p>
+      <p><p>I occasionally need to measure something in the corporeal world but never seem to have a ruler handy, so I wrote a bit of Python code that uses the <code>turtle</code> graphics module to draw a to-life scale digital ruler. The <code>turtle</code> module is a wrapper around a Tkinter canvas and is meant for introducing kids to programming so it isn&#039;t powerful, but for the simple use case of drawing a ruler <code>turtle</code> can handle it. It&#039;s been a while since I&#039;ve used the module so the code isn&#039;t very clean.</p>
+          <a class="img" href="/media/digital-ruler.png">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/media/digital-ruler.png"
+              alt="digital ruler.png"
+            />
+          </a>
+        <p>The code shown below should draw the above image of a standard yellow ruler onto an unresizable pop up window.</p></p>
+      <p class="ellipsis"><a href="/posts/ruler.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/blanking-display.md">Blanking Displays on Linux</a></h1>
+      <h4 class="center grayout">linux</h4>
+      <p style="text-align: center"><i>2023-04-26</i></p>
+      <p><p>I blank my displays when I go to sleep since I don&#039;t want sharp blue light cast on my bed as I try to doze. My Linux PC can be put to sleep with the command <code>systemctl suspend</code> which also blanks the display, but often I need my PC computing some time-consuming code overnight, rendering 3D models, or transferring files to my backup so I need it still run, just with the display off. I could just turn off my only monitor hooked to the PC with the power button, but the 2K monitor takes maybe 3-4 seconds to load back up and I&#039;m too impatient to wait that long each morning so instead I found that I can run <code>xset dpms force off</code> to turn off the screen.</p><p>If that doesn&#039;t work for you try the command <code>sleep 1 &amp;&amp; xset dpms force off</code> which just waits a second but seems to fix things.</p><p>I also have a laptop which isn&#039;t running Xorg or any other graphical display so I can&#039;t use the <code>xset</code> command. I&#039;ve tried doing what some Stack Overflow Q&amp;As suggest, like using the command <code>setterm -powerdown 1</code> which doesn&#039;t work on my laptop or using <code>vbetool</code> which isn&#039;t in OpenSUSE&#039;s repos, so I can&#039;t install it on my laptop. Instead I followed an OpenSUSE <a href="https://forums.opensuse.org/t/how-to-turn-off-monitor-in-multi-user-mode/149732/4">forum</a> in which OP has the same problem I have. In the file <code>/etc/systemd/logind.conf</code> I set <code>HandleLidSwitch</code> to <code>ignore</code>, then the file looks like</p></p>
+      <p class="ellipsis"><a href="/posts/blanking-display.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/ioli-crackmes.md">Reverse Engineering IOLI Crackmes</a></h1>
+      <h4 class="center grayout">RE, linux</h4>
+      <p style="text-align: center"><i>2023-04-20</i></p>
+      <p><p>A crackme is an executable program that people reverse engineer for fun. The executable usually prompts the user for a password, and the game is figuring out what that password is by reverse engineering the executable. IOLI crackmes are a series of 10 introductory crackmes we&#039;ll be reverse engineering today. They look like this</p><pre><code>$ ./crackme0x00
+IOLI Crackme Level 0x00
+Password: 346234
+Invalid Password!
+$ ./crackme0x00
+IOLI Crackme Level 0x00
+Password: 250382
+Password OK :)</code></pre><p>Our goal is to get the <code>Password OK :)</code> message for every program. You can download the crackmes at <a href="https://dustri.org/b/files/IOLI-crackme.tar.gz">IOLI-crackme.tar.gz</a>.</p></p>
+      <p class="ellipsis"><a href="/posts/ioli-crackmes.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/quicksort.md">A Decent Quicksort Function in C</a></h1>
+      <h4 class="center grayout">C, algorithm</h4>
+      <p style="text-align: center"><i>2023-04-13</i></p>
+      <p><p>We&#039;ll be writing a quicksort function whose header file looks like this</p><pre><code><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> SORT_H</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> SORT_H</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stddef.h&gt;</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-title function_">int</span> <span class="hljs-params">(*<span class="hljs-type">cmpfn_t</span>)</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *)</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">sort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size, <span class="hljs-type">cmpfn_t</span> cmp)</span>;
+
+<span class="hljs-meta">#<span class="hljs-keyword">endif</span></span></code></pre><p>The header file defines the type <code>cmpfn_t</code> as a function pointer that returns an integer and takes two void pointers. You can see the function signature of the <code>sort</code> function we&#039;ll be implementing; it takes a void pointer to an array, the number of elements in this array, the size of each element, and a function to compare elements. For <code>cmp(a,b)</code> it should return an integer less than zero if a&lt;b, equal to zero if a=b, and greater than zero if a&gt;b.</p></p>
+      <p class="ellipsis"><a href="/posts/quicksort.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/llama.md">LLaMA: Facebook&#39;s New Language Model</a></h1>
+      <h4 class="center grayout">LLM, ai</h4>
+      <p style="text-align: center"><i>2023-03-31</i></p>
+      <p><style>
+      .llama{white-space:pre-wrap}
+
+    </style><p>I heard from somewhere that Facebook&#039;s new language model LLaMA both outperforms GPT-3 (which powers ChatGPT) and can be run off a something as slow as a Raspberry PI. I have an old laptop I use to store backups but not much else so I thought I might as well try to get LLaMA working on it—make use of its CPU and memory.</p><p>Clone the repo <a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a> then torrent the pre-trained weights from this <a href="magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&amp;dn=LLaMA">magnet link</a> with your client of choice. Move the <code>7B</code> directory and files <code>tokenizer_checklist.chk</code> and <code>tokenizer.model</code> into the directory <code>models/</code> under the cloned repo then run the following at the root directory of the cloned repo</p></p>
+      <p class="ellipsis"><a href="/posts/llama.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/roots-of-unity.md">Roots of Unity</a></h1>
+      <h4 class="center grayout">interactive, math</h4>
+      <p style="text-align: center"><i>2023-03-14</i></p>
+      <p><style>
+      .roots input{width:4em}.center{text-align:center}
+
+    </style><p>The <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>th roots of unity are the solutions to the equation</p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>x</mi><mi>n</mi></msup><mo>−</mo><mn>1</mn><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x^n-1=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7977em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></span></p>
+      <p class="ellipsis"><a href="/posts/roots-of-unity.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/paywalls.md">Circumventing Online Paywalls</a></h1>
+      <h4 class="center grayout">piracy</h4>
+      <p style="text-align: center"><i>2023-03-09</i></p>
+      <p><p>Many paywalls on the Internet can be easily circumvented. There are two types of paywalls: Hard paywalls which require a paid subscription before any content can
+be accessed and soft paywalls which grant the customer a preview first, a
+limited amount of content, before demanding payment.</p><p>Soft paywalls usually rely on cookies to track how much content you&#039;ve already consumed. Simply clear your cookies and the site will have no idea you were ever
+there. To do this on Chrome click the three vertically stacked dots on the very
+right of the search bar, then click on the item that says &quot;Settings.&quot; Click the
+&quot;Privacy and security&quot; tab to the left, then click the &quot;Cookies and other site
+data&quot; menu item. Then click &quot;See all site data and permissions.&quot; Search with the
+search bar at the top-right for whatever website you want and click on the trash
+icon to the right to delete it.</p><p>Hard paywalls like <em>The Times</em> or <em>The Wall Street Journal</em> are forced to display their content in full to web crawlers to rank high on Google&#039;s search
+reuslts, so simply archive the page on an archive site like
+<a href="https://archive.ph/">archive.ph</a>; This work because archive sites archive pages
+in a similar way Google does.</p></p>
+      <p class="ellipsis"><a href="/posts/paywalls.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/sentiment.md">Sentiment Analysis: Detecting The Sentiment of a Text</a></h1>
+      <h4 class="center grayout">NLP, interactive</h4>
+      <p style="text-align: center"><i>2023-02-01</i></p>
+      <p><style>
+      #input{width:100%;padding:.5em}
+
+    </style><script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script><p>I&#039;ve been doing a bit of machine learning lately and have been messing around with TensorFlow&#039;s Keras API. As a fun little project I used their sentiment140 dataset to train a model to classify text as either positive or negative. I trained this model with Python and wrote it in a <a href="/tfjs/twitter.ipynb">Jupyter notebook</a>. I saved the model and used TensorFlow.js to load the model onto my website, which you can play around with below.</p></p>
+      <p class="ellipsis"><a href="/posts/sentiment.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/huffman.md">Experimenting with Huffman Coding</a></h1>
+      <h4 class="center grayout">algorithm, python</h4>
+      <p style="text-align: center"><i>2023-01-03</i></p>
+      <p><p>Huffman coding generates a tree from text and uses this tree to optimally and losslessly compress the text. Here is the tree generated from the text &quot;beekeepers keep bees&quot;:</p>
+          <a class="img" href="/media/huffman-tree.png">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/media/huffman-tree.png"
+              alt="huffman tree.png"
+            />
+          </a>
+        <p>You can see the letter &quot;E&quot; occurs in the phrase frequently, so it&#039;s near the top. To compress text, follow the branches (colored lines) down to each letter. Each time you take a right, write down 1; each time you take a left, write down 0. For example, using the tree, the word &quot;bees&quot; would be encoded as <code>001110111</code>. This is smaller than <code>1100010110010111001011110011</code>, which is how it&#039;s represented uncompressed.</p></p>
+      <p class="ellipsis"><a href="/posts/huffman.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/ipad.md">Having Fun with an iPad</a></h1>
+      <h4 class="center grayout">linux</h4>
+      <p style="text-align: center"><i>2022-12-04</i></p>
+      <p><p>I have an iPad Mini 2 that I use to read eBooks. I transfer the books to and from my iPad using the technique I outlined on one of my recent posts: I create a temporary HTTP server on my desktop that broadcasts a <code>index.html</code> file with a list of hyperlinks, then I click on one of them from the iPad to download the book. It took me a ludicrous amount of time to find out that you could mount the iPad just like any other USB. The Arch Linux Wiki has a guide­as it does for everything­on iOS. I followed the Wiki&#039;s instructions:</p><ol><li> I installed <code>libimobiledevice</code> and <code>usbmuxd</code>, both of which I apparently already had.</li>
+<li> I ran <code>idevicepair pair</code>. The command exited, printing something like &quot;please trust the device,&quot; then a little bubbly box pops up on the center of my iPad, asking me whether it should trust the device. I clicked &quot;trust.&quot; I ran the pairing command again. It doesn&#039;t print out an error, which I assumed meant the pairing went well.</li>
+<li> I mounted it, with <code>ifuse ~/ipad</code>. It worked!</li>
+</ol><p>I <code>cd</code>&#039;d into the directory and there these subdirectories stood,</p></p>
+      <p class="ellipsis"><a href="/posts/ipad.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/mandelbrot.md">Drawing the Mandelbrot Set</a></h1>
+      <h4 class="center grayout">C, algorithm</h4>
+      <p style="text-align: center"><i>2022-10-31</i></p>
+      <p><p>The Mandelbrot set is generated by iterating the function <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">f(x)=x^2+c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span>. Let <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> (called the seed) be 0 and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> (called the constant) be 1.</p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><msup><mn>0</mn><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex"> f(0)=0^2+1=1 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord">0</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9474em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span><p>Let&#039;s use the previous computation as the input for the next.</p></p>
+      <p class="ellipsis"><a href="/posts/mandelbrot.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/footnotes.md">Fixing A Don Quixote EPUB Book&#39;s Footnotes</a></h1>
+      <h4 class="center grayout">ebook, python</h4>
+      <p style="text-align: center"><i>2022-10-07</i></p>
+      <p><p>I wanted to read Don Quixote, specifically the Grossman translation, but I couldn&#039;t find any high-quality eBook copies. The majority of the copies I previewed had their footnotes jumbled up, but I really wanted the translator&#039;s commentary. After searching more, I found a copy with proper footnotes, but the formatting was abysmal—the text was unreadably minuscule in some places, and the table of contents contained a total of seven nonsensical entries. I took it upon myself to somehow extract the proper footnotes from this and overlay them on a copy with better formatting.</p><p>EPUB is a very common file format for eBooks. EPUB files are really just packed websites; EPUB files are ZIP archives, and so unzipping them with <code>unzip ebook.epub -d ebook/</code> would reveal HTML and CSS files, much like a website. However, a EPUB file has three additional, special files: the <code>toc.ncx</code> documentating the table of contents; a file ending in <code>.opf</code> listing all the files and what order to display them in; and the <code>mimetype</code> file containing <code>application/epub+zip</code> which states that this is, in fact, an EPUB file.</p><p>To repack an EPUB file, you can&#039;t just zip it back up again. You need to first zip the <code>mimetype</code> file without compression and without file attributes. <code>mimetype</code> must be there so as to immediately announce the file as an EPUB. Only then can you add the rest of your files to the zip archive. To do all that, you run <code>zip -Xr &quot;../ebook.epub&quot; mimetype $(ls | sed &#039;/^mimetype$/d&#039;)</code> in the directory you unzipped your EPUB to. The <code>-X</code> flag ensures ZIP doesn&#039;t store any attributes, and <code>-r</code> means to zip recursively. We copy <code>mimetype</code> first, then everything else.</p></p>
+      <p class="ellipsis"><a href="/posts/footnotes.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/backup.md">Backing Up My Desktop</a></h1>
+      <h4 class="center grayout">backup, linux</h4>
+      <p style="text-align: center"><i>2022-09-04</i></p>
+      <p><p>I recently acquired an Ethernet cable and had a spare laptop that was gathering dust with a 500GB hard drive in it. I&#039;ve been meaning to backup my desktop since I&#039;ve had troublesome moments where I accidentally deleted important files of mine or was on the precipice of deleting important files of mine. I thought, why not hook my desktop up to that old laptop with the Ethernet cable and copy my files and directories over using something like <code>rsync</code>?</p><p>In case you&#039;re unfamiliar, backing up a computer means copying its files and folders over to another computer, so in case something happens to your files that makes them inaccessible—like a corrupted hard drive, ransomware, or your clumsy fingers irreparably damaging them—you still have a copy on the other machine. <code>rsync</code> is a tool to copy files and folders that&#039;s smart and fast: It doesn&#039;t copy everything, it just copies the things it <em>must</em> copy.</p><p>I install Ubuntu Server on that laptop and create the user <code>kjc</code>. I make three directories in the home folder of <code>kjc</code>: <code>daily</code>, <code>weekly</code>, and <code>monthly</code>, to store my backups at those time increments. I notice that Ubuntu wasn&#039;t using the full 500GB that the hard drive was capable of, instead only registering around 100GB. It turns out I needed to expand the LVM, which is as simple as just two commands:</p></p>
+      <p class="ellipsis"><a href="/posts/backup.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/dwmbar.md">dwmbar: Create a DWM Status Bar</a></h1>
+      <h4 class="center grayout">C, dwm, linux</h4>
+      <p style="text-align: center"><i>2022-08-15</i></p>
+      <p><p>DWM is a window manager and its status bar is a customizable piece of text on the top right of the screen. I wrote a C program that populates the status bar with the time and ALSA volume, in the format of <code>Thu Aug 11 11:03:23 AM EDT 2022 [ 36% ]</code>.</p><p>The code to set the window manager&#039;s name using Xlib was copied from <a href="https://git.suckless.org/dwmstatus/">dwmstatus</a>. Compile with <code>gcc main.c $(pkg-config --cflags --libs x11 alsa) -O3 -o dwmbar</code>.</p><pre><code><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;X11/Xlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;alsa/asoundlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;alsa/mixer.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;signal.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdbool.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;time.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span>
+
+<span class="hljs-type">bool</span> run = <span class="hljs-literal">true</span>;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">sigint_handler</span><span class="hljs-params">()</span> {
+    run = <span class="hljs-literal">false</span>;
+}
+
+<span class="hljs-type">double</span> <span class="hljs-title function_">get_volume</span><span class="hljs-params">(<span class="hljs-type">snd_mixer_t</span> *handle)</span> {
+    snd_mixer_handle_events(handle);
+
+    <span class="hljs-type">snd_mixer_selem_id_t</span> *sid;
+    snd_mixer_selem_id_alloca(&amp;sid);
+    snd_mixer_selem_id_set_index(sid, <span class="hljs-number">0</span>);
+    snd_mixer_selem_id_set_name(sid, <span class="hljs-string">&quot;Master&quot;</span>);
+
+    <span class="hljs-type">long</span> min, max, volume;
+    <span class="hljs-type">snd_mixer_elem_t</span> *elem = snd_mixer_find_selem(handle, sid);
+    snd_mixer_selem_get_playback_volume_range(elem, &amp;min, &amp;max);
+    snd_mixer_selem_get_playback_volume(elem, SND_MIXER_SCHN_FRONT_LEFT, &amp;volume);
+
+    <span class="hljs-keyword">return</span> (<span class="hljs-type">double</span>)volume / (max/<span class="hljs-number">100</span>);
+}
+
+<span class="hljs-type">snd_mixer_t</span> *<span class="hljs-title function_">create_handle</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    <span class="hljs-type">snd_mixer_t</span> *handle;
+    snd_mixer_open(&amp;handle, <span class="hljs-number">0</span>);
+    snd_mixer_attach(handle, <span class="hljs-string">&quot;default&quot;</span>);
+    snd_mixer_selem_register(handle, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);
+    snd_mixer_load(handle);
+    <span class="hljs-keyword">return</span> handle;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {
+    Display *dpy = XOpenDisplay(<span class="hljs-literal">NULL</span>);
+    <span class="hljs-type">snd_mixer_t</span> *handle = create_handle();
+
+    signal(SIGINT, sigint_handler);
+
+    <span class="hljs-keyword">while</span>(run) {
+        <span class="hljs-type">char</span> bar[<span class="hljs-number">128</span>];
+
+        <span class="hljs-type">time_t</span> t = time(<span class="hljs-literal">NULL</span>);
+        <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tm</span> *<span class="hljs-title">tm</span> =</span> localtime(&amp;t);
+        <span class="hljs-type">int</span> n = strftime(bar, <span class="hljs-keyword">sizeof</span>(bar), <span class="hljs-string">&quot; %a %b %d %r %Z %Y &quot;</span>, tm);
+
+        <span class="hljs-built_in">sprintf</span>(bar+n, <span class="hljs-string">&quot;[ %.0f%% ]&quot;</span>, get_volume(handle));
+
+        XStoreName(dpy, DefaultRootWindow(dpy), bar);
+        XSync(dpy, False);
+
+        usleep(<span class="hljs-number">1000000</span>);
+    }
+
+    snd_mixer_close(handle);
+    XCloseDisplay(dpy);
+}</code></pre></p>
+      <p class="ellipsis"><a href="/posts/dwmbar.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/rep.md">rep: A Tool for Repeating Commands</a></h1>
+      <h4 class="center grayout">C, linux</h4>
+      <p style="text-align: center"><i>2022-07-18</i></p>
+      <p><p>When I needed to run a command multiple times, I would wrap that command into a loop.</p><pre><code><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {1..10}; <span class="hljs-keyword">do</span> ...; <span class="hljs-keyword">done</span></code></pre><p>But it&#039;s a bother to type that out just to repeat a command a few times, so I wrote a simple C script that simplifies the process.</p></p>
+      <p class="ellipsis"><a href="/posts/rep.md">...read more</a></p>
+    </li>
+    
+    <li class="post">
+      <h1 class="post-title"><a style="text-decoration: none; color: inherit" href="/posts/base64.md">Base64: Encoding Binary Data</a></h1>
+      <h4 class="center grayout">C, algorithm</h4>
+      <p style="text-align: center"><i>2022-06-09</i></p>
+      <p><p>Base64 is a binary-to-text encoding scheme that transforms 8-bit binary data, in chunks of 3, into 6-bit ASCII characters. This is useful for the transfer of data in environments that are restricted to ASCII, or to avoid accidentally triggering control characters. It is used to create Data URLs, which allow the embedding of media—such as images—or other binary assets into textual HTML, XML, and CSS files; Earlier forms of SMTP only supported 7-bit ASCII, and Base64 was used to transfer attachments.</p><p>Data encoded with Base64 experience around a 33 percent increase in size, about 2 percent more if line breaks occur every 76 characters, as enforced by MIME.</p><p>If the data being encoded does not fit neatly into chunks of 3, equal signs are commonly used to pad the output. The 64 characters used for Base64 are, in order from 0–63: A–Z, a–z, 0–9, then two symbols that vary. RFC 4648 specifies those two symbols as the plus sign, then the forward slash.</p></p>
+      <p class="ellipsis"><a href="/posts/base64.md">...read more</a></p>
+    </li>
+    
+  </ul>
+
+    </main>
+  
+</body>
+
 </html>

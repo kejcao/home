@@ -1,6 +1,4 @@
-title: Having Fun with an iPad
- desc: Poking and peeking into the internals of an iPad Mini 2.
- date: 2022-12-04
+Having Fun with an iPad | 3 | 2022-12-04 | linux
 
 I have an iPad Mini 2 that I use to read eBooks. I transfer the books to and from my iPad using the technique I outlined on one of my recent posts: I create a temporary HTTP server on my desktop that broadcasts a `index.html` file with a list of hyperlinks, then I click on one of them from the iPad to download the book. It took me a ludicrous amount of time to find out that you could mount the iPad just like any other USB. The Arch Linux Wiki has a guide­as it does for everything­on iOS. I followed the Wiki's instructions:
 

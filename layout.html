@@ -1,72 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kevin Cao's Website</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    {% block style %}
-      {% style %}
-        body {
-          padding: 0 1em;
-          margin: 0 auto;
-          font-family: "Merriweather", serif;
-          color: rgb(0, 0, 0, 0.7);
-          max-width: 50em;
-          tab-size: 4;
-        }
 
-        code,
-        pre {
-          font-family: "Inconsolata", monospace;
-        }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kevin Cao's Website</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <link rel="stylesheet" href="/stylesheet.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
+  <style>
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
+  Theme: a11y-light
+  Author: @ericwbailey
+  Maintainer: @ericwbailey
 
-        pre {
-          overflow-x: auto;
-        }
+  Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
+*/.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
+  </style>
+  {% block style %}
+    {% style %}
+      body {
+        padding: 0 1em;
+        margin: 0 auto;
+        font-family: "Merriweather", serif;
+        color: rgb(0, 0, 0, 0.7);
+        max-width: 50em;
+        tab-size: 4;
+      }
 
-        img {
-          max-width: 100%;
-          height: auto;
-        }
+      code,
+      pre {
+        font-family: "IBM Plex Mono", monospace;
+      }
 
-        input {
-          width: 100%;
-          font: inherit;
-          padding: .5em;
-        }
+      pre {
+        overflow-x: auto;
+        margin: 0 2em;
+      }
 
-        * {
-          box-sizing: border-box;
-        }
+      .img+pre {
+        margin-top: 1em;
+      }
+      
+      pre:has(+.img) {
+        margin-bottom: 1em;
+      }
 
-        .navbar ul {
-          list-style: none;
-          padding: .5em 0 0 0;
-          margin: 0;
-        }
+      img {
+        max-width: 80%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
 
-        .navbar li {
-          display: inline;
-        }
-      {% endstyle %}
-    {% endblock%}
-    {% block head %}
-    {% endblock %}
-  </head>
-  <body>
-  {% block body %}
-    <header>
-      <nav class="navbar">
-        <ul>
-          <li><a href="/">homepage</a></li>
-          |
-          <li><a href="/posts/">posts</a></li>
-        </ul>
-      </nav>
-    </header>
-    {% block content %}
-    {% endblock %}
+      input {
+        font: inherit;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      article h1 {
+      	font-size: 2em;
+      }
+
+      .navbar ul {
+        list-style: none;
+        padding: .5em 0 0 0;
+        margin: 0;
+      }
+
+      .navbar li {
+        display: inline;
+      }
+
+      .center {
+      	text-align: center;
+      }
+    {% endstyle %}
   {% endblock %}
-  </body>
+  {% block head %}
+  {% endblock %}
+</head>
+<body>
+  {% block body %}
+    {% block header %}
+      <header>
+        <p style="text-align: center"><a href="/">back to homepage</a></p>
+      </header>
+    {% endblock %}
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+  {% endblock %}
+</body>
+
 </html>
