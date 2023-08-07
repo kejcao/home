@@ -3,16 +3,6 @@
 {% block head %}
   <title>Homepage</title>
   <meta name="description" content="The website of a computer geek. I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform." />
-    <!-- <style> -->
-    <!-- .post { -->
-    <!--   border: 3px solid black; -->
-    <!--   border-radius: 6px; -->
-    <!--   box-shadow: .5em .5em lightblue, -.5em -.5em pink; -->
-    <!--   background-color: white; -->
-    <!--   text-decoration: none; -->
-    <!--   color: inherit; -->
-    <!-- } -->
-    <!-- </style> -->
 {% endblock %}
 
 {% block header %}
@@ -38,9 +28,11 @@
   <ul class="m-0 p-0">
     {% for post in posts %}
     <li class="{% if loop.first %}mt-8 {% endif %}{% if loop.last %} mt-8 {% endif %}rounded-lg border-black border-solid border-3 my-4 p-4">
-      <h1 class="text-center"><a class="no-underline text-inherit" href="/posts/{{ post.slug }}">{{ post.title }}</a></h1>
-      <h4 class="text-center opacity-60">{{ post.tags | join(', ') }}</h4>
-      <p class="text-center"><i>{{ post.date }}</i></p>
+      <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/{{ post.slug }}">{{ post.title | raw | safe }}</a></h1>
+      <div class="columns-2">
+        <div class="m-0 text-center"><i>{{ post.date }}</i></div>
+        <div class="m-0 text-center opacity-60">{{ post.tags | join(', ') }}</div>
+      </div>
       <p>{{ post.desc | raw | safe }}</p>
       <p class="text-center m-0"><a href="/posts/{{ post.slug }}">...read more</a></p>
     </li>

@@ -23,10 +23,10 @@ print('''
 
 {% block content %}
   <h1 class="text-center">Recent Reads</h1>
-  <p>A list of recent things on the Internet I have read/skimmed/watched and found entertaining.</p> 
+  <p>I sometimes stumble upon really unique websites on the Internet that I wish to share. Also some interesting articles and videos.</p> 
 ''')
 
-print('<section class="columns-4 leading-4">')
+print('<section>')
 with open('/home/kjc/recent-reads', 'r') as fp:
     cards = []
     for l in fp.readlines():
@@ -36,22 +36,11 @@ with open('/home/kjc/recent-reads', 'r') as fp:
             continue
         type, desc = desc.split(':', maxsplit=1)
         cards.append(f'<div class="inline-block mb-4"><a title="added on {date}" href="{url}"><b>{type}</b></a> {process(desc)}</div>')
-    print('<div>')
-    for c in cards[::4]:
-        print(c)
-    print('</div>')
-    print('<div>')
-    for c in cards[1::4]:
-        print(c)
-    print('</div>')
-    print('<div>')
-    for c in cards[2::4]:
-        print(c)
-    print('</div>')
-    print('<div>')
-    for c in cards[3::4]:
-        print(c)
-    print('</div>')
+    for i in range(3):
+        print('<div class="p-2 sm:float-left sm:w-[calc(33.33%-1rem)]">')
+        for c in cards[i::3]:
+            print(c)
+        print('</div>')
 print('</section>')
 
 print('{% endblock %})')

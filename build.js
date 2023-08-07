@@ -95,6 +95,55 @@ env.addExtension('ScriptExtension', new function() {
 //   };
 // }());
 
+function escapeHTML(txt) {
+  return txt
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function renderInline(txt) {
+  let ptr = 0;
+
+  function matchSpecial(c) {
+    return (ptr >= txt.length || txt[ptr] == c) && (ptr <= 0 || txt[ptr - 1] != '\\');
+  }
+
+  function get(name, ending) {
+    let content = '';
+    while (++ptr < txt.length && !matchSpecial(ending)) {
+      content += txt[ptr];
+    }
+    if (ptr >= txt.length) {
+      throw new Error(`unterminated ${name}.`);
+    }
+    return content;
+  }
+
+  let html = '';
+  for (ptr = 0; ptr < txt.length; ++ptr) {
+    if (matchSpecial('*')) {
+      html += `<em>${escapeHTML(renderInline(get('italics', '*')))}</em>`;
+    } else if (matchSpecial('`')) {
+      html += `<code>${escapeHTML(get('code', '`'))}</code>`;
+    } else if (matchSpecial('$')) {
+      html += `${katex.renderToString(get('math', '$'), {})}`;
+    } else if (matchSpecial('[')) {
+      const content = escapeHTML(renderInline(get('link', ']')));
+      if (++ptr >= txt.length || !matchSpecial('(')) {
+        throw new Error('malformed link.');
+      }
+      const url = escapeHTML(get('link', ')'));
+      html += `<a href="${url}">${content}</a>`;
+    } else {
+      html += escapeHTML(txt[ptr]);
+    }
+  }
+  return html;
+}
+
 env.addFilter('raw', str => {
   return env.renderString(str, this.ctx);
 });
@@ -119,55 +168,6 @@ function toHTML(txt) {
     return block;
   }
 
-  function escapeHTML(txt) {
-    return txt
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  function renderInline(txt) {
-    let ptr = 0;
-
-    function matchSpecial(c) {
-      return (ptr >= txt.length || txt[ptr] == c) && (ptr <= 0 || txt[ptr - 1] != '\\');
-    }
-
-    function get(name, ending) {
-      let content = '';
-      while (++ptr < txt.length && !matchSpecial(ending)) {
-        content += txt[ptr];
-      }
-      if (ptr >= txt.length) {
-        throw new Error(`unterminated ${name}.`);
-      }
-      return content;
-    }
-
-    let html = '';
-    for (ptr = 0; ptr < txt.length; ++ptr) {
-      if (matchSpecial('*')) {
-        html += `<em>${escapeHTML(renderInline(get('italics', '*')))}</em>`;
-      } else if (matchSpecial('`')) {
-        html += `<code>${escapeHTML(get('code', '`'))}</code>`;
-      } else if (matchSpecial('$')) {
-        html += `${katex.renderToString(get('math', '$'), {})}`;
-      } else if (matchSpecial('[')) {
-        const content = escapeHTML(renderInline(get('link', ']')));
-        if (++ptr >= txt.length || !matchSpecial('(')) {
-          throw new Error('malformed link.');
-        }
-        const url = escapeHTML(get('link', ')'));
-        html += `<a href="${url}">${content}</a>`;
-      } else {
-        html += escapeHTML(txt[ptr]);
-      }
-    }
-    return html;
-  }
-
   try {
     for (ptr = 0; ptr < lines.length; ++ptr) {
       if (!lines[ptr].trim()) {
@@ -186,9 +186,12 @@ function toHTML(txt) {
           : get('math block', ['\\]']).slice(1, -1).join('\n');
         html.push(katex.renderToString(latex, { displayMode: true }));
       } else if (lines[ptr].startsWith('!')) {
-        const filename = lines[ptr].slice(1).trim();
+        let filename = lines[ptr].slice(1).trim();
         if (!fs.existsSync(`images/${filename}`)) {
           throw new Error(`${filename} does not exist.`);
+        }
+        if (path.parse(filename).ext == '.png') {
+          filename = `${path.parse(filename).name}.jpg`;
         }
         html.push(`
           <a class="img" href="/media/${filename}">
@@ -196,7 +199,7 @@ function toHTML(txt) {
               loading="lazy"
               decoding="async"
               src="/media/${filename}"
-              alt="${path.basename(filename).replace('-', ' ')}"
+              alt="${path.parse(filename).name.replace(/-/g, ' ')}"
             />
           </a>
         `);
@@ -287,7 +290,7 @@ function postToHTML(txt) {
   }
   let html = toHTML(lines.join('\n'));
   return [{
-    title: frontmatter[0].trim(),
+    title: renderInline(frontmatter[0].trim()),
     desc: html.slice(0, frontmatter[1]).join(''),
     date: frontmatter[2].trim(),
     tags: (frontmatter.length == 4 ? frontmatter[3].split(',').map(x => x.trim()) : []).sort(),
@@ -329,7 +332,6 @@ function renderPosts() {
   let metadata = [];
   fs.readdirSync('src/posts/').forEach(fp => {
     if (path.extname(fp) == '.md') {
-      console.log(fp)
       let frontmatter, content;
       try {
         [frontmatter, content] = postToHTML(
@@ -339,7 +341,7 @@ function renderPosts() {
         console.error(`${fp}: ${e.message}`)
         process.exit(1);
       }
-      frontmatter['slug'] = path.basename(fp);
+      frontmatter['slug'] = path.parse(fp).name;
       frontmatter['content'] = content;
       metadata.push(frontmatter);
 

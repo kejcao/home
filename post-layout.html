@@ -7,7 +7,7 @@
 
 {% block content %}
   <article>
-    <h1 class="text-center">{{ post.title }}</h1>
+    <h1 class="text-center">{{ post.title | raw | safe }}</h1>
     <p class="text-center"><i>{{ post.date }}</i></p>
     {{ post.content | raw | safe }}
   </article>

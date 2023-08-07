@@ -9,6 +9,6 @@
   <h1 class="text-center">Archive</h1>
   <p>To search for all posts that have a certain tag, find all occurrences of the text "<code>tag;</code>" by pressing Ctrl+F.</p>
   <pre><code>cat &lt;&lt;EOF
-{% for post in posts %}<i>{{ post.date }}</i> <a href="/posts/{{ post.slug }}">{{ post.title }}</a> <b>|</b> {{ post.tags | join(';') }};
+{% for post in posts %}<i>{{ post.date }}</i> <a href="/posts/{{ post.slug }}">{{ post.title | raw | safe}}</a> <b>|</b> {{ post.tags | join(';') }};
 {% endfor %}EOF</code></pre>
 {% endblock %}
