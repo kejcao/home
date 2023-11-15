@@ -1,7 +1,5 @@
 Scraping Graphic Novels/Comics with Selenium | 4 | 2023-07-12 | python,selenium,scraping,piracy,ebook
 
-## Background Information
-
 File formats like CBR and CBZ are used to store comic books which are represented as a sequential series of images. CBR stores these images in a RAR archive while CBZ stores them in a ZIP archive. Torrenting is basically a way of sharing files, where these files are often copyrighted material such as movies or TV shows. DC++ is a popular client for a P2P file-sharing protocol like BitTorrent called Direct Connect—basically it's like torrenting. Selenium is a library with bindings for Python that allows someone to code a robot to automatically interact with a web browser—like a magic spell a necromancer can use to animate undead metal to use a web browser.
 
 ## Scraping Comics

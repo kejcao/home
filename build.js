@@ -4,14 +4,15 @@ const nunjucks = require('nunjucks');
 const hljs = require('highlight.js');
 const babel = require('@babel/core');
 const katex = require('katex');
+const readline = require('readline');
 
 const GLOBAL_LAYOUT_FILE = 'layout.html';
-const POST_LAYOUT_FILE = 'post-layout.html';
+const POST_LAYOUT_FILE = 'src/post-layout.html';
+
+let all = false, verbose = false;
 
 function shouldUpdate(src, dest) {
-  if (process.argv.length >= 3 && process.argv[2] == '-a') {
-    return true;
-  }
+  if (all) { return true; }
   try {
     return fs.statSync(src).mtime > fs.statSync(dest).mtime;
   } catch (_) {
@@ -95,6 +96,10 @@ env.addExtension('ScriptExtension', new function() {
 //   };
 // }());
 
+env.addFilter('raw', str => {
+  return env.renderString(str, this.ctx);
+});
+
 function escapeHTML(txt) {
   return txt
     .replace(/&/g, '&amp;')
@@ -105,88 +110,104 @@ function escapeHTML(txt) {
 }
 
 function renderInline(txt) {
-  let ptr = 0;
+  let i = 0;
+  let html = '';
 
-  function matchSpecial(c) {
-    return (ptr >= txt.length || txt[ptr] == c) && (ptr <= 0 || txt[ptr - 1] != '\\');
+  function finished() {
+    return i >= txt.length;
   }
 
-  function get(name, ending) {
+  function readUntil(ending) {
     let content = '';
-    while (++ptr < txt.length && !matchSpecial(ending)) {
-      content += txt[ptr];
-    }
-    if (ptr >= txt.length) {
-      throw new Error(`unterminated ${name}.`);
+    while (txt[++i] != ending) {
+      if (finished()) {
+        throw new Error(`unterminated inline block "${ending}".`);
+      }
+      if (txt[i] == '\\' && txt[i+1] == ending) {
+        ++i;
+      }
+      content += txt[i];
     }
     return content;
   }
 
-  let html = '';
-  for (ptr = 0; ptr < txt.length; ++ptr) {
-    if (matchSpecial('*')) {
-      html += `<em>${escapeHTML(renderInline(get('italics', '*')))}</em>`;
-    } else if (matchSpecial('`')) {
-      html += `<code>${escapeHTML(get('code', '`'))}</code>`;
-    } else if (matchSpecial('$')) {
-      html += `${katex.renderToString(get('math', '$'), {})}`;
-    } else if (matchSpecial('[')) {
-      const content = escapeHTML(renderInline(get('link', ']')));
-      if (++ptr >= txt.length || !matchSpecial('(')) {
-        throw new Error('malformed link.');
-      }
-      const url = escapeHTML(get('link', ')'));
-      html += `<a href="${url}">${content}</a>`;
-    } else {
-      html += escapeHTML(txt[ptr]);
+  for (; !finished(); ++i) {
+    if (txt[i] == '\\') {
+      html += escapeHTML(txt[i+1]);
+      ++i;
+      continue;
+    }
+
+    switch(txt[i]) {
+      case '*':
+        html += `<em>${renderInline(readUntil('*').replace(/\*/g, '\\*'))}</em>`;
+        break;
+      case '`':
+        const data = readUntil('`');
+
+        if (data.startsWith('!')) {
+          html += `<kbd>${
+            data.slice(1).split('+')
+              .map(x => `<kbd>${x}</kbd>`).join('+')
+          }</kbd>`;
+          break;
+        }
+
+        html += `<code>${escapeHTML(data)}</code>`;
+        break;
+      case '$':
+        html += `${katex.renderToString(readUntil('$'), {})}`;
+        break;
+      case '[':
+        const content = renderInline(readUntil(']'));
+        if (txt[++i] != '(' || finished()) {
+          throw new Error('malformed link.');
+        }
+        const url = escapeHTML(readUntil(')'));
+        html += `<a href="${url}">${content}</a>`;
+        break;
+      default:
+        html += escapeHTML(txt[i]);
     }
   }
   return html;
 }
 
-env.addFilter('raw', str => {
-  return env.renderString(str, this.ctx);
-});
-
-function toHTML(txt) {
-  let lines = txt.split('\n');
-  let ptr = 0;
+async function toHTML(lines, update) {
   let html = [];
 
-  function get(name, endings) {
-    let block = [lines[ptr]];
-    while (++ptr < lines.length) {
-      if (endings.some(s => lines[ptr].startsWith(s))) {
-        break;
+  async function readUntil(endings) {
+    let block = [];
+    while (true) {
+      const {value, done} = await lines.next();
+      if (done) {
+        throw new Error(`unterminated block "${endings}".`);
       }
-      block.push(lines[ptr]);
+      if (endings.some(s => value.startsWith(s))) {
+        block.push(value);
+        return block;
+      }
+      block.push(value);
     }
-    if (ptr >= lines.length) {
-      throw new Error(`unterminated ${name}.`);
-    }
-    block.push(lines[ptr]);
-    return block;
   }
 
   try {
-    for (ptr = 0; ptr < lines.length; ++ptr) {
-      if (!lines[ptr].trim()) {
-        continue;
-      }
+    for await (const line of lines) {
+      if (!line.trim()) { continue; }
 
-      if (lines[ptr].startsWith('<') || lines[ptr].startsWith('{%')) {
-        if (/<\/.*?>$/.test(lines[ptr])) {
-          html.push(lines[ptr]);
+      if (line.startsWith('<') || line.startsWith('{%')) {
+        if (/<\/.*?>$/.test(line) || /<.*?\/>$/.test(line)) {
+          html.push(line);
           continue;
         }
-        html.push(get('raw code', ['</', '{%']).join('\n'))
-      } else if (lines[ptr].startsWith('\\[')) {
-        const latex = lines[ptr].endsWith('\\]')
-          ? lines[ptr].slice(2, -2)
-          : get('math block', ['\\]']).slice(1, -1).join('\n');
+        html.push(([line].concat(await readUntil(['</', '{%']))).join('\n'))
+      } else if (line.startsWith('\\[')) {
+        const latex = line.trim().endsWith('\\]')
+          ? line.trim().slice(2, -2)
+          : ([line].concat(await readUntil(['\\]']))).slice(1, -1).join('\n');
         html.push(katex.renderToString(latex, { displayMode: true }));
-      } else if (lines[ptr].startsWith('!')) {
-        let filename = lines[ptr].slice(1).trim();
+      } else if (line.startsWith('!')) {
+        let filename = line.slice(1).trim();
         if (!fs.existsSync(`images/${filename}`)) {
           throw new Error(`${filename} does not exist.`);
         }
@@ -194,41 +215,45 @@ function toHTML(txt) {
           filename = `${path.parse(filename).name}.jpg`;
         }
         html.push(`
-          <a class="img" href="/media/${filename}">
+          <a class="img" href="/static/media/${filename}">
             <img
               loading="lazy"
               decoding="async"
-              src="/media/${filename}"
+              src="/static/media/${filename}"
               alt="${path.parse(filename).name.replace(/-/g, ' ')}"
             />
           </a>
         `);
-      } else if (lines[ptr].startsWith('#')) {
-        const size = lines[ptr].match(/^#*/)[0].length;
+      } else if (line.startsWith('#')) {
+        const size = line.match(/^#*/)[0].length;
         if (size > 5) {
           throw new Error('too big of a header.');
         }
-        html.push(`<h${size}>${renderInline(lines[ptr].slice(size).trim())}</h${size}>`);
-        ++ptr;
-      } else if (lines[ptr].startsWith('```')) {
-        let block = get('code block', ['```'])
-        if (block.join('').includes('\t')) {
-          throw new Error('code block contains tabs.');
-        }
-        const language = block[0].slice(3).trim();
+        html.push(`<h${size}>${renderInline(line.slice(size).trim())}</h${size}>`);
+      } else if (line.startsWith('```') || line.startsWith('````')) {
+        let wrap = line.startsWith('````');
+        let block = [line].concat(await readUntil(wrap ? ['````'] : ['```']));
+        const language = block[0].slice(wrap ? 4 : 3).trim();
         let code = block.slice(1, block.length - 1).join('\n');
         if (language != '') {
           code = hljs.highlight(code, { language }).value;
         } else {
           code = escapeHTML(code);
         }
-        html.push(`<pre><code>${code}</code></pre>`);
+        // To avoid Jinja misinterpretation as placeholder.
+        code = code
+          .replace(/{/g, '&lbrace;')
+          .replace(/}/g, '&rbrace;');
+        html.push(`<pre${
+          wrap ? " style=\"white-space:pre-wrap\"" : ""
+        }><code>${code}</code></pre>`);
       } else {
-        let block = lines[ptr] + '\n';
-        while (++ptr < lines.length && lines[ptr].trim()) {
-          block += lines[ptr] + '\n';
-        }
-        block = block.trim();
+        let block = line;
+        // while (true) {
+        //   const {value, done} = await lines.next();
+        //   if (value.trim() || done) { break; }
+        //   block += value;
+        // }
 
         if (block.startsWith('1.')) {
           let item = '';
@@ -274,25 +299,46 @@ function toHTML(txt) {
           html.push(`<p>${renderInline(block.replace('\n', ' '))}</p>`);
         }
       }
+      if (!update) {
+        break;
+      }
     }
   } catch (e) {
-    e.message = `line ${ptr}: ${e.message}`;
+    // e.message = `line ${i+1}: ${e.message}`;
     throw e;
   }
   return html;
 }
 
-function postToHTML(txt) {
-  const lines = txt.split('\n');
-  const frontmatter = lines.shift().split('|');
+async function* linesOf(path) {
+  for await (const line of
+    readline.createInterface({
+      input: fs.createReadStream(path)
+    })) {
+
+    yield line;
+  }
+}
+
+async function postToHTML(path, update=true) {
+  function parseDate(s) {
+    const [y,m,d] = s.split('-');
+    return new Date(y, m-1, d);
+  }
+
+  const lines = linesOf(path);
+
+  const frontmatter = ((await lines.next()).value).split('|');
   if (frontmatter.length != 3 && frontmatter.length != 4) {
     throw new Error('invalid frontmatter.');
   }
-  let html = toHTML(lines.join('\n'));
+
+  let html = await toHTML(lines, update);
   return [{
     title: renderInline(frontmatter[0].trim()),
-    desc: html.slice(0, frontmatter[1]).join(''),
-    date: frontmatter[2].trim(),
+    desc: html[0] ?? '',
+    date: parseDate(frontmatter[2].trim()).toLocaleDateString(
+      'en-US', { year: "numeric", month: "short", day: "numeric"}),
     tags: (frontmatter.length == 4 ? frontmatter[3].split(',').map(x => x.trim()) : []).sort(),
   }, html.join('')];
 }
@@ -307,6 +353,9 @@ function renderWebpages(dir, frontmatters) {
     }
 
     if (fp == 'index.html') {
+      if (verbose) {
+        console.log(`rendering ${dir}`)
+      }
       const out = absfp.replace(/^src/, 'build');
       try {
         fs.mkdirSync(
@@ -314,69 +363,126 @@ function renderWebpages(dir, frontmatters) {
           { recursive: true }
         );
       } catch (_) { }
-      fs.writeFile(
-        out,
-        env.render(absfp, { posts: frontmatters, layout: GLOBAL_LAYOUT_FILE }),
-        err => {
-          if (err) {
-            console.error(err);
-            process.exit(1);
+
+      try {
+        fs.writeFile(
+          out,
+          env.render(absfp, { posts: frontmatters, layout: GLOBAL_LAYOUT_FILE }),
+          err => {
+            if (err) {
+              console.error(err);
+              process.exit(1);
+            }
           }
-        }
-      );
+        );
+      } catch(e) {
+        console.error(`${fp}: ${e}`)
+      }
     }
   });
 }
 
-function renderPosts() {
-  let metadata = [];
-  fs.readdirSync('src/posts/').forEach(fp => {
+async function firstLines(path, n) {
+  let lines = '';
+  for await (const line of
+    readline.createInterface({
+      input: fs.createReadStream(path)
+    })) {
+
+    if (n-- <= 0) { break; }
+    lines += line + '\n';
+  }
+  return lines;
+}
+
+async function renderPosts(past) {
+  let frontmatters = past ? past : [];
+  for (const fp of await fs.promises.readdir('src/posts/')) {
+    const outdir = path.join('build/posts', path.parse(fp).name);
+    const srcfp = path.join('src/posts', fp);
+
     if (path.extname(fp) == '.md') {
+      const willUpdate = shouldUpdate(
+        path.join('src/posts/', fp),
+        path.join(outdir, 'index.html')
+      );
+
+      // render the post into HTML and parse metadata
       let frontmatter, content;
       try {
-        [frontmatter, content] = postToHTML(
-          fs.readFileSync(`src/posts/${fp}`, 'utf8')
-        );
+        [frontmatter, content] = await postToHTML(srcfp, willUpdate);
       } catch (e) {
-        console.error(`${fp}: ${e.message}`)
-        process.exit(1);
+        throw e;
+        // console.error(`${fp}: ${e.message}`)
+        // process.exit(1);
       }
       frontmatter['slug'] = path.parse(fp).name;
       frontmatter['content'] = content;
-      metadata.push(frontmatter);
+      frontmatters.push(frontmatter);
 
-      const outdir = `build/posts/${frontmatter['slug']}/`;
-      if (!shouldUpdate(
-        path.join('src/posts/', fp),
-        path.join(outdir, 'index.html')
-      )) {
-        return;
-      }
-
-      try {
-        fs.mkdirSync(outdir);
-      } catch (_) { }
-
-      fs.writeFile(
-        path.join(outdir, 'index.html'),
-        env.render(POST_LAYOUT_FILE, { post: frontmatter, layout: GLOBAL_LAYOUT_FILE }),
-        err => {
-          if (err) {
-            console.error(err);
-            process.exit(1);
-          }
+      // if we should update, then rewrite the HTML
+      if (willUpdate) {
+        if (verbose) {
+          console.log(`rendering post ${fp}`)
         }
-      );
+        try {
+          await fs.promises.mkdir(outdir);
+        } catch (_) { }
+        await fs.promises.writeFile(
+          path.join(outdir, 'index.html'),
+          env.render(POST_LAYOUT_FILE, {
+            post: frontmatter,
+            layout: GLOBAL_LAYOUT_FILE
+          }),
+        );
+      }
     }
-  });
-  return metadata;
+  }
+  return frontmatters;
 }
 
-let start = performance.now()
-const frontmatters = renderPosts();
-frontmatters.sort((a, b) => {
-  return new Date(b['date']).getTime() - new Date(a['date']).getTime();
-});
-renderWebpages('src/', frontmatters);
-let duration = performance.now() - start;
-console.log(`finished in ${(duration / 1000).toFixed(2)} secs.`);
+// function test() {
+//   function assertEq(a, b) {
+//     if (a != b) {
+//       throw new Error(`'${a}' != '${b}'`);
+//     }
+//   }
+//   try {
+//     assertEq(renderInline('\\`*`test`*\\*\\$ <doo'), '`<em><code>test</code></em>*$ &lt;doo');
+//     assertEq(renderInline('[\\[(te\\]s*t*)](url)'), '<a href="url">[(te]s<em>t</em>)</a>');
+//     assertEq(renderInline('*\\*d\\`* `2\\``'), '<em>*d`</em> <code>2`</code>');
+//   } catch(e) {
+//     throw new Error(`assertion fail(): ${e}`);
+//   }
+// }
+// test()
+
+let mutex = true;
+module.exports = {
+  build: async function () {
+    if (mutex) {
+      mutex = false;
+      const org = process.cwd();
+      process.chdir('/home/kjc/home');
+
+      renderWebpages('src/', (await renderPosts()).sort((a, b) => {
+        return new Date(b['date']).getTime() - new Date(a['date']).getTime();
+      }));
+
+      process.chdir(org);
+      mutex = true;
+    } else {
+      console.log('no')
+    }
+  }
+};
+
+if (require.main == module) {
+  all = true;
+  (async () => {
+    let start = performance.now();
+    await module.exports.build();
+    let duration = performance.now() - start;
+    console.log(`finished in ${(duration / 1000).toFixed(2)} secs.`);
+  })();
+}

@@ -3,9 +3,18 @@
     "@babel/core": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
     "babel-preset-minify": "^0.5.2",
+    "chokidar": "^3.5.3",
     "highlight.js": "^11.8.0",
     "katex": "^0.16.8",
     "nunjucks": "^3.2.4",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "ws": "^8.14.2"
+  },
+  "scripts": {
+    "dev": "node serve.js",
+    "build": "./compile.sh"
+  },
+  "dependencies": {
+    "mime-types": "^2.1.35"
   }
 }

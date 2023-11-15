@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['**/*.html'],
+  content: ['**/*.html', '**/*.md'],
   theme: {
     extend: {},
     fontFamily: {
       'serif': ['Merriweather', 'serif'],
-      'mono': ['"IBM Plex Mono"', 'monospace'],
+      'mono': ['"Source Code Pro"', 'monospace'],
     }
   },
   plugins: [],

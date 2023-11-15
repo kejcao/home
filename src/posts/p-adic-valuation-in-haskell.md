@@ -40,7 +40,7 @@ v_p(n) = \begin{cases}
 \end{cases}
 \]
 
-Note $v_p(n) = v_p(-n)$ which is to say the function is even, since if a number $k$ divides into $n$, then $k$ also divide into $-n$. An implementation of this function in Haskell using the same method of interweaving lists as before looks like
+Note $v_p(n) = v_p(-n)$ which is to say the function is even, since if a number $k$ divides into $n$, then $k$ also divides into $-n$. An implementation of this function in Haskell using the same method of interweaving lists as before looks like
 
 ```haskell
 ruler :: Int -> [Integer]

@@ -1,5 +1,7 @@
 A Strange Hello World Program in C | 4 | 2023-05-11 | C,assembly,linux,low-level
 
+Compile the C code below with either GCC or Clang on a x86-64 Linux platform
+
 ```c
 __attribute__((section(".text"))) const char main[] = {
     0x55, 0x48, 0x89, 0xe5, 0x48, 0x83, 0xec, 0x10, 0x48, 0xb8,
@@ -13,7 +15,7 @@ __attribute__((section(".text"))) const char main[] = {
 };
 ```
 
-Compiling the above C code with either GCC or Clang on my x86-64 Linux platform yields
+And you will get
 
 ```
 $ gcc main.c

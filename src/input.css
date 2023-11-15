@@ -2,19 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-ul {
-  list-style: none;
+/* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+kbd > kbd {
+  text-indent: 0;
+  background-color: #eee;
+  border-radius: 3px;
+  border: 1px solid #b4b4b4;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.2),
+    0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+  color: #333;
+  display: inline-block;
+  font-size: 0.9em;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  white-space: nowrap;
 }
 
-code,
-pre {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: .9rem !important;
+code, pre {
+  font-family: "Source Code Pro", monospace !important;
+  overflow-y: hidden;
+}
+
+p, li {
+  line-height: 1.4;
+  margin: 2em 0;
 }
 
 pre {
   overflow-x: auto;
-  margin: 0 2rem;
+  margin-left: 2rem;
 }
 
 .img+pre {
@@ -30,17 +48,4 @@ img {
   height: auto;
   display: block;
   margin: 0 auto;
-  /* transition: transform .3s; */
 }
-
-/* img:active { */
-/*   transform: scale(1.6); */
-/* } */
-
-input {
-  font: inherit;
-}
-
-/* article h1 { */
-/* 	font-size: 2em; */
-/* } */

@@ -6,11 +6,11 @@
 {% endblock %}
 
 {% block header %}
-  <header>
-    <nav class="text-center mt-4">
+  <header class="mt-4">
+    <nav class="text-center">
       <a href="/archive/">/archive/</a>
       <br>
-      <a href="/recent-reads/">/recent-reads/</a>
+      <a href="/fun-websites/">/fun-websites/</a>
     </nav>
   </header>
 {% endblock %}
@@ -18,16 +18,17 @@
 {% block content %}
   <h1 class="text-center">Homepage</h1>
   <p class="text-center">Welcome!</p>
-  <p class="text-center">I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform. I know HTML, Python, C, Bash, C++, x86-64 assembly, CSS, and JavaScript.</p>
-  <p class="text-center">I used to host this website on a spare laptop running Apache but have since moved to Vercel—forwarding ports, fiddling with DNS records, generating HTTPS certificates with Let's Encrypt, configuring Postfix and Dovecot, etc. is all an absolute nightmare. I believe back then I was using a handwritten SSG in C++. I then hopped around different web frameworks (Next.js, Svelte, Vue.js, etc.) before deciding to write my own in Node.js. It crawls for Nunjucks templates and blog posts written in my own Markdown-like document language then renders these. It uses Babel for JavaScript transcompilation and miniaturization, highlight.js to highlight source code, KaTeX for rendering LaTeX math stuff, and Tailwind CSS to make styling easier. A handful of randomly scattered shell scripts aids development.</p>
+  <p class="text-center">I write about computers. I know a little bit of HTML, CSS, JavaScript, Python, C, C++, Bash, Haskell, Prolog, Scheme, and x86-64 assembly.</p>
+  <!-- <p class="text-center">I used to host this website on a spare laptop running Apache but have since moved to Vercel—forwarding ports, fiddling with DNS records, generating HTTPS certificates with Let's Encrypt, configuring Postfix and Dovecot, etc. is all an absolute nightmare. I believe back then I was using a handwritten SSG in C++. I then hopped around different web frameworks (Next.js, Svelte, Vue.js, etc.) before deciding to write my own in Node.js. It crawls for Nunjucks templates and blog posts written in my own Markdown-like document language then renders these. It uses Babel for JavaScript transcompilation and miniaturization, highlight.js to highlight source code, KaTeX for rendering LaTeX math stuff, and Tailwind CSS to make styling easier. A handful of randomly scattered shell scripts aids development.</p> -->
   <div class="text-center">
     <a href="mailto:&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;">&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;</a><br>
     <a href="https://github.com/kejcao">github.com</a><br>
     <a href="https://crackmes.one/user/kejcao">crackmes.one</a>
   </div>
-  <ul class="m-0 p-0">
+  <ul class="m-0 p-0 list-none">
     {% for post in posts %}
-    <li class="{% if loop.first %}mt-8 {% endif %}{% if loop.last %} mt-8 {% endif %}rounded-lg border-black border-solid border-3 my-4 p-4">
+      {% if loop.index0 < 9 %}
+    <li class="{% if loop.first %}mt-8 {% endif %}{% if loop.last %} mt-8 {% endif %}rounded-lg shadow-md border-gray-700 border-solid border-2 my-8 p-4">
       <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/{{ post.slug }}">{{ post.title | raw | safe }}</a></h1>
       <div class="columns-2">
         <div class="m-0 text-center"><i>{{ post.date }}</i></div>
@@ -36,6 +37,7 @@
       <p>{{ post.desc | raw | safe }}</p>
       <p class="text-center m-0"><a href="/posts/{{ post.slug }}">...read more</a></p>
     </li>
+      {% endif %}
     {% endfor %}
   </ul>
 {% endblock %}
