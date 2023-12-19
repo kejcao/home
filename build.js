@@ -5,6 +5,7 @@ const hljs = require('highlight.js');
 const babel = require('@babel/core');
 const katex = require('katex');
 const readline = require('readline');
+const { convert } = require('html-to-text');
 
 const GLOBAL_LAYOUT_FILE = 'layout.html';
 const POST_LAYOUT_FILE = 'src/post-layout.html';
@@ -206,6 +207,11 @@ async function toHTML(lines, update) {
           ? line.trim().slice(2, -2)
           : ([line].concat(await readUntil(['\\]']))).slice(1, -1).join('\n');
         html.push(katex.renderToString(latex, { displayMode: true }));
+      } else if (line.startsWith('$$')) {
+        const latex = line.trim().endsWith('$$')
+          ? line.trim().slice(2, -2)
+          : ([line].concat(await readUntil(['$$']))).slice(1, -1).join('\n');
+        html.push(katex.renderToString(latex, { displayMode: true }));
       } else if (line.startsWith('!')) {
         let filename = line.slice(1).trim();
         if (!fs.existsSync(`images/${filename}`)) {
@@ -245,7 +251,7 @@ async function toHTML(lines, update) {
           .replace(/{/g, '&lbrace;')
           .replace(/}/g, '&rbrace;');
         html.push(`<pre${
-          wrap ? " style=\"white-space:pre-wrap\"" : ""
+          wrap ? " style=\"hyphens:none;text-align:start;white-space:pre-wrap\"" : ""
         }><code>${code}</code></pre>`);
       } else {
         let block = line;
@@ -337,6 +343,7 @@ async function postToHTML(path, update=true) {
   return [{
     title: renderInline(frontmatter[0].trim()),
     desc: html[0] ?? '',
+    plainDesc: convert(html[0] ?? ''),
     date: parseDate(frontmatter[2].trim()).toLocaleDateString(
       'en-US', { year: "numeric", month: "short", day: "numeric"}),
     tags: (frontmatter.length == 4 ? frontmatter[3].split(',').map(x => x.trim()) : []).sort(),
@@ -426,7 +433,7 @@ async function renderPosts(past) {
           console.log(`rendering post ${fp}`)
         }
         try {
-          await fs.promises.mkdir(outdir);
+          await fs.promises.mkdir(outdir, { recursive: true });
         } catch (_) { }
         await fs.promises.writeFile(
           path.join(outdir, 'index.html'),
@@ -472,7 +479,7 @@ module.exports = {
       process.chdir(org);
       mutex = true;
     } else {
-      console.log('no')
+      console.log('error mutex')
     }
   }
 };

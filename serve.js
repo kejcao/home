@@ -25,6 +25,12 @@ const mime = require('mime-types')
 //     process.exit(1);
 //   });
 
+// switch to alternative buffer and clear screen
+process.stdout.write('\x1b[?1049h\x1bc');
+
+process.on('beforeExit', code => {
+  console.log('\x1b[?1049l');
+});
 
 // start HTTP server
 process.chdir('build');
@@ -39,7 +45,6 @@ const server = http.createServer(async (req, res) => {
 
     const mimetype = mime.lookup(fp);
     res.writeHead(200, headers = { 'Content-Type': mimetype });
-    console.log(fp)
 
     // inject javascript to interact with websocket server
     let contents = (
@@ -59,15 +64,19 @@ new WebSocket('ws://' + location.host + '/ws')
 server.listen(8000, 'localhost', () => { });
 
 // start websocket server
-let con;
-new ws.Server({ server, path: '/ws' })
-  .on('connection', ws => { con = ws; });
+const wss = new ws.Server({ server, path: '/ws' });
 
-chokidar.watch('../src', {})
+chokidar.watch('../src', { })
   .on('change', async _ => {
-      await build.build();
-      console.log('reloaded')
-      if (con) {
-        con.send('reload');
+      process.stdout.write('\x1bc');
+      try {
+        await build.build();
+        wss.clients.forEach(client => {
+          if (client.readyState === ws.OPEN) {
+            client.send('reload');
+          }
+        });
+      } catch (e) {
+        console.log(e);
       }
   });

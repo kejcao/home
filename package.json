@@ -15,6 +15,7 @@
     "build": "./compile.sh"
   },
   "dependencies": {
+    "html-to-text": "^9.0.5",
     "mime-types": "^2.1.35"
   }
 }

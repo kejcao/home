@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      'serif': ['Merriweather', 'serif'],
-      'mono': ['"Source Code Pro"', 'monospace'],
+      'serif': ["'Iowan Old Style'", "'Palatino Linotype'", "'URW Palladio L'", "P052", "serif"],
+      'mono': ["ui-monospace", "'Cascadia Code'", "'Source Code Pro'", "Menlo", "Consolas", "'DejaVu Sans Mono'", "monospace"],
     }
   },
   plugins: [],

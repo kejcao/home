@@ -3,27 +3,126 @@
 {% block head %}
   <title>Homepage</title>
   <meta name="description" content="The website of a computer geek. I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform." />
+
+  <style>
+    nav a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(1.5deg);
+      background-color: magenta;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    nav a:hover::before {
+      opacity: .8;
+    }
+
+    nav a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .green::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(1.5deg);
+      background-color: lightgreen;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    .green:hover::before {
+      opacity: .8;
+    }
+
+    .green {
+      font-size: 1.2rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .something {
+      font-size: 1.2rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .green:nth-child(odd):before {
+      transform: rotate(1.8deg);
+    }
+
+
+    .read-more::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1.8deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    li:nth-child(odd) .read-more:before {
+      transform: rotate(1.8deg);
+    }
+
+    .read-more:hover::before {
+      opacity: .8;
+    }
+
+    .read-more {
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      font-weight: bold;
+    }
+  </style>
 {% endblock %}
 
 {% block header %}
-  <header class="mt-4">
+  <header class="mt-4 mb-8">
     <nav class="text-center">
-      <a href="/archive/">/archive/</a>
-      <br>
-      <a href="/fun-websites/">/fun-websites/</a>
+      <a href="/archive/">archive</a>
+      <!-- <br>
+      <a href="/fun-websites/">/fun-websites/</a> -->
     </nav>
   </header>
 {% endblock %}
 
 {% block content %}
-  <h1 class="text-center">Homepage</h1>
-  <p class="text-center">Welcome!</p>
+  <h1 class="text-4xl text-center">Homepage</h1>
   <p class="text-center">I write about computers. I know a little bit of HTML, CSS, JavaScript, Python, C, C++, Bash, Haskell, Prolog, Scheme, and x86-64 assembly.</p>
   <!-- <p class="text-center">I used to host this website on a spare laptop running Apache but have since moved to Vercel—forwarding ports, fiddling with DNS records, generating HTTPS certificates with Let's Encrypt, configuring Postfix and Dovecot, etc. is all an absolute nightmare. I believe back then I was using a handwritten SSG in C++. I then hopped around different web frameworks (Next.js, Svelte, Vue.js, etc.) before deciding to write my own in Node.js. It crawls for Nunjucks templates and blog posts written in my own Markdown-like document language then renders these. It uses Babel for JavaScript transcompilation and miniaturization, highlight.js to highlight source code, KaTeX for rendering LaTeX math stuff, and Tailwind CSS to make styling easier. A handful of randomly scattered shell scripts aids development.</p> -->
-  <div class="text-center">
-    <a href="mailto:&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;">&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;</a><br>
-    <a href="https://github.com/kejcao">github.com</a><br>
-    <a href="https://crackmes.one/user/kejcao">crackmes.one</a>
+  <div class="text-center my-8">
+    <span class="something">&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#107;&#101;&#118;&#105;&#110;&#99;&#97;&#111;&#46;&#120;&#121;&#122;</span><br>
+    <a class="green" href="https://github.com/kejcao">github.com</a><br>
+    <a class="green" href="https://crackmes.one/user/kejcao">crackmes.one</a>
   </div>
   <ul class="m-0 p-0 list-none">
     {% for post in posts %}
@@ -32,10 +131,10 @@
       <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/{{ post.slug }}">{{ post.title | raw | safe }}</a></h1>
       <div class="columns-2">
         <div class="m-0 text-center"><i>{{ post.date }}</i></div>
-        <div class="m-0 text-center opacity-60">{{ post.tags | join(', ') }}</div>
+      <div class="m-0 text-center"><code>{{ post.tags | join(', ') }}</code></div>
       </div>
       <p>{{ post.desc | raw | safe }}</p>
-      <p class="text-center m-0"><a href="/posts/{{ post.slug }}">...read more</a></p>
+      <p class="text-center m-0"><a class="read-more" href="/posts/{{ post.slug }}">...read more</a></p>
     </li>
       {% endif %}
     {% endfor %}
