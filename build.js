@@ -1,14 +1,21 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const nunjucks = require('nunjucks');
 const hljs = require('highlight.js');
 const babel = require('@babel/core');
 const katex = require('katex');
+const postcss = require('postcss');
 const readline = require('readline');
 const { convert } = require('html-to-text');
+const { error } = require('console');
+
+// TODO unit tests
+// TODO to mjs imports
 
 const GLOBAL_LAYOUT_FILE = 'layout.html';
 const POST_LAYOUT_FILE = 'src/post-layout.html';
+const LINKED_POST_FILES = 'static/store';
 
 let all = false, verbose = false;
 
@@ -23,25 +30,25 @@ function shouldUpdate(src, dest) {
 
 let env = new nunjucks.Environment(new nunjucks.FileSystemLoader());
 
-// env.addExtension('StyleExtension', new function() {
-//   this.tags = ['style'];
+env.addExtension('StyleExtension', new function() {
+  this.tags = ['style'];
 
-//   this.parse = function(parser, nodes, lexer) {
-//     const tok = parser.nextToken().value;
-//     const args = parser.parseSignature(null, true);
-//     parser.advanceAfterBlockEnd(tok);
-//     const body = parser.parseUntilBlocks('endstyle');
-//     parser.advanceAfterBlockEnd();
-//     return new nodes.CallExtension(this, 'run', args, [body]);
-//   };
+  this.parse = function(parser, nodes, lexer) {
+    const tok = parser.nextToken().value;
+    const args = parser.parseSignature(null, true);
+    parser.advanceAfterBlockEnd(tok);
+    const body = parser.parseUntilBlocks('endstyle');
+    parser.advanceAfterBlockEnd();
+    return new nodes.CallExtension(this, 'run', args, [body]);
+  };
 
-//   this.run = function(context, body) {
-//     return new nunjucks.runtime.SafeString(`<style>
-//       ${postcss([require('postcss-preset-env'), require('postcss-minify')])
-//         .process(body(), { from: undefined, to: undefined }).css}
-//     </style>`);
-//   };
-// }());
+  this.run = function(context, body) {
+    return new nunjucks.runtime.SafeString(`<style>
+      ${postcss([require('postcss-preset-env'), require('postcss-minify')])
+        .process(body(), { from: undefined, to: undefined }).css}
+    </style>`);
+  };
+}());
 
 env.addExtension('ScriptExtension', new function() {
   this.tags = ['script'];
@@ -124,7 +131,7 @@ function renderInline(txt) {
       if (finished()) {
         throw new Error(`unterminated inline block "${ending}".`);
       }
-      if (txt[i] == '\\' && txt[i+1] == ending) {
+      if (txt[i] == '\\' && txt[i + 1] == ending) {
         ++i;
       }
       content += txt[i];
@@ -134,12 +141,12 @@ function renderInline(txt) {
 
   for (; !finished(); ++i) {
     if (txt[i] == '\\') {
-      html += escapeHTML(txt[i+1]);
+      html += escapeHTML(txt[i + 1]);
       ++i;
       continue;
     }
 
-    switch(txt[i]) {
+    switch (txt[i]) {
       case '*':
         html += `<em>${renderInline(readUntil('*').replace(/\*/g, '\\*'))}</em>`;
         break;
@@ -147,17 +154,16 @@ function renderInline(txt) {
         const data = readUntil('`');
 
         if (data.startsWith('!')) {
-          html += `<kbd>${
-            data.slice(1).split('+')
-              .map(x => `<kbd>${x}</kbd>`).join('+')
-          }</kbd>`;
+          html += `<kbd>${data.slice(1).split('+')
+            .map(x => `<kbd>${x}</kbd>`).join('+')
+            }</kbd>`;
           break;
         }
 
         html += `<code>${escapeHTML(data)}</code>`;
         break;
       case '$':
-        html += `${katex.renderToString(readUntil('$'), {})}`;
+        html += `$${readUntil('$')}$`;
         break;
       case '[':
         const content = renderInline(readUntil(']'));
@@ -180,7 +186,7 @@ async function toHTML(lines, update) {
   async function readUntil(endings) {
     let block = [];
     while (true) {
-      const {value, done} = await lines.next();
+      const { value, done } = await lines.next();
       if (done) {
         throw new Error(`unterminated block "${endings}".`);
       }
@@ -193,8 +199,18 @@ async function toHTML(lines, update) {
   }
 
   try {
+    // let inEndSection = false;
     for await (const line of lines) {
       if (!line.trim()) { continue; }
+      // if (inEndSection) {
+      //   const mid = line.indexOf('|');
+      //   const filename = line.slice(0, mid);
+      //   const data = Buffer.from(line.slice(mid), 'base64');
+      //
+      //   let hash = crypto.createHash('sha256');
+      //   hash.update(data);
+      //   await fs.writeFile(path.join(LINKED_POST_FILES, hash.digest('hex') + '.' + filename), data);
+      // }
 
       if (line.startsWith('<') || line.startsWith('{%')) {
         if (/<\/.*?>$/.test(line) || /<.*?\/>$/.test(line)) {
@@ -202,16 +218,16 @@ async function toHTML(lines, update) {
           continue;
         }
         html.push(([line].concat(await readUntil(['</', '{%']))).join('\n'))
-      } else if (line.startsWith('\\[')) {
-        const latex = line.trim().endsWith('\\]')
-          ? line.trim().slice(2, -2)
-          : ([line].concat(await readUntil(['\\]']))).slice(1, -1).join('\n');
-        html.push(katex.renderToString(latex, { displayMode: true }));
+      // } else if (line.startsWith('\\[')) {
+      //   const latex = line.trim().endsWith('\\]')
+      //     ? line.trim().slice(2, -2)
+      //     : ([line].concat(await readUntil(['\\]']))).slice(1, -1).join('\n');
+      //   html.push(katex.renderToString(latex, { displayMode: true }));
       } else if (line.startsWith('$$')) {
-        const latex = line.trim().endsWith('$$')
-          ? line.trim().slice(2, -2)
-          : ([line].concat(await readUntil(['$$']))).slice(1, -1).join('\n');
-        html.push(katex.renderToString(latex, { displayMode: true }));
+        const latex = line.trim().length > 2 && line.trim().endsWith('$$')
+          ? line.trim()
+          : ([line].concat(await readUntil(['$$']))).join('\n');
+        html.push(`<p>${latex}</p>`);
       } else if (line.startsWith('!')) {
         let filename = line.slice(1).trim();
         if (!fs.existsSync(`images/${filename}`)) {
@@ -241,27 +257,42 @@ async function toHTML(lines, update) {
         let block = [line].concat(await readUntil(wrap ? ['````'] : ['```']));
         const language = block[0].slice(wrap ? 4 : 3).trim();
         let code = block.slice(1, block.length - 1).join('\n');
-        if (language != '') {
+        if (language != '' && language != 'pseudo') {
           code = hljs.highlight(code, { language }).value;
         } else {
           code = escapeHTML(code);
         }
-        // To avoid Jinja misinterpretation as placeholder.
-        code = code
-          .replace(/{/g, '&lbrace;')
-          .replace(/}/g, '&rbrace;');
-        html.push(`<pre${
-          wrap ? " style=\"hyphens:none;text-align:start;white-space:pre-wrap\"" : ""
-        }><code>${code}</code></pre>`);
-      } else {
-        let block = line;
-        // while (true) {
-        //   const {value, done} = await lines.next();
-        //   if (value.trim() || done) { break; }
-        //   block += value;
-        // }
 
-        if (block.startsWith('1.')) {
+        // To avoid Jinja misinterpretation as placeholder.
+        if (language != 'pseudo') {
+          code = code
+            .replace(/{/g, '&lbrace;')
+            .replace(/}/g, '&rbrace;');
+        }
+        
+        let attributes = [];
+        if (wrap) {
+          attributes.push('style="hyphens:none; text-align:start; white-space:pre-wrap"');
+        }
+        if (language == 'pseudo') {
+          attributes.push('class="pseudocode"')
+        } else {
+          code = `<code>${code}</code>`
+        }
+
+        html.push(`<pre ${attributes.join(' ')}>${code}</pre>`);
+      } else {
+        let block = line + '\n';
+        while (true) {
+          const { value, done } = await lines.next();
+          if (done || !value.trim()) { break; }
+          block += value + '\n';
+        }
+        block = block.trim()
+
+        if (block == '---') {
+          html.push('<hr>');
+        } else if (block.startsWith('1.')) {
           let item = '';
           item += '<ol>';
           for (const i of block.matchAll(/\d+\.(.*)\n?/g)) {
@@ -273,31 +304,12 @@ async function toHTML(lines, update) {
           let item = '';
           item += '<ul>';
 
-          let first = true;
-          let paragraphs = [''];
-
           for (let line of block.split('\n')) {
-            if (line.startsWith('- ')) {
-              if (!first) {
-                item += (`<li>${paragraphs.map(renderInline).map(p => {
-                  return p;
-                }).join(' ')
-                  }</li>`);
-                paragraphs = [''];
-              }
-              first = false;
+            if (!line.startsWith('- ')) {
+              throw new Error('invalid list');
             }
-            line = line.replace(/^-/, '');
-            if (!line.trim()) {
-              paragraphs.push('');
-            }
-            paragraphs[paragraphs.length - 1] += line;
+            item += `<li>${renderInline(line.replace(/^-/, ''))}</li>`;
           }
-
-          item += (`<li>${paragraphs.map(renderInline).map(p => {
-            return p;
-          }).join(' ')
-            }</li>`);
 
           item += '</ul>';
           html.push(item);
@@ -310,7 +322,7 @@ async function toHTML(lines, update) {
       }
     }
   } catch (e) {
-    // e.message = `line ${i+1}: ${e.message}`;
+    e.message = `line ${i+1}: ${e.message}`;
     throw e;
   }
   return html;
@@ -326,16 +338,17 @@ async function* linesOf(path) {
   }
 }
 
-async function postToHTML(path, update=true) {
+async function postToHTML(path, update = true) {
   function parseDate(s) {
-    const [y,m,d] = s.split('-');
-    return new Date(y, m-1, d);
+    const [y, m, d] = s.split('-');
+    return new Date(y, m - 1, d);
   }
 
   const lines = linesOf(path);
 
   const frontmatter = ((await lines.next()).value).split('|');
-  if (frontmatter.length != 3 && frontmatter.length != 4) {
+  if (frontmatter.length != 4) {
+  // if (frontmatter.length != 3) {
     throw new Error('invalid frontmatter.');
   }
 
@@ -345,14 +358,14 @@ async function postToHTML(path, update=true) {
     desc: html[0] ?? '',
     plainDesc: convert(html[0] ?? ''),
     date: parseDate(frontmatter[2].trim()).toLocaleDateString(
-      'en-US', { year: "numeric", month: "short", day: "numeric"}),
+      'en-US', { year: "numeric", month: "short", day: "numeric" }),
     tags: (frontmatter.length == 4 ? frontmatter[3].split(',').map(x => x.trim()) : []).sort(),
   }, html.join('')];
 }
 
-function renderWebpages(dir, frontmatters) {
-  fs.readdirSync(dir).forEach(fp => {
-    const absfp = path.join(dir, fp);
+function renderWebpages(src, frontmatters) {
+  fs.readdirSync(src).forEach(fp => {
+    const absfp = path.join(src, fp);
 
     if (fs.statSync(absfp).isDirectory()) {
       renderWebpages(absfp, frontmatters);
@@ -360,21 +373,19 @@ function renderWebpages(dir, frontmatters) {
     }
 
     if (fp == 'index.html') {
-      if (verbose) {
-        console.log(`rendering ${dir}`)
-      }
       const out = absfp.replace(/^src/, 'build');
       try {
-        fs.mkdirSync(
-          path.dirname(out),
-          { recursive: true }
-        );
+        fs.mkdirSync(path.dirname(out), { recursive: true });
       } catch (_) { }
 
       try {
         fs.writeFile(
           out,
-          env.render(absfp, { posts: frontmatters, layout: GLOBAL_LAYOUT_FILE }),
+          env.render(absfp, {
+            posts: frontmatters,
+            last_build: new Date().toISOString(),
+            layout: GLOBAL_LAYOUT_FILE
+          }),
           err => {
             if (err) {
               console.error(err);
@@ -382,25 +393,25 @@ function renderWebpages(dir, frontmatters) {
             }
           }
         );
-      } catch(e) {
+      } catch (e) {
         console.error(`${fp}: ${e}`)
       }
     }
   });
 }
 
-async function firstLines(path, n) {
-  let lines = '';
-  for await (const line of
-    readline.createInterface({
-      input: fs.createReadStream(path)
-    })) {
-
-    if (n-- <= 0) { break; }
-    lines += line + '\n';
-  }
-  return lines;
-}
+// async function firstLines(path, n) {
+//   let lines = '';
+//   for await (const line of
+//     readline.createInterface({
+//       input: fs.createReadStream(path)
+//     })) {
+//
+//     if (n-- <= 0) { break; }
+//     lines += line + '\n';
+//   }
+//   return lines;
+// }
 
 async function renderPosts(past) {
   let frontmatters = past ? past : [];
@@ -419,9 +430,8 @@ async function renderPosts(past) {
       try {
         [frontmatter, content] = await postToHTML(srcfp, willUpdate);
       } catch (e) {
-        throw e;
-        // console.error(`${fp}: ${e.message}`)
-        // process.exit(1);
+        console.error(`${fp}: ${e.message}`);
+        process.exit(1);
       }
       frontmatter['slug'] = path.parse(fp).name;
       frontmatter['content'] = content;
@@ -466,20 +476,24 @@ async function renderPosts(past) {
 
 let mutex = true;
 module.exports = {
-  build: async function () {
+  build: async function() {
     if (mutex) {
       mutex = false;
-      const org = process.cwd();
+
+      const original = process.cwd();
       process.chdir('/home/kjc/home');
+      renderWebpages('src/',
+        (await renderPosts())
+          .sort((a, b) => {
+            return new Date(b['date']).getTime() - new Date(a['date']).getTime();
+          }));
+      process.chdir(original);
 
-      renderWebpages('src/', (await renderPosts()).sort((a, b) => {
-        return new Date(b['date']).getTime() - new Date(a['date']).getTime();
-      }));
-
-      process.chdir(org);
       mutex = true;
+      return true;
     } else {
       console.log('error mutex')
+      return false;
     }
   }
 };

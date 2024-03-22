@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  line-height: 1.55;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  line-height: 1.2;
+}
+
 /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
 kbd > kbd {
   text-indent: 0;
@@ -21,18 +29,23 @@ kbd > kbd {
 }
 
 code, pre {
-  font-family: "Source Code Pro", monospace !important;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
   overflow-y: hidden;
+  hyphens: auto;
 }
 
-/* p, li { */
-/*   line-height: 1.4; */
-/*   margin: 2em 0; */
-/* } */
+:not(pre) > code {
+  font-size: 90%;
+}
+
+p + p {
+  margin-top: 1.3em;
+}
 
 pre {
   overflow-x: auto;
   margin-left: 2rem;
+  font-size: .8rem;
 }
 
 .img+pre {
@@ -48,4 +61,8 @@ img {
   height: auto;
   display: block;
   margin: 0 auto;
+}
+
+.hljs-meta.prompt_ {
+  user-select: none;
 }

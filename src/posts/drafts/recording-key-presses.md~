@@ -1,0 +1,92 @@
+Counting Key Presses | 1 | 2024-01-25 | python,linux
+
+I have wondered for a long time how many times I press each key on my keyboards. Apparently the average rubber dome keyboard is rated for 5 million key presses, so the natural question is how long would it take me to wear one out? I looked for software that can count my key presses and found WhatPulse, but the installation kept segfaulting on me. My only option then is to write my own Python script to count key presses.
+
+For context, on Linux there is the directory `/dev/input` in which are many files, specifically character devices, corresponding to input devices attached to your system. Running the program `evtest` on any of them enables you to obtain information about what type of device they are and what they support, in addition to a live view of events that those devices encounter.
+
+```shell
+$ cd /dev/input
+$ ls -F
+by-id/    event1   event12  event15  event18  event3  event6  event9  mouse1
+by-path/  event10  event13  event16  event19  event4  event7  mice    mouse2
+event0    event11  event14  event17  event2   event5  event8  mouse0  mouse3
+```
+
+I could hook X11 somehow to determine key presses, but instead I chose to read directly from those character devices in `/dev/input`.
+
+I have an integrated keyboard on my laptop, but sometimes I connect my mechanical keyboard for a better typing experience. Based off of an answer by [Martin Kouba](https://stackoverflow.com/a/69308048/23259570), the following code can be used to find all the keyboards connected to my laptop. More specifically, it determines the capabilities of each input device and adds it to a list if it supports the alphabet keys.
+
+```py
+def find_kbd_paths() -> list[Path]:
+    devices = []
+    for d in Path('/sys/class/input/').glob('input*'):
+        last_block = (d / 'capabilities/key').read_text().split()[-1]
+        if int(last_block, 16) & 0x7f07fc3ff0000 == 0x7f07fc3ff0000:
+            devices.append('/dev/input' / Path(next(d.glob('event*')).name))
+    return devices
+```
+
+The workhorse will be the `tap` function which when given an input device, opens it and continually decodes its events. If it is a key-related key down event, we take the lock and adjust the data array before saving.
+
+```py
+processing = threading.Lock()
+def tap(fp):
+    try:
+        with open(fp, 'rb') as fp:
+            while event := fp.read(struct.calcsize('LLHHi')):
+                _, _, type_, code, value = struct.unpack('LLHHi', event)
+
+                if type_ == 1 and value == 1:
+                    with processing:
+                        data['keys'][code] = data['keys'].get(code, 0) + 1
+                        save()
+    except OSError:
+        print(f'disconnected {fp.name}')
+```
+
+The save function is very simple, it uses msgpack to store the key press frequencies and has caused me no performance headaches so far. We run this function if our program terminates. At the beginning of our code, we attempt to load the existing data. If there is no data, we initialize a new one with the current time.
+
+```py
+def save():
+    msgpack.dump(data, open(SAVE_FILE, 'wb'))
+atexit.register(save)
+
+def trunc(t):
+    return t.replace(microsecond=0, second=0, minute=0)
+
+try:
+    data = msgpack.load(open(SAVE_FILE, 'rb'), strict_map_key=False)
+except (FileNotFoundError, ValueError):
+    data = {
+        'date': trunc(datetime.now()).timestamp(),
+        'keys': { },
+    }
+```
+
+We then create a function to loop through all keyboards and start a thread on it if we haven't already, but not before clearing the list of all disconnected keyboards.
+
+```py
+kbds = {}
+def refresh_kbds():
+    global kbds
+    kbds = {k: v for k, v in kbds.items() if v.is_alive()}
+
+    for fp in find_kbd_paths():
+        if fp not in kbds:
+            print(f'connected {fp}')
+            kbds[fp] = threading.Thread(target=tap, args=(fp,))
+            kbds[fp].start()
+```
+
+Finally,
+
+```py
+refresh_kbds()
+
+monitor = pyudev.Monitor.from_netlink(pyudev.Context())
+monitor.filter_by(subsystem='input')
+for action, device in monitor:
+    if action == 'add':
+        print(action, device)
+        refresh_kbds()
+```

@@ -1,0 +1,871 @@
+  0           RESUME                   0
+
+  1           LOAD_CONST               0 (0)
+              LOAD_CONST               1 (('md5',))
+              IMPORT_NAME              0 (hashlib)
+              IMPORT_FROM              1 (md5)
+              STORE_NAME               1 (md5)
+              POP_TOP
+
+  2           LOAD_CONST               0 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              2 (time)
+              STORE_NAME               2 (time)
+
+  4           LOAD_CONST               3 (<code object crackme at 0x57679b29f980, file "byteme.py", line 4>)
+              MAKE_FUNCTION
+              STORE_NAME               3 (crackme)
+
+ 55           LOAD_CONST               4 (<code object solveme at 0x57679b2ba090, file "byteme.py", line 55>)
+              MAKE_FUNCTION
+              STORE_NAME               4 (solveme)
+
+142           LOAD_CONST               5 (<code object breakme at 0x57679b296830, file "byteme.py", line 142>)
+              MAKE_FUNCTION
+              STORE_NAME               5 (breakme)
+
+245           LOAD_NAME                6 (__name__)
+              LOAD_CONST               6 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       97 (to L1)
+
+246           LOAD_NAME                3 (crackme)
+              PUSH_NULL
+              CALL                     0
+              STORE_NAME               7 (spell)
+
+247           LOAD_NAME                4 (solveme)
+              PUSH_NULL
+              CALL                     0
+              STORE_NAME               8 (answer)
+
+248           LOAD_NAME                5 (breakme)
+              PUSH_NULL
+              CALL                     0
+              STORE_NAME               9 (chain)
+
+250           LOAD_NAME               10 (print)
+              PUSH_NULL
+              LOAD_CONST               7 ('Thalor has risen!')
+              CALL                     1
+              POP_TOP
+
+251           LOAD_NAME               10 (print)
+              PUSH_NULL
+              LOAD_CONST               8 ('The prophecy has been fulfilled')
+              CALL                     1
+              POP_TOP
+
+252           LOAD_NAME               10 (print)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+
+253           LOAD_NAME               10 (print)
+              PUSH_NULL
+              LOAD_CONST               9 ('#######################################')
+              CALL                     1
+              POP_TOP
+
+254           LOAD_NAME               10 (print)
+              PUSH_NULL
+              LOAD_CONST              10 ('##')
+              LOAD_CONST              11 ('                                 ')
+              LOAD_CONST              10 ('##')
+              CALL                     3
+              POP_TOP
+
+255           LOAD_NAME               10 (print)
+              PUSH_NULL
+              LOAD_CONST              10 ('##')
+              LOAD_NAME                7 (spell)
+              FORMAT_SIMPLE
+              LOAD_NAME                8 (answer)
+              FORMAT_SIMPLE
+              LOAD_NAME                9 (chain)
+              FORMAT_SIMPLE
+              BUILD_STRING             3
+              LOAD_CONST              10 ('##')
+              CALL                     3
+              POP_TOP
+
+256           LOAD_NAME               10 (print)
+              PUSH_NULL
+              LOAD_CONST              10 ('##')
+              LOAD_CONST              11 ('                                 ')
+              LOAD_CONST              10 ('##')
+              CALL                     3
+              POP_TOP
+
+257           LOAD_NAME               10 (print)
+              PUSH_NULL
+              LOAD_CONST               9 ('#######################################')
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             2 (None)
+
+245   L1:     RETURN_CONST             2 (None)
+
+Disassembly of <code object crackme at 0x57679b29f980, file "byteme.py", line 4>:
+  4           RESUME                   0
+
+  5           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ("                           o                    \n                       _---|         _ _ _ _ _ \n                    o   ---|     o   ]-I-I-I-[ \n   _ _ _ _ _ _  _---|      | _---|    \\ ` ' / \n   ]-I-I-I-I-[   ---|      |  ---|    |.   | \n    \\ `   '_/       |     / \\    |    | /^\\| \n     [*]  __|       ^    / ^ \\   ^    | |*|| \n     |__   ,|      / \\  /    `\\ / \\   | ===| \n  ___| ___ ,|__   /    /=_=_=_=\\   \\  |,  _|\n  I_I__I_I__I_I  (====(_________)___|_|____|____\n  \\-\\--|-|--/-/  |     I  [ ]__I I_I__|____I_I_| \n   |[]      '|   | []  |`__  . [  \\-\\--|-|--/-/  \n   |.   | |' |___|_____I___|___I___|---------| \n  / \\| []   .|_|-|_|-|-|_|-|_|-|_|-| []   [] | \n <===>  |   .|-=-=-=-=-=-=-=-=-=-=-|   |    / \\  \n ] []|`   [] ||.|.|.|.|.|.|.|.|.|.||-      <===> \n ] []| ` |   |/////////\\\\\\\\\\.||__.  | |[] [ \n <===>     ' ||||| |   |   | ||||.||  []   <===>\n  \\T/  | |-- ||||| | O | O | ||||.|| . |'   \\T/ \n   |      . _||||| |   |   | ||||.|| |     | |\n../|' v . | .|||||/____|____\\|||| /|. . | . ./\n.|//\\............/...........\\........../../\\\n")
+              CALL                     1
+              POP_TOP
+
+ 28           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+ 29           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               2 ('Welcome Warrior! You have made it till here')
+              CALL                     1
+              POP_TOP
+
+ 30           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               3 ('This is where best of the best have fallen prey to the fate')
+              CALL                     1
+              POP_TOP
+
+ 31           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+ 32           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               4 ('It is written that only the true Thalor can get The sword of Eldoria')
+              CALL                     1
+              POP_TOP
+
+ 33           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               5 ('Do you have what it takes to be Thalor?')
+              CALL                     1
+              POP_TOP
+
+ 34           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               6 ('Prove your mettle by bringing the sword out of the castle')
+              CALL                     1
+              POP_TOP
+
+ 35           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+ 36           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               7 ('Go on! unlock the castle with XEKLEIDOMA spell')
+              CALL                     1
+              POP_TOP
+
+ 38           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+ 39           LOAD_GLOBAL              3 (input + NULL)
+              LOAD_CONST               8 ('> ')
+              CALL                     1
+              STORE_FAST               0 (spell)
+
+ 40           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+ 42           LOAD_GLOBAL              5 (len + NULL)
+              LOAD_FAST                0 (spell)
+              LOAD_ATTR                7 (strip + NULL|self)
+              CALL                     0
+              CALL                     1
+              LOAD_CONST               9 (12)
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_TRUE        57 (to L1)
+              LOAD_GLOBAL              9 (md5 + NULL)
+              LOAD_FAST                0 (spell)
+              LOAD_ATTR                7 (strip + NULL|self)
+              CALL                     0
+              LOAD_ATTR               11 (encode + NULL|self)
+              CALL                     0
+              CALL                     1
+              LOAD_ATTR               13 (hexdigest + NULL|self)
+              CALL                     0
+              LOAD_CONST              10 ('9ce86143889d80b01586f8a819d20f0c')
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_FALSE       43 (to L2)
+
+ 43   L1:     LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              11 ('You are not THE ONE')
+              CALL                     1
+              POP_TOP
+
+ 44           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              12 ('True Thalor is a master of sorcery')
+              CALL                     1
+              POP_TOP
+
+ 45           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              13 ('Ground beneath you opens up and you fall into the depths of hell')
+              CALL                     1
+              POP_TOP
+
+ 46           LOAD_GLOBAL             15 (exit + NULL)
+              CALL                     0
+              POP_TOP
+
+ 48   L2:     LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              14 ('The door is opened!')
+              CALL                     1
+              POP_TOP
+
+ 49           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              15 ('You surely mastered sorcery')
+              CALL                     1
+              POP_TOP
+
+ 50           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+ 51           LOAD_GLOBAL             16 (time)
+              LOAD_ATTR               18 (sleep)
+              PUSH_NULL
+              LOAD_CONST              16 (3)
+              CALL                     1
+              POP_TOP
+
+ 53           LOAD_FAST                0 (spell)
+              RETURN_VALUE
+
+Disassembly of <code object solveme at 0x57679b2ba090, file "byteme.py", line 55>:
+  55            RESUME                   0
+
+  56            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               1 ('\n                                            .""--..__\n                     _                     []       ``-.._\n                  .\'` `\'.                  ||__           `-._\n                 /    ,-.\\                 ||_ ```---..__     `-.\n                /    /:::\\               /|//}          ``--._  `.\n                |    |:::||              |////}                `. |\n                |    |:::||             //\'///                   -\n                |    |:::||            //  ||\'     \n                /    |:::|/        _,-//\\  ||\n               /`    |:::|`-,__,-\'`  |/  \\ ||\n             /`  |   |\'\' ||           \\   |||\n           /`    \\   |   ||            |  /||\n         |`       |  |   |)            \\ | ||\n        |          \\ |   /      ,.__    \\| ||\n        /           `         /`    `\\   | ||\n       |                     /        \\  / ||\n       |                     |        | /  ||\n       /         /           |        `(   ||\n      /          .           /          )  ||\n     |            \\          |     ________||\n    /             |          /     `-------.|\n   |\\            /          |              ||\n   \\/`-._       |           /              ||\n    //   `.    /`           |              ||\n   //`.    `. |             \\              ||\n  ///\\ `-._  )/             |              ||\n //// )   .(/               |              ||\n ||||   ,\'` )               /              //\n ||||  /                    /             || \n `\\` /`                    |             // \n     |`                     \\            ||  \n    /                        |           //  \n  /`                          \\         //   \n/`                            |        ||    \n`-.___,-.      .-.        ___,\'        (/    \n         `---\'`   `\'----\'`\n')
+                CALL                     1
+                POP_TOP
+
+  94            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+  95            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               2 ('As you walk in, you see a spectral figure Elyrian, the Guardian of Souls')
+                CALL                     1
+                POP_TOP
+
+  96            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               3 ('He speaks to you in a voice that echoes through the chamber')
+                CALL                     1
+                POP_TOP
+
+  97            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+  98            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               4 ('"Brave warrior, before you lies the next trial on your path. Answer my riddle, and prove your worthiness to continue your quest."')
+                CALL                     1
+                POP_TOP
+
+ 100            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               5 ('\n"I am a word of ten, with numbers and letters blend,\nUnravel me, and secrets I\'ll send.\nThough cryptic in sight, I hold the code tight,\nUnlock my mystery with wit and might."\n')
+                CALL                     1
+                POP_TOP
+
+ 107            LOAD_GLOBAL              3 (input + NULL)
+                LOAD_CONST               6 ('> ')
+                CALL                     1
+                STORE_FAST               0 (answer)
+
+ 108            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 109            LOAD_GLOBAL              5 (list + NULL)
+                LOAD_GLOBAL              7 (map + NULL)
+                LOAD_GLOBAL              8 (ord)
+                LOAD_GLOBAL              5 (list + NULL)
+                LOAD_FAST                0 (answer)
+                LOAD_ATTR               11 (strip + NULL|self)
+                CALL                     0
+                CALL                     1
+                CALL                     2
+                CALL                     1
+                STORE_FAST               0 (answer)
+
+ 111            NOP
+
+ 112    L1:     LOAD_GLOBAL             13 (len + NULL)
+                LOAD_FAST                0 (answer)
+                CALL                     1
+                LOAD_CONST               7 (10)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L2)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 113    L2:     LOAD_FAST                0 (answer)
+                LOAD_CONST               8 (6)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST               9 (7)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              10 (8)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_CONST              12 (190)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L3)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 114    L3:     LOAD_FAST                0 (answer)
+                LOAD_CONST               8 (6)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              13 (2)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_CONST              14 (202)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L4)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 115    L4:     LOAD_FAST                0 (answer)
+                LOAD_CONST              15 (9)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              16 (3)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              13 (2)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_CONST              17 (433)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L5)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 116    L5:     LOAD_FAST                0 (answer)
+                LOAD_CONST               9 (7)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              18 (0)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              18 (0)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              16 (3)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_CONST              19 (237)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L6)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 117    L6:     LOAD_FAST                0 (answer)
+                LOAD_CONST              20 (1)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              15 (9)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              21 (4)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_CONST              22 (-50)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L7)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 118    L7:     LOAD_FAST                0 (answer)
+                LOAD_CONST              13 (2)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              16 (3)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              20 (1)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              20 (1)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_CONST              23 (-6)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L8)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 119    L8:     LOAD_FAST                0 (answer)
+                LOAD_CONST              10 (8)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST               9 (7)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST               8 (6)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_CONST              24 (-88)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L9)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 120    L9:     LOAD_FAST                0 (answer)
+                LOAD_CONST              18 (0)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              10 (8)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              16 (3)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_CONST              25 (-117)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L10)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 121   L10:     LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST               8 (6)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              10 (8)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              13 (2)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_CONST              26 (385)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L11)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 122   L11:     LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              21 (4)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              15 (9)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_CONST              21 (4)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L12)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 123   L12:     LOAD_FAST                0 (answer)
+                LOAD_CONST              13 (2)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              15 (9)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              18 (0)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_CONST              27 (63)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L13)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 124   L13:     LOAD_FAST                0 (answer)
+                LOAD_CONST              13 (2)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              21 (4)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              15 (9)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_CONST              28 (13)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L14)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 125   L14:     LOAD_FAST                0 (answer)
+                LOAD_CONST              10 (8)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              16 (3)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST               9 (7)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST               8 (6)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_CONST              29 (167)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L15)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 126   L15:     LOAD_FAST                0 (answer)
+                LOAD_CONST               8 (6)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              18 (0)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_CONST              30 (-126)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L16)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+
+ 127   L16:     LOAD_FAST                0 (answer)
+                LOAD_CONST              13 (2)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST               8 (6)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              21 (4)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_CONST              31 (-199)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L17)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1
+       L17:     NOP
+
+ 134   L18:     LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              35 ('You have proven your `wit and might`')
+                CALL                     1
+                POP_TOP
+
+ 135            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              36 ('Elyrian, the Guardian of Souls, bows to you')
+                CALL                     1
+                POP_TOP
+
+ 136            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              37 ('You have unlocked the next chamber')
+                CALL                     1
+                POP_TOP
+
+ 137            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 138            LOAD_GLOBAL             18 (time)
+                LOAD_ATTR               20 (sleep)
+                PUSH_NULL
+                LOAD_CONST              21 (4)
+                CALL                     1
+                POP_TOP
+
+ 140            LOAD_CONST              38 ('')
+                LOAD_ATTR               23 (join + NULL|self)
+                LOAD_FAST                0 (answer)
+                GET_ITER
+                LOAD_FAST_AND_CLEAR      1 (x)
+                SWAP                     2
+       L19:     BUILD_LIST               0
+                SWAP                     2
+       L20:     FOR_ITER                14 (to L21)
+                STORE_FAST               1 (x)
+                LOAD_GLOBAL             25 (chr + NULL)
+                LOAD_FAST                1 (x)
+                CALL                     1
+                LIST_APPEND              2
+                JUMP_BACKWARD           16 (to L20)
+       L21:     END_FOR
+                POP_TOP
+       L22:     SWAP                     2
+                STORE_FAST               1 (x)
+                CALL                     1
+                RETURN_VALUE
+
+  --   L23:     PUSH_EXC_INFO
+
+ 128            LOAD_GLOBAL             14 (AssertionError)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       46 (to L25)
+                POP_TOP
+
+ 129            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              32 ('You are not worthy')
+                CALL                     1
+                POP_TOP
+
+ 130            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              33 ('Your soul has been cursed')
+                CALL                     1
+                POP_TOP
+
+ 131            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              34 ('You will seek your own death in a fortnight')
+                CALL                     1
+                POP_TOP
+
+ 132            LOAD_GLOBAL             17 (exit + NULL)
+                CALL                     0
+                POP_TOP
+       L24:     POP_EXCEPT
+                JUMP_BACKWARD_NO_INTERRUPT 162 (to L18)
+
+ 128   L25:     RERAISE                  0
+
+  --   L26:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+       L27:     SWAP                     2
+                POP_TOP
+
+ 140            SWAP                     2
+                STORE_FAST               1 (x)
+                RERAISE                  0
+ExceptionTable:
+  L1 to L17 -> L23 [0]
+  L19 to L22 -> L27 [4]
+  L23 to L24 -> L26 [1] lasti
+  L25 to L26 -> L26 [1] lasti
+
+Disassembly of <code object breakme at 0x57679b296830, file "byteme.py", line 142>:
+142           RESUME                   0
+
+143           LOAD_CONST               1 ("\n                      _..._\n                     /MMMMM\\\n                    (I8H#H8I)\n                    (I8H#H8I)\n                     \\WWWWW/\n                      I._.I\n                      I._.I\n                      I._.I\n                      I._.I\n                      I._.I\n                      I._.I\n                      I._.I\n                      I.,.I\n                     / /#\\ \\\n                   .dH# # #Hb.\n               _.~d#XXP I 7XX#b~,_\n            _.dXV^XP^ Y X Y ^7X^VXb._\n           /AP^   \\PY   Y   Y7/   ^VA\\\n          /8/      \\PP  I  77/      \\8\\\n         /J/        IV     VI        \\L\\\n         L|         |  \\ /  |         |J\n         V          |  | |  |          V\n                    |  | |  |\n                    |  | |  |\n                    |  | |  |\n                    |  | |  |\n _                  |  | |  |                  _\n( \\                 |  | |  |                 / )\n \\ \\                |  | |  |                / /\n('\\ \\               |  | |  |               / /`)\n \\ \\ \\              |  | |  |              / / /\n('\\ \\ \\             |  | |  |             / / /`)\n \\ \\ \\ )            |  | |  |            ( / / /\n('\\ \\( )            |  | |  |            ( )/ /`)\n \\ \\ ( |            |  | |  |            | ) / /\n  \\ \\( |            |  | |  |            | )/ /\n   \\ ( |            |  | |  |            | ) /\n    \\( |            |   Y   |            | )/\n     | |            |   |   |            | |\n     J | ___...~~--'|   |   |`--~~...___ | L\n     >-+<...___     |   |   |     ___...>+-<\n    /     __   `--~.L___L___J.~--'   __     \\\n    K    /  ` --.     d===b     .-- '  \\    H\n    \\_._/        \\   // I \\   /        \\_._/\n      `--~.._     \\__\\ I //__/     _..~--'\n             `--~~..____ ____..~~--'\n                    |   T   |\n                    |   |   |\n                    |   |   |\n                    |   |   |\n                    |   |   |\n                    |   |   |\n                    |   |   |\n                    |   |   |\n                    |   |   |\n                    |   |   |\n                    |   |   |\n                    |   |   |\n                    |   |   |\n                    I   '   I\n                     \\     /\n                      \\   /\n                       \\ /\n                       ")
+              STORE_FAST               0 (sword)
+
+209           LOAD_FAST                0 (sword)
+              LOAD_ATTR                1 (split + NULL|self)
+              LOAD_CONST               2 ('\n')
+              CALL                     1
+              STORE_FAST               0 (sword)
+
+211           LOAD_FAST                0 (sword)
+              GET_ITER
+      L1:     FOR_ITER                36 (to L2)
+              STORE_FAST               1 (line)
+
+212           LOAD_GLOBAL              3 (print + NULL)
+              LOAD_FAST                1 (line)
+              CALL                     1
+              POP_TOP
+
+213           LOAD_GLOBAL              4 (time)
+              LOAD_ATTR                6 (sleep)
+              PUSH_NULL
+              LOAD_CONST               3 (0.1)
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           38 (to L1)
+
+211   L2:     END_FOR
+              POP_TOP
+
+215           LOAD_GLOBAL              3 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+216           LOAD_GLOBAL              3 (print + NULL)
+              LOAD_CONST               4 ('There it is! The sword of Eldoria')
+              CALL                     1
+              POP_TOP
+
+217           LOAD_GLOBAL              3 (print + NULL)
+              LOAD_CONST               5 ("Break it's shackles and show that you are the Thalor")
+              CALL                     1
+              POP_TOP
+
+218           LOAD_GLOBAL              3 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+220           LOAD_GLOBAL              9 (input + NULL)
+              LOAD_CONST               6 ('> ')
+              CALL                     1
+              STORE_FAST               2 (chain)
+
+221           LOAD_GLOBAL              3 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+223           BUILD_LIST               0
+              LOAD_CONST               7 ((117, 84, 87, 108, 59, 85, 66, 71, 71, 30, 16))
+              LIST_EXTEND              1
+              STORE_FAST               3 (best)
+
+224           LOAD_GLOBAL             11 (list + NULL)
+              CALL                     0
+              STORE_FAST               4 (mod)
+
+225           LOAD_CONST               8 (69)
+              STORE_FAST               5 (plier)
+
+227           LOAD_GLOBAL             13 (range + NULL)
+              LOAD_GLOBAL             15 (len + NULL)
+              LOAD_FAST                2 (chain)
+              CALL                     1
+              CALL                     1
+              GET_ITER
+      L3:     FOR_ITER                47 (to L4)
+              STORE_FAST               6 (i)
+
+228           LOAD_FAST                4 (mod)
+              LOAD_ATTR               17 (append + NULL|self)
+              LOAD_FAST                5 (plier)
+              LOAD_GLOBAL             19 (ord + NULL)
+              LOAD_FAST_LOAD_FAST     38 (chain, i)
+              BINARY_SUBSCR
+              CALL                     1
+              BINARY_OP               12 (^)
+              CALL                     1
+              POP_TOP
+
+229           LOAD_GLOBAL             19 (ord + NULL)
+              LOAD_FAST_LOAD_FAST     38 (chain, i)
+              BINARY_SUBSCR
+              CALL                     1
+              STORE_FAST               5 (plier)
+              JUMP_BACKWARD           49 (to L3)
+
+227   L4:     END_FOR
+              POP_TOP
+
+231           LOAD_FAST_LOAD_FAST     67 (mod, best)
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       78 (to L5)
+
+232           LOAD_GLOBAL              3 (print + NULL)
+              LOAD_CONST               9 ('Oh! True Thalor, you have broken the shackles')
+              CALL                     1
+              POP_TOP
+
+233           LOAD_GLOBAL              3 (print + NULL)
+              LOAD_CONST              10 ('You are the chosen one')
+              CALL                     1
+              POP_TOP
+
+234           LOAD_GLOBAL              3 (print + NULL)
+              LOAD_CONST              11 ('I kneel before you')
+              CALL                     1
+              POP_TOP
+
+235           LOAD_GLOBAL              3 (print + NULL)
+              LOAD_CONST              12 ('Go on! Take the sword and fulfill your destiny')
+              CALL                     1
+              POP_TOP
+
+236           LOAD_GLOBAL              3 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+237           LOAD_GLOBAL              4 (time)
+              LOAD_ATTR                6 (sleep)
+              PUSH_NULL
+              LOAD_CONST              13 (2)
+              CALL                     1
+              POP_TOP
+
+238           LOAD_FAST                2 (chain)
+              RETURN_VALUE
+
+240   L5:     LOAD_GLOBAL              3 (print + NULL)
+              LOAD_CONST              14 ('You are not worthy')
+              CALL                     1
+              POP_TOP
+
+241           LOAD_GLOBAL              3 (print + NULL)
+              LOAD_CONST              15 ("The fate has you in it's grip")
+              CALL                     1
+              POP_TOP
+
+242           LOAD_GLOBAL              3 (print + NULL)
+              LOAD_CONST              16 ('You will be forgotten in the sands of time')
+              CALL                     1
+              POP_TOP
+
+243           LOAD_GLOBAL             21 (exit + NULL)
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             0 (None)

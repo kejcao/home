@@ -11,5 +11,6 @@ echo 'pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:
 node build.js $@
 
 cd build
+rm -r static
 cp -r ../static .
 

@@ -7,11 +7,15 @@
 
 {% block content %}
   <h1 class="text-center">Archive</h1>
-  <ul class="text-start">
+  <ul class="text-start p-0">
   {% for post in posts %}
-    <li>
-      <a href="/posts/{{ post.slug }}">{{ post.title | raw | safe}}</a> (<i>{{ post.date }}</i>) [{{ post.tags | join(', ') }}]
-    </li>
+    <a href="/posts/{{ post.slug }}" class="text-inherit no-underline text-center">
+      <li class="list-none border border-solid border-gray-700 p-4 my-4 rounded">
+        <b>{{ post.title | raw | safe}}</b>
+        <br>
+        <small><code>{{ post.date }}  [{{ post.tags | join(',') }}]</code></small>
+      </li>
+    </a>
   {% endfor %}
   </ul>
 {% endblock %}

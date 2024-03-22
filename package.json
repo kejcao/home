@@ -16,6 +16,10 @@
   },
   "dependencies": {
     "html-to-text": "^9.0.5",
-    "mime-types": "^2.1.35"
+    "mime-types": "^2.1.35",
+    "node-watch": "^0.7.4",
+    "postcss": "^8.4.33",
+    "postcss-minify": "^1.1.0",
+    "postcss-preset-env": "^9.3.0"
   }
 }

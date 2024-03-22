@@ -3,8 +3,8 @@ const fs = require('fs').promises;
 const path = require('path');
 const ws = require('ws');
 const chokidar = require('chokidar');
-const build = require('./build.js');
 const mime = require('mime-types')
+const watch = require('node-watch');
 
 // load mimetypes
 // mimetypes = {}
@@ -26,11 +26,11 @@ const mime = require('mime-types')
 //   });
 
 // switch to alternative buffer and clear screen
-process.stdout.write('\x1b[?1049h\x1bc');
+/* process.stdout.write('\x1b[?1049h\x1bc'); */
 
-process.on('beforeExit', code => {
-  console.log('\x1b[?1049l');
-});
+/* process.on('beforeExit', code => { */
+/*   console.log('\x1b[?1049l'); */
+/* }); */
 
 // start HTTP server
 process.chdir('build');
@@ -66,17 +66,20 @@ server.listen(8000, 'localhost', () => { });
 // start websocket server
 const wss = new ws.Server({ server, path: '/ws' });
 
-chokidar.watch('../src', { })
-  .on('change', async _ => {
-      process.stdout.write('\x1bc');
-      try {
-        await build.build();
-        wss.clients.forEach(client => {
-          if (client.readyState === ws.OPEN) {
-            client.send('reload');
-          }
-        });
-      } catch (e) {
-        console.log(e);
-      }
-  });
+const build = require('./build.js');
+
+watch('../src', { recursive: true }, async (e, file) => {
+  console.log(e, file)
+  try {
+    if (await build.build()) {
+      wss.clients.forEach(client => {
+        if (client.readyState === ws.OPEN) {
+          client.send('reload');
+        }
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});
+
