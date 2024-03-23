@@ -224,10 +224,13 @@ async function toHTML(lines, update) {
       //     : ([line].concat(await readUntil(['\\]']))).slice(1, -1).join('\n');
       //   html.push(katex.renderToString(latex, { displayMode: true }));
       } else if (line.startsWith('$$')) {
-        const latex = line.trim().length > 2 && line.trim().endsWith('$$')
-          ? line.trim()
-          : ([line].concat(await readUntil(['$$']))).join('\n');
-        html.push(`<p>${latex}</p>`);
+        let latex = line.trim().length > 2 && line.trim().endsWith('$$')
+          ? line.trim().slice(2, -2)
+          : ([line].concat(await readUntil(['$$']))).slice(1, -1).join('\n').trim();
+        if (!latex.startsWith('\\begin') && latex.includes('\\\\\n')) {
+          latex = `\\begin{gathered}${latex}\\end{gathered}`;
+        }
+        html.push(`<p>$$${latex}$$</p>`);
       } else if (line.startsWith('!')) {
         let filename = line.slice(1).trim();
         if (!fs.existsSync(`images/${filename}`)) {
@@ -322,7 +325,7 @@ async function toHTML(lines, update) {
       }
     }
   } catch (e) {
-    e.message = `line ${i+1}: ${e.message}`;
+    // e.message = `line ${i+1}: ${e.message}`;
     throw e;
   }
   return html;
