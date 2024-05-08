@@ -5,6 +5,14 @@ error() {
     exit 1
 }
 
+nvm() {
+  unset -f nvm
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  nvm "$@"
+}
+
 confirm() {
     while :; do
         read -n1 -rp "$*? (y/n) " ans && echo
@@ -64,6 +72,11 @@ EOF
         fi
 
         $EDITOR "$out"
+        ;;
+    'dev')
+        cd ~/home
+        nvm use v22.1.0
+        npm run dev
         ;;
     'help')
         echo '       ls - list all posts'

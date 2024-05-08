@@ -1,23 +1,17 @@
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 const nunjucks = require('nunjucks');
 const hljs = require('highlight.js');
 const babel = require('@babel/core');
-const katex = require('katex');
 const postcss = require('postcss');
 const readline = require('readline');
 const { convert } = require('html-to-text');
-const { error } = require('console');
-
-// TODO unit tests
-// TODO to mjs imports
 
 const GLOBAL_LAYOUT_FILE = 'layout.html';
 const POST_LAYOUT_FILE = 'src/post-layout.html';
 const LINKED_POST_FILES = 'static/store';
 
-let all = false, verbose = false;
+let all = false;
 
 function shouldUpdate(src, dest) {
   if (all) { return true; }
@@ -180,7 +174,7 @@ function renderInline(txt) {
   return html;
 }
 
-async function toHTML(lines, update) {
+async function toHTML(lines, preview = false) {
   let html = [];
 
   async function readUntil(endings) {
@@ -199,18 +193,8 @@ async function toHTML(lines, update) {
   }
 
   try {
-    // let inEndSection = false;
     for await (const line of lines) {
       if (!line.trim()) { continue; }
-      // if (inEndSection) {
-      //   const mid = line.indexOf('|');
-      //   const filename = line.slice(0, mid);
-      //   const data = Buffer.from(line.slice(mid), 'base64');
-      //
-      //   let hash = crypto.createHash('sha256');
-      //   hash.update(data);
-      //   await fs.writeFile(path.join(LINKED_POST_FILES, hash.digest('hex') + '.' + filename), data);
-      // }
 
       if (line.startsWith('<') || line.startsWith('{%')) {
         if (/<\/.*?>$/.test(line) || /<.*?\/>$/.test(line)) {
@@ -218,11 +202,6 @@ async function toHTML(lines, update) {
           continue;
         }
         html.push(([line].concat(await readUntil(['</', '{%']))).join('\n'))
-      // } else if (line.startsWith('\\[')) {
-      //   const latex = line.trim().endsWith('\\]')
-      //     ? line.trim().slice(2, -2)
-      //     : ([line].concat(await readUntil(['\\]']))).slice(1, -1).join('\n');
-      //   html.push(katex.renderToString(latex, { displayMode: true }));
       } else if (line.startsWith('$$')) {
         let latex = line.trim().length > 2 && line.trim().endsWith('$$')
           ? line.trim().slice(2, -2)
@@ -254,11 +233,18 @@ async function toHTML(lines, update) {
         if (size > 5) {
           throw new Error('too big of a header.');
         }
-        html.push(`<h${size}>${renderInline(line.slice(size).trim())}</h${size}>`);
+        html.push(`<h${size + 1}>${renderInline(line.slice(size).trim())}</h${size + 1}>`);
       } else if (line.startsWith('```') || line.startsWith('````')) {
         let wrap = line.startsWith('````');
         let block = [line].concat(await readUntil(wrap ? ['````'] : ['```']));
-        const language = block[0].slice(wrap ? 4 : 3).trim();
+        let language = block[0].slice(wrap ? 4 : 3).trim();
+        let expand = false;
+
+        if (language.split(' ')[1] == 'EXP') {
+          expand = true;
+          language = language.split(' ')[0];
+        }
+
         let code = block.slice(1, block.length - 1).join('\n');
         if (language != '' && language != 'pseudo') {
           code = hljs.highlight(code, { language }).value;
@@ -272,10 +258,10 @@ async function toHTML(lines, update) {
             .replace(/{/g, '&lbrace;')
             .replace(/}/g, '&rbrace;');
         }
-        
+
         let attributes = [];
         if (wrap) {
-          attributes.push('style="hyphens:none; text-align:start; white-space:pre-wrap"');
+          attributes.push('style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word"');
         }
         if (language == 'pseudo') {
           attributes.push('class="pseudocode"')
@@ -283,7 +269,12 @@ async function toHTML(lines, update) {
           code = `<code>${code}</code>`
         }
 
-        html.push(`<pre ${attributes.join(' ')}>${code}</pre>`);
+        let tmp = `<pre ${attributes.join(' ')}>${code}</pre>`
+        if (!expand) {
+          html.push(tmp);
+        } else {
+          html.push(`<details><summary>Click me to see code!</summary>${tmp}</details>`);
+        }
       } else {
         let block = line + '\n';
         while (true) {
@@ -320,7 +311,7 @@ async function toHTML(lines, update) {
           html.push(`<p>${renderInline(block.replace('\n', ' '))}</p>`);
         }
       }
-      if (!update) {
+      if (preview) {
         break;
       }
     }
@@ -341,7 +332,7 @@ async function* linesOf(path) {
   }
 }
 
-async function postToHTML(path, update = true) {
+async function postToHTML(path) {
   function parseDate(s) {
     const [y, m, d] = s.split('-');
     return new Date(y, m - 1, d);
@@ -351,32 +342,37 @@ async function postToHTML(path, update = true) {
 
   const frontmatter = ((await lines.next()).value).split('|');
   if (frontmatter.length != 4) {
-  // if (frontmatter.length != 3) {
+    // if (frontmatter.length != 3) {
     throw new Error('invalid frontmatter.');
   }
 
-  let html = await toHTML(lines, update);
-  return [{
+  let html = await toHTML(lines);
+  return {
     title: renderInline(frontmatter[0].trim()),
     desc: html[0] ?? '',
     plainDesc: convert(html[0] ?? ''),
     date: parseDate(frontmatter[2].trim()).toLocaleDateString(
       'en-US', { year: "numeric", month: "short", day: "numeric" }),
     tags: (frontmatter.length == 4 ? frontmatter[3].split(',').map(x => x.trim()) : []).sort(),
-  }, html.join('')];
+    content: html.join(''),
+  };
 }
 
-function renderWebpages(src, frontmatters) {
+function renderWebpages(src, blogPosts) {
   fs.readdirSync(src).forEach(fp => {
     const absfp = path.join(src, fp);
 
     if (fs.statSync(absfp).isDirectory()) {
-      renderWebpages(absfp, frontmatters);
+      renderWebpages(absfp, blogPosts);
       return;
     }
 
     if (fp == 'index.html') {
       const out = absfp.replace(/^src/, 'build');
+      if (!shouldUpdate(absfp, out)) {
+        return;
+      }
+
       try {
         fs.mkdirSync(path.dirname(out), { recursive: true });
       } catch (_) { }
@@ -385,7 +381,7 @@ function renderWebpages(src, frontmatters) {
         fs.writeFile(
           out,
           env.render(absfp, {
-            posts: frontmatters,
+            posts: blogPosts,
             last_build: new Date().toISOString(),
             layout: GLOBAL_LAYOUT_FILE
           }),
@@ -403,62 +399,56 @@ function renderWebpages(src, frontmatters) {
   });
 }
 
-// async function firstLines(path, n) {
-//   let lines = '';
-//   for await (const line of
-//     readline.createInterface({
-//       input: fs.createReadStream(path)
-//     })) {
-//
-//     if (n-- <= 0) { break; }
-//     lines += line + '\n';
-//   }
-//   return lines;
-// }
-
-async function renderPosts(past) {
-  let frontmatters = past ? past : [];
+let cache = {};
+async function renderBlogPosts() {
+  let blogPosts = [];
   for (const fp of await fs.promises.readdir('src/posts/')) {
     const outdir = path.join('build/posts', path.parse(fp).name);
     const srcfp = path.join('src/posts', fp);
 
+    // This means that the file is a post we need to render
     if (path.extname(fp) == '.md') {
       const willUpdate = shouldUpdate(
         path.join('src/posts/', fp),
         path.join(outdir, 'index.html')
       );
 
-      // render the post into HTML and parse metadata
-      let frontmatter, content;
+      let blogPost;
+
+      // If source file has not changed, then there is no need to update and we use cache.
+      if (!willUpdate && cache.hasOwnProperty(fp)) {
+        blogPost = cache[fp]
+      }
+
+      // Else render from scratch.
       try {
-        [frontmatter, content] = await postToHTML(srcfp, willUpdate);
+        blogPost = await postToHTML(srcfp);
+        cache[fp] = blogPost;
       } catch (e) {
         console.error(`${fp}: ${e.message}`);
         process.exit(1);
       }
-      frontmatter['slug'] = path.parse(fp).name;
-      frontmatter['content'] = content;
-      frontmatters.push(frontmatter);
 
-      // if we should update, then rewrite the HTML
+      blogPost['slug'] = path.parse(fp).name;
+      blogPosts.push(blogPost);
+
+      // If source file have changed, then rewrite output HTML
       if (willUpdate) {
-        if (verbose) {
-          console.log(`rendering post ${fp}`)
-        }
         try {
           await fs.promises.mkdir(outdir, { recursive: true });
         } catch (_) { }
+
         await fs.promises.writeFile(
           path.join(outdir, 'index.html'),
           env.render(POST_LAYOUT_FILE, {
-            post: frontmatter,
+            post: blogPost,
             layout: GLOBAL_LAYOUT_FILE
           }),
         );
       }
     }
   }
-  return frontmatters;
+  return blogPosts;
 }
 
 // function test() {
@@ -477,36 +467,24 @@ async function renderPosts(past) {
 // }
 // test()
 
-let mutex = true;
 module.exports = {
   build: async function() {
-    if (mutex) {
-      mutex = false;
+    let start = performance.now();
 
-      const original = process.cwd();
-      process.chdir('/home/kjc/home');
-      renderWebpages('src/',
-        (await renderPosts())
-          .sort((a, b) => {
-            return new Date(b['date']).getTime() - new Date(a['date']).getTime();
-          }));
-      process.chdir(original);
+    renderWebpages('src/',
+      (await renderBlogPosts())
+        .sort((a, b) => {
+          return new Date(b['date']).getTime() - new Date(a['date']).getTime();
+        }));
 
-      mutex = true;
-      return true;
-    } else {
-      console.log('error mutex')
-      return false;
-    }
+    let duration = performance.now() - start;
+    console.log(`finished rendering webpages in ${(duration / 1000).toFixed(2)} secs.`);
   }
 };
 
 if (require.main == module) {
   all = true;
   (async () => {
-    let start = performance.now();
     await module.exports.build();
-    let duration = performance.now() - start;
-    console.log(`finished in ${(duration / 1000).toFixed(2)} secs.`);
   })();
 }

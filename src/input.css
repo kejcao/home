@@ -6,12 +6,25 @@ html {
   line-height: 1.55;
 }
 
-h1,h2,h3,h4,h5,h6 {
+hr {
+  margin: 32px 0;
+}
+
+li {
+  margin: 4px 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.2;
 }
 
 /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
-kbd > kbd {
+kbd>kbd {
   text-indent: 0;
   background-color: #eee;
   border-radius: 3px;
@@ -28,23 +41,35 @@ kbd > kbd {
   white-space: nowrap;
 }
 
-code, pre {
+aside {
+  border-left: 2px solid gray;
+  border-radius: 2px;
+  padding-left: 16px;
+  margin: 0;
+  margin-left: 32px;
+}
+
+code,
+pre {
   font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
   overflow-y: hidden;
   hyphens: auto;
 }
 
-:not(pre) > code {
+:not(pre)>code {
   font-size: 90%;
 }
 
-p + p {
+p+p {
   margin-top: 1.3em;
 }
 
 pre {
+  border-radius: 8px;
+  background-color: #fcfcfc;
+  border: 1px solid #f2f2f2;
+  padding: 4px 7px;
   overflow-x: auto;
-  margin-left: 2rem;
   font-size: .8rem;
 }
 
@@ -66,3 +91,51 @@ img {
 .hljs-meta.prompt_ {
   user-select: none;
 }
+
+
+summary {
+  cursor: pointer;
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+details>summary::before {
+  content: '>';
+  font-weight: 700;
+  padding-right: 10px;
+}
+
+details[open]>summary::before {
+  content: '^';
+}
+
+summary::after {
+  content: "";
+  flex-grow: 1;
+  height: 1px;
+  background-color: #333;
+  margin-left: 10px;
+}
+
+
+/* summary::marker { */
+/*   content: "tt ▶"; */
+/* } */
+
+/* summary::after { */
+/*   content: ""; */
+/*   flex-grow: 1; */
+/*   height: 1px; */
+/*   background-color: #111; */
+/*   margin-left: 0.5em; */
+/* } */
+
+
+/* details { */
+/*   border-left: 3px solid lightred; */
+/*   padding-left: 6px; */
+/* } */

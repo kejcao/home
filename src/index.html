@@ -102,17 +102,6 @@
       color: inherit;
       font-weight: bold;
     }
-    
-    summary {
-      cursor: pointer;
-      user-select: none;
-      text-decoration: underline;
-    }
-
-    details {
-      border-left: 3px solid lightred;
-      padding-left: 6px;
-    }
   {% endstyle %}
 {% endblock %}
 
@@ -128,9 +117,8 @@
   <div>
     <h1 class="text-4xl text-center">Homepage</h1>
     <p class="text-center px-12">I use this website primarily to write on computer-related topics, such as cybersecurity, programming, and mathematics.</p>
-
     <details>
-      <summary>Learn more about me (click to expand!)</summary>
+      <summary><span>Learn more about me (click to expand!)</span></summary>
       <p>I like to participate in CTFs and competitive programming contests. I read, both fiction and non-fiction. I use the DWM window manager on Arch Linux. I use neovim as my primary editor and Chromium for web browsing. I know a lot of programming languages, including but not limited to: C/C++, Bash, Haskell, LaTeX, and x86-64 asm.</p>
       <p>A history: This personal website has gone through numerous iterations. Previously, I hosted this website on a spare laptop running Apache but have since moved to Vercel for hosting—forwarding ports, fiddling with DNS records, generating HTTPS certificates with Let's Encrypt, configuring my mail server daemons Postfix and Dovecot, etc. were all an absolute nightmare. I believe back then I used a handwritten SSG in C++ to generate my website. I proceeded to rebuild my website in a dozen different web frameworks (Next.js, Svelte, Vue.js, etc.) before deciding to write my own in Node.js. It crawls for Nunjucks templates and blog posts written in my own Markdown-like document language. It uses Babel for JavaScript transcompilation and miniaturization, highlight.js to syntax highlight blocks of source code, KaTeX for rendering the LaTeX math embed in my posts, and Tailwind CSS to make styling easier. I have a Node.js script that hosts a HTTP development server which injects a bit of JavaScript into any HTML; this script receives websocket commands from a websocket server that I host alongside the HTTP one; when I edit a post, the websocket server sends a command to the embed JavaScript to refresh the page. A handful of randomly scattered shell scripts aid in my development process.</p>
       <!-- <p class="">last build: {{ last_build }}</p> -->

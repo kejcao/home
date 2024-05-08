@@ -3,9 +3,25 @@
 {% block head %}
   <title>{{ post.title }} - Kevin Cao</title>
   <meta name="description" content="{{ post.plainDesc }}" />
+  {% style %}
+    h2,h3,h4,h5,h6 {
+        margin-top: 32px;
+        margin-bottom: 12px;
+        margin-left: -28px;
+        text-decoration: underline;
+    }
+
+    @media (min-width: 42rem) {
+      pre {
+          margin-left: -2rem;
+          width: calc(100% + 4rem);
+      }
+    }
+  {% endstyle %}
 {% endblock %}
 
 {% block content %}
+        <!-- font-size: 1.8rem; -->
   <article>
     <header>
         <h1 class="text-5xl text-gray-700 py-4 text-center">{{ post.title | raw | safe }}</h1>
