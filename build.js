@@ -11,10 +11,10 @@ const GLOBAL_LAYOUT_FILE = 'layout.html';
 const POST_LAYOUT_FILE = 'src/post-layout.html';
 const LINKED_POST_FILES = 'static/store';
 
-let all = false;
+let renderAll = false;
 
 function shouldUpdate(src, dest) {
-  if (all) { return true; }
+  if (renderAll) { return true; }
   try {
     return fs.statSync(src).mtime > fs.statSync(dest).mtime;
   } catch (_) {
@@ -332,6 +332,14 @@ async function* linesOf(path) {
   }
 }
 
+function render(src, vars) {
+  try {
+    return env.render(src, vars);
+  } catch (e) {
+    throw new Error(`${e}`)
+  }
+}
+
 async function postToHTML(path) {
   function parseDate(s) {
     const [y, m, d] = s.split('-');
@@ -342,7 +350,6 @@ async function postToHTML(path) {
 
   const frontmatter = ((await lines.next()).value).split('|');
   if (frontmatter.length != 4) {
-    // if (frontmatter.length != 3) {
     throw new Error('invalid frontmatter.');
   }
 
@@ -358,12 +365,34 @@ async function postToHTML(path) {
   };
 }
 
-function renderWebpages(src, blogPosts) {
-  fs.readdirSync(src).forEach(fp => {
+let blogPosts = [];
+async function renderWebpage(absfp) {
+  const start = performance.now()
+  const out = absfp.replace(/^src/, 'build');
+
+  try {
+    await fs.promises.mkdir(path.dirname(out), { recursive: true });
+  } catch (_) { }
+
+  await fs.promises.writeFile(
+    out,
+    render(absfp, {
+      posts: blogPosts,
+      last_build: new Date().toISOString(),
+      layout: GLOBAL_LAYOUT_FILE
+    }),
+  );
+
+  const duration = performance.now() - start;
+  console.log(`rendered ${absfp} in ${(duration / 1000).toFixed(2)} secs`)
+}
+
+async function renderWebpages(src) {
+  for (const fp of await fs.promises.readdir(src)) {
     const absfp = path.join(src, fp);
 
     if (fs.statSync(absfp).isDirectory()) {
-      renderWebpages(absfp, blogPosts);
+      renderWebpages(absfp);
       return;
     }
 
@@ -372,75 +401,47 @@ function renderWebpages(src, blogPosts) {
       if (!shouldUpdate(absfp, out)) {
         return;
       }
-
-      try {
-        fs.mkdirSync(path.dirname(out), { recursive: true });
-      } catch (_) { }
-
-      try {
-        fs.writeFile(
-          out,
-          env.render(absfp, {
-            posts: blogPosts,
-            last_build: new Date().toISOString(),
-            layout: GLOBAL_LAYOUT_FILE
-          }),
-          err => {
-            if (err) {
-              console.error(err);
-              process.exit(1);
-            }
-          }
-        );
-      } catch (e) {
-        console.error(`${fp}: ${e}`)
-      }
+      renderWebpage(absfp);
     }
-  });
+  }
 }
 
 let cache = {};
 async function renderBlogPosts() {
-  let blogPosts = [];
-  for (const fp of await fs.promises.readdir('src/posts/')) {
+  blogPosts = [];
+  for (const fp of await fs.promises.readdir('src/posts')) {
     const outdir = path.join('build/posts', path.parse(fp).name);
     const srcfp = path.join('src/posts', fp);
 
-    // This means that the file is a post we need to render
     if (path.extname(fp) == '.md') {
-      const willUpdate = shouldUpdate(
+      const needToUpdate = shouldUpdate(
         path.join('src/posts/', fp),
         path.join(outdir, 'index.html')
       );
 
       let blogPost;
-
-      // If source file has not changed, then there is no need to update and we use cache.
-      if (!willUpdate && cache.hasOwnProperty(fp)) {
+      if (!needToUpdate && cache.hasOwnProperty(fp)) {
         blogPost = cache[fp]
-      }
-
-      // Else render from scratch.
-      try {
-        blogPost = await postToHTML(srcfp);
-        cache[fp] = blogPost;
-      } catch (e) {
-        console.error(`${fp}: ${e.message}`);
-        process.exit(1);
+      } else {
+        try {
+          blogPost = await postToHTML(srcfp);
+          cache[fp] = blogPost;
+        } catch (e) {
+          throw new Error(`${fp}: ${e.message}`);
+        }
       }
 
       blogPost['slug'] = path.parse(fp).name;
       blogPosts.push(blogPost);
 
-      // If source file have changed, then rewrite output HTML
-      if (willUpdate) {
+      if (needToUpdate) {
         try {
           await fs.promises.mkdir(outdir, { recursive: true });
         } catch (_) { }
 
         await fs.promises.writeFile(
           path.join(outdir, 'index.html'),
-          env.render(POST_LAYOUT_FILE, {
+          render(POST_LAYOUT_FILE, {
             post: blogPost,
             layout: GLOBAL_LAYOUT_FILE
           }),
@@ -448,7 +449,9 @@ async function renderBlogPosts() {
       }
     }
   }
-  return blogPosts;
+  blogPosts = blogPosts.sort((a, b) => {
+    return new Date(b['date']).getTime() - new Date(a['date']).getTime();
+  });
 }
 
 // function test() {
@@ -468,14 +471,12 @@ async function renderBlogPosts() {
 // test()
 
 module.exports = {
+  renderWebpage: renderWebpage,
   build: async function() {
     let start = performance.now();
 
-    renderWebpages('src/',
-      (await renderBlogPosts())
-        .sort((a, b) => {
-          return new Date(b['date']).getTime() - new Date(a['date']).getTime();
-        }));
+    await renderBlogPosts();
+    await renderWebpages('src/');
 
     let duration = performance.now() - start;
     console.log(`finished rendering webpages in ${(duration / 1000).toFixed(2)} secs.`);
@@ -483,7 +484,7 @@ module.exports = {
 };
 
 if (require.main == module) {
-  all = true;
+  renderAll = true;
   (async () => {
     await module.exports.build();
   })();
