@@ -32,7 +32,8 @@ const server = http.createServer(async (req, res) => {
     } else {    // Inject javascript!
       const srcpath = path.join('src/', fp.slice(6));
       if (fs.existsSync(srcpath)) {
-        build.renderWebpage(srcpath);
+        // console.log('SRC', srcpath);
+        // build.renderWebpage(srcpath);
       }
 
       res.end(

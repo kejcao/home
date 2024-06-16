@@ -22,49 +22,56 @@ function shouldUpdate(src, dest) {
   }
 }
 
-let env = new nunjucks.Environment(new nunjucks.FileSystemLoader());
+let env;
+function initNunjucks() {
+  env = new nunjucks.Environment(new nunjucks.FileSystemLoader());
 
-env.addExtension('StyleExtension', new function() {
-  this.tags = ['style'];
+  env.addExtension('StyleExtension', new function() {
+    this.tags = ['style'];
 
-  this.parse = function(parser, nodes, lexer) {
-    const tok = parser.nextToken().value;
-    const args = parser.parseSignature(null, true);
-    parser.advanceAfterBlockEnd(tok);
-    const body = parser.parseUntilBlocks('endstyle');
-    parser.advanceAfterBlockEnd();
-    return new nodes.CallExtension(this, 'run', args, [body]);
-  };
+    this.parse = function(parser, nodes, lexer) {
+      const tok = parser.nextToken().value;
+      const args = parser.parseSignature(null, true);
+      parser.advanceAfterBlockEnd(tok);
+      const body = parser.parseUntilBlocks('endstyle');
+      parser.advanceAfterBlockEnd();
+      return new nodes.CallExtension(this, 'run', args, [body]);
+    };
 
-  this.run = function(context, body) {
-    return new nunjucks.runtime.SafeString(`<style>
+    this.run = function(context, body) {
+      return new nunjucks.runtime.SafeString(`<style>
       ${postcss([require('postcss-preset-env'), require('postcss-minify')])
-        .process(body(), { from: undefined, to: undefined }).css}
+          .process(body(), { from: undefined, to: undefined }).css}
     </style>`);
-  };
-}());
+    };
+  }());
 
-env.addExtension('ScriptExtension', new function() {
-  this.tags = ['script'];
+  env.addExtension('ScriptExtension', new function() {
+    this.tags = ['script'];
 
-  this.parse = function(parser, nodes, lexer) {
-    const tok = parser.nextToken().value;
-    const args = parser.parseSignature(null, true);
-    parser.advanceAfterBlockEnd(tok);
-    const body = parser.parseUntilBlocks('endscript');
-    parser.advanceAfterBlockEnd();
-    return new nodes.CallExtension(this, 'run', args, [body]);
-  };
+    this.parse = function(parser, nodes, lexer) {
+      const tok = parser.nextToken().value;
+      const args = parser.parseSignature(null, true);
+      parser.advanceAfterBlockEnd(tok);
+      const body = parser.parseUntilBlocks('endscript');
+      parser.advanceAfterBlockEnd();
+      return new nodes.CallExtension(this, 'run', args, [body]);
+    };
 
-  this.run = function(context, body) {
-    return new nunjucks.runtime.SafeString(`<script>
+    this.run = function(context, body) {
+      return new nunjucks.runtime.SafeString(`<script>
     ${babel.transformSync(body(), {
-      presets: ['@babel/preset-env', 'minify'],
-      targets: '> 0.25%, not dead'
-    }).code}
+        presets: ['@babel/preset-env', 'minify'],
+        targets: '> 0.25%, not dead'
+      }).code}
     </script>`);
-  };
-}());
+    };
+  }());
+
+  env.addFilter('raw', str => {
+    return env.renderString(str, this.ctx);
+  });
+}
 
 // env.addExtension('ImageExtension', new function() {
 //   this.tags = ['img'];
@@ -97,10 +104,6 @@ env.addExtension('ScriptExtension', new function() {
 //     `);
 //   };
 // }());
-
-env.addFilter('raw', str => {
-  return env.renderString(str, this.ctx);
-});
 
 function escapeHTML(txt) {
   return txt
@@ -393,15 +396,14 @@ async function renderWebpages(src) {
 
     if (fs.statSync(absfp).isDirectory()) {
       renderWebpages(absfp);
-      return;
+      continue;
     }
 
     if (fp == 'index.html') {
       const out = absfp.replace(/^src/, 'build');
-      if (!shouldUpdate(absfp, out)) {
-        return;
+      if (shouldUpdate(absfp, out)) {
+        renderWebpage(absfp);
       }
-      renderWebpage(absfp);
     }
   }
 }
@@ -474,6 +476,7 @@ module.exports = {
   renderWebpage: renderWebpage,
   build: async function() {
     let start = performance.now();
+    initNunjucks();
 
     await renderBlogPosts();
     await renderWebpages('src/');
