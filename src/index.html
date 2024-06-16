@@ -108,7 +108,8 @@
 {% block header %}
   <header class="mt-4 mb-8">
     <nav class="text-center">
-      <a href="/archive/">blog archive</a>
+      <a href="/archive/">blog archive</a><br>
+      <a href="/about/">about</a>
     </nav>
   </header>
 {% endblock %}
@@ -116,20 +117,13 @@
 {% block content %}
   <div>
     <h1 class="text-4xl text-center">Homepage</h1>
-    <p class="text-center px-12">I use this website primarily to write on computer-related topics, such as cybersecurity, programming, and mathematics.</p>
-    <details>
-      <summary><span>Learn more about me (click to expand!)</span></summary>
-      <p>I like to participate in CTFs and competitive programming contests. I read, both fiction and non-fiction. I use the DWM window manager on Arch Linux. I use neovim as my primary editor and Chromium for web browsing. I know a lot of programming languages, including but not limited to: C/C++, Bash, Haskell, LaTeX, and x86-64 asm.</p>
-      <p>A history: This personal website has gone through numerous iterations. Previously, I hosted this website on a spare laptop running Apache but have since moved to Vercel for hosting—forwarding ports, fiddling with DNS records, generating HTTPS certificates with Let's Encrypt, configuring my mail server daemons Postfix and Dovecot, etc. were all an absolute nightmare. I believe back then I used a handwritten SSG in C++ to generate my website. I proceeded to rebuild my website in a dozen different web frameworks (Next.js, Svelte, Vue.js, etc.) before deciding to write my own in Node.js. It crawls for Nunjucks templates and blog posts written in my own Markdown-like document language. It uses Babel for JavaScript transcompilation and miniaturization, highlight.js to syntax highlight blocks of source code, KaTeX for rendering the LaTeX math embed in my posts, and Tailwind CSS to make styling easier. I have a Node.js script that hosts a HTTP development server which injects a bit of JavaScript into any HTML; this script receives websocket commands from a websocket server that I host alongside the HTTP one; when I edit a post, the websocket server sends a command to the embed JavaScript to refresh the page. A handful of randomly scattered shell scripts aid in my development process.</p>
-      <!-- <p class="">last build: {{ last_build }}</p> -->
-    </details>
+      <p>I use this website primarily to write on computer-related topics, such as cybersecurity, programming, and mathematics. I participate in CTFs and competitive programming contests sometimes. I read, both fiction and non-fiction. I use the DWM window manager on Arch Linux, neovim as my editor, Chromium for web browsing, and Alacritty as my terminal emulator. I know a lot of programming languages, in order of skill, from most to least: Python, HTML, Bash, C/C++, JavaScript, Haskell, CSS, LaTeX, Lean, and x86-64 asm.</p>
 
     <div class="text-center mt-4 mb-8">
       <a class="green" href="https://github.com/kejcao">github.com</a>&nbsp;&nbsp;&nbsp;
       <a class="green" href="https://gitlab.com/kejcao">gitlab.com</a><br>
       <a class="green" href="https://crackmes.one/user/kejcao">crackmes.one</a><br>
       <span class="something">&#x6b;&#x6a;&#x63;&#x61;&#x6f;&#x40;&#x70;&#x72;&#x6f;&#x74;&#x6f;&#x6e;&#x2e;&#x6d;&#x65;</span><br>
-      <a class="green" href="https://literal.club/kjcao">literal.club</a>
     </div>
   </div>
 
