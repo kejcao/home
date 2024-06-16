@@ -33,12 +33,12 @@ ruler = map twos [1..]
 
 This exercise reminded me of $p$-adic valuation, which is a function in mathematics that returns, for prime $p$, the highest exponent such that this prime raised to it will divide into (that is to say is a factor of) an integer $n$. Wikipedia defines it as
 
-\[
+$$
 v_p(n) = \begin{cases}
   \max\{k \in \mathbb{N} : p^k \mid n\} & \text{if } n \neq 0 \\
   \infty                                & \text{if } n = 0.
 \end{cases}
-\]
+$$
 
 Note $v_p(n) = v_p(-n)$ which is to say the function is even, since if a number $k$ divides into $n$, then $k$ also divides into $-n$. An implementation of this function in Haskell using the same method of interweaving lists as before looks like
 
@@ -67,9 +67,9 @@ for i in range(1, 1001):
 
 BTW in math there's a formula, Legendre's formula, that makes it really easy to calculate the $p$-adic valuation of a factorial.
 
-\[
-v_p(n!) = \sum_{i=1}^{\infty} \left\lfloor \frac{n}{p^i} \right\rfloor
-\]
+$$
+  v_p(n!) = \sum_{i=1}^{\infty} \left\lfloor \frac{n}{p^i} \right\rfloor
+$$
 
 Note that eventually $p^i > n$ for all $i$ greater than a certain point, so in Haskell to evaluate the sum in a finite amount of time we take until the result of the floored division between $n$ and $p^i$ is 0, in which case all subsequent divisions will also amount to 0.
 
