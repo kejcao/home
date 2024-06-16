@@ -4,25 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Kevin Cao</title>
-
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="/static/stylesheet.css">
 
-  <script>
-    MathJax = {
-        tex: {
-            inlineMath: [['$','$']],
-            displayMath: [['$$','$$']],
-            processEscapes: false,
-            // processEnvironments: true,
-        }
-    }
-  </script>
-  <script type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script>MathJax={tex:{inlineMath:[["$","$"]],displayMath:[["$$","$$"]],processEscapes:!1}}</script>
+  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
   {% style %}
+    /* This is CSS for hljs code highlighting */
+    pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}
+
     header div a::before {
       content: '';
       display: block;
@@ -50,27 +40,167 @@
       text-decoration: none;
       color: inherit;
     }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header > div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    main {
+      text-align: justify;
+      hyphens: auto;
+      word-break: auto-phrase;
+      text-wrap: balance;
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,h2,h3,h4,h5,h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #fcfcfc;
+      border: 1px solid #f2f2f2;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    img {
+      max-width: 85%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
   {% endstyle %}
 
   {% block head %}
   {% endblock %}
 </head>
 
-<body class="font-serif px-4 mx-auto my-0 text-gray-800 max-w-xl">
+<body>
   {% block body %}
-
-  <header class="mt-4">
+  <header>
     {% block header %}
-    <div class="text-center"><a href="/">back to homepage</a></div>
+    <div>
+      <a href="/">back to homepage</a>
+    </div>
     {% endblock %}
   </header>
 
-  <main class="text-justify text-balance hyphens-auto">
+  <main>
     {% block content %}
     {% endblock %}
   </main>
   {% endblock %}
-  <script>pseudocode.renderClass('pseudocode')</script>
 </body>
 
 </html>

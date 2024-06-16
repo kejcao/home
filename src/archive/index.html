@@ -3,14 +3,39 @@
 {% block head %}
   <title>Archive</title>
   <meta name="description" content="A dump of every one of my posts." />
+  {% style %}
+    ul {
+      text-align: start;
+      padding: 0;
+    }
+    
+    ul > a {
+      color: inherit;
+      text-decoration-line: none;
+      text-align: center;
+    }
+
+    ul li {
+      list-style-type: none;
+      border: 1px solid #333;
+      border-radius: .25rem;
+      box-shadow: 3px 3px 4px #ccc;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    ul li:hover {
+      box-shadow: 3px 3px 4px #999;
+    }
+  {% endstyle %}
 {% endblock %}
 
 {% block content %}
-  <h1 class="text-center">Archive</h1>
-  <ul class="text-start p-0">
+  <h1>Archive</h1>
+  <ul>
   {% for post in posts %}
-    <a href="/posts/{{ post.slug }}" class="text-inherit no-underline text-center">
-      <li class="list-none border border-solid border-gray-700 p-4 my-4 rounded">
+    <a href="/posts/{{ post.slug }}">
+      <li>
         <b>{{ post.title | raw | safe}}</b>
         <br>
         <small><code>{{ post.date }}  [{{ post.tags | join(',') }}]</code></small>
