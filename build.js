@@ -9,7 +9,6 @@ const { convert } = require('html-to-text');
 
 const GLOBAL_LAYOUT_FILE = 'layout.html';
 const POST_LAYOUT_FILE = 'src/post-layout.html';
-const LINKED_POST_FILES = 'static/store';
 
 let renderAll = false;
 
@@ -371,7 +370,7 @@ async function postToHTML(path) {
 let blogPosts = [];
 async function renderWebpage(absfp) {
   const start = performance.now()
-  const out = absfp.replace(/^src/, 'build');
+  const out = absfp.replace(/^src/, 'pub');
 
   try {
     await fs.promises.mkdir(path.dirname(out), { recursive: true });
@@ -400,7 +399,7 @@ async function renderWebpages(src) {
     }
 
     if (fp == 'index.html') {
-      const out = absfp.replace(/^src/, 'build');
+      const out = absfp.replace(/^src/, 'pub');
       if (shouldUpdate(absfp, out)) {
         renderWebpage(absfp);
       }
@@ -412,7 +411,7 @@ let cache = {};
 async function renderBlogPosts() {
   blogPosts = [];
   for (const fp of await fs.promises.readdir('src/posts')) {
-    const outdir = path.join('build/posts', path.parse(fp).name);
+    const outdir = path.join('pub/posts', path.parse(fp).name);
     const srcfp = path.join('src/posts', fp);
 
     if (path.extname(fp) == '.md') {

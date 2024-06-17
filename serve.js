@@ -10,7 +10,7 @@ build.build();
 
 async function URLPathToPath(fp) {
   if (!fp) { fp = 'index.html'; }
-  fp = 'build/' + fp;
+  fp = 'pub/' + fp;
 
   if ((await fs.promises.lstat(fp)).isDirectory()) {
     fp += '/index.html';

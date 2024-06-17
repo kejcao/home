@@ -84,15 +84,11 @@ EOF
         cd $root
         node build.js "$@"
 
-        cd build || exit
-        rm -r static
-        cp -r ../static .
+        # cd pub
+        # ! [ -d ./static ] && cp -r ../static .
         ;;
     'publish')
-        cd $root
-        cd pub
-        rm -r ./*
-        cp -r ../build/* .
+        cd $root/pub
         git add -A
         git commit --amend -m "Add post"
         git push -f origin main
