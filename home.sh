@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 error() {
     echo "home: $*"
     exit 1
@@ -74,15 +76,34 @@ EOF
         $EDITOR "$out"
         ;;
     'dev')
-        cd ~/home
+        cd $root
         nvm use v22.1.0
         npm run dev
+        ;;
+    'compile')
+        cd $root
+        node build.js "$@"
+
+        cd build || exit
+        rm -r static
+        cp -r ../static .
+        ;;
+    'publish')
+        cd $root
+        cd pub
+        rm -r ./*
+        cp -r ../build/* .
+        git add -A
+        git commit --amend -m "Add post"
+        git push -f origin main
         ;;
     'help')
         echo '       ls - list all posts'
         echo '     edit - edit an post'
         echo '   latest - edit latest post'
         echo 'add-image - add an image'
+        echo '  publish - publish website'
+        echo '  compile - recompile entire website'
         ;;
     *)
         error "no subcommand given; try help?"
