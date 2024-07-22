@@ -44,16 +44,18 @@ case $1 in
             || echo "$root/images/$(basename "$2")"
         )
 
-        [ ! -f "$2" ] && error "image file doesn't exist"
+        [ ! -f "$2" ] && error "src image file doesn't exist"
         [ -f "$out" ] && error "image already exists"
-        [ "${2##*.}" != "png" ] && error 'image file should be png'
+
+        [ "${2##*.}" != "jpg" ] && \
+        [ "${2##*.}" != "gif" ] && \
+        [ "${2##*.}" != "svg" ] && \
+            error 'unsupported image file format'
 
         confirm "save as $(basename "$out")"
         cp "$2" "$out"
 
-        cd "$root/images" || error "cd fails"
-        ./compile.sh
-
+        cp $root/images/* $root/pub/static/media
         ;;
     'ls')
         ls-posts
@@ -82,26 +84,23 @@ EOF
         ;;
     'compile')
         cd $root
-        node build.js "$@"
-
-        # cd pub
-        # ! [ -d ./static ] && cp -r ../static .
+        node build.js
         ;;
     'publish')
-        cd $root/pub
+        cd $root
+        node build.js dev=false
+
+        cd pub
         git add -A
         git commit --amend -m "Add post"
         git push -f origin main
         ;;
-    'help')
+    *)
         echo '       ls - list all posts'
         echo '     edit - edit an post'
         echo '   latest - edit latest post'
-        echo 'add-image - add an image'
         echo '  publish - publish website'
         echo '  compile - recompile entire website'
-        ;;
-    *)
-        error "no subcommand given; try help?"
+        echo 'add-image [src] [dest] - add an image'
         ;;
 esac

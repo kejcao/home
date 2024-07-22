@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const nunjucks = require('nunjucks');
-const hljs = require('highlight.js');
-const babel = require('@babel/core');
+const hljs = require('highlight.js'); const babel = require('@babel/core');
 const postcss = require('postcss');
 const readline = require('readline');
 const { convert } = require('html-to-text');
@@ -162,9 +161,12 @@ function renderInline(txt) {
         html += `$${readUntil('$')}$`;
         break;
       case '[':
+        const original_i = i;
         const content = renderInline(readUntil(']'));
         if (txt[++i] != '(' || finished()) {
-          throw new Error('malformed link.');
+          i = original_i;
+          html += escapeHTML(txt[i]);
+          continue;
         }
         const url = escapeHTML(readUntil(')'));
         html += `<a href="${url}">${content}</a>`;
@@ -196,7 +198,7 @@ async function toHTML(lines, preview = false) {
 
   try {
     for await (const line of lines) {
-      if (!line.trim()) { continue; }
+      if (!line.trim() || line.startsWith('<!--')) { continue; }
 
       if (line.startsWith('<') || line.startsWith('{%')) {
         if (/<\/.*?>$/.test(line) || /<.*?\/>$/.test(line)) {
@@ -351,6 +353,7 @@ async function postToHTML(path) {
   const lines = linesOf(path);
 
   const frontmatter = ((await lines.next()).value).split('|');
+  const draft = frontmatter[0].startsWith('DD: ') ? true : false;
   if (frontmatter.length != 4) {
     throw new Error('invalid frontmatter.');
   }
@@ -358,6 +361,7 @@ async function postToHTML(path) {
   let html = await toHTML(lines);
   return {
     title: renderInline(frontmatter[0].trim()),
+    draft: draft,
     desc: html[0] ?? '',
     plainDesc: convert(html[0] ?? ''),
     date: parseDate(frontmatter[2].trim()).toLocaleDateString(
@@ -408,7 +412,7 @@ async function renderWebpages(src) {
 }
 
 let cache = {};
-async function renderBlogPosts() {
+async function renderBlogPosts(dev = false) {
   blogPosts = [];
   for (const fp of await fs.promises.readdir('src/posts')) {
     const outdir = path.join('pub/posts', path.parse(fp).name);
@@ -426,6 +430,9 @@ async function renderBlogPosts() {
       } else {
         try {
           blogPost = await postToHTML(srcfp);
+          if (blogPost.draft && !dev) {
+            continue;
+          }
           cache[fp] = blogPost;
         } catch (e) {
           throw new Error(`${fp}: ${e.message}`);
@@ -473,11 +480,11 @@ async function renderBlogPosts() {
 
 module.exports = {
   renderWebpage: renderWebpage,
-  build: async function() {
+  build: async function(dev = true) {
     let start = performance.now();
     initNunjucks();
 
-    await renderBlogPosts();
+    await renderBlogPosts(dev);
     await renderWebpages('src/');
 
     let duration = performance.now() - start;
@@ -488,6 +495,6 @@ module.exports = {
 if (require.main == module) {
   renderAll = true;
   (async () => {
-    await module.exports.build();
+    await module.exports.build(...process.argv.slice(2).map(eval)); // WTF is this cli parsing? TODO
   })();
 }
