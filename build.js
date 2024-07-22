@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const nunjucks = require('nunjucks');
-const hljs = require('highlight.js'); const babel = require('@babel/core');
+const hljs = require('highlight.js');
+const babel = require('@babel/core');
 const postcss = require('postcss');
 const readline = require('readline');
 const { convert } = require('html-to-text');
