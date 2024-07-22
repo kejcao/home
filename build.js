@@ -7,7 +7,7 @@ const readline = require('readline');
 const { convert } = require('html-to-text');
 
 const GLOBAL_LAYOUT_FILE = 'layout.html';
-const POST_LAYOUT_FILE = 'src/post-layout.html';
+const POST_LAYOUT_FILE = 'post-layout.html';
 
 let renderAll = false;
 

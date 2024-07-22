@@ -1,38 +1,34 @@
 # SSG
 
-A hodgepodge of confused Bash scripts and a Node.js file that come together to render a menagerie of Nunjucks templates and posts written in a Markdown-like document language.
+A Node.js file and a Bash script work together to render a bunch of Nunjucks templates and posts written in a Markdown-like document language. Used for my personal site [kevincao.xyz](https://www.kevincao.xyz/).
 
-## Technologies
+## Libraries
 
-- `babel` to transcompile and miniaturize modern JavaScript to code a legacy browser would understand.
-- `highlight.js` to add a bit of color to otherwise plain code blocks.
-- `katex` to render the LaTeX math stuff.
-- `nunjucks` to render the HTML templates.
-- `tailwindcss` for really convenient styling.
+- Ran server side
+    - `babel` to transcompile and miniaturize JavaScript.
+    - `highlight.js` to syntax highlight code blocks.
+    - `nunjucks` to render the HTML templates.
+- Ran client side
+    - `Mathjax` to render LaTeX math formulas.
 
 ## Directory Structure & Important Files
 
-- `images`: unoptimized, raw images.
-- `src`: source code: mostly template files and posts.
-- `static`: files that don't qualify as source code, like favicon.ico or optimized media.
-- `build.js`: renders source code and posts from `src` to `build`.
-- `compile.sh`: runs `build.js` then combines `static` and `build` into `pub`, which can be directly served.
-- `pub`: raw HTML, CSS, JavaScript, and miscellaneous media ready to be served.
-- `build`: directory containing rendered `index.html` files and posts from `src`.
-- `test.sh`: for development.
-- `layout.html`: global layout. Nearly every page inherits from this file.
-- `post-layout.html`: layout for each post.
-- `src/input.css` is the global CSS file.
+- `src`: Source code, template files and Markdown posts.
+- `pub`: The rendered site.
+- `pub/static`: Static files like favicon.ico.
+- `build.js`: Renders source code and posts from `src` to `build`.
+- `home.sh`: A collection of commands for managing the SSG.
+- `layout.html`: Global layout, nearly every page inherits from this file.
+- `post-layout.html`: Layout for each blog post.
 
 ## Markdown-like Markup Language
 
-Blog posts are written in a Markdown-like markup language and parsed and converted by `build.js`. Most of the inline text features we love and expect from Markdown are here
+Blog posts are written in a Markdown-like markup language which is parsed and converted by `build.js`. Most of the inline text features we love and expect from Markdown are here
 
 - backticks for monospace,
 - asterisks for italics,
 - dollar sign for inline LaTeX math,
-- brackets for href links,
-- no double asterisks for bold however.
+- brackets for href links.
 
 It automatically wraps keyboard shortcuts surrounded by backticks (e.g. "\`ctrl+t\`") into `<kbd>` tags instead of code tags. Images are handled slightly differently, as `!img.png` on its own line where the image is found in `/images` and the alt-text is set to the filename.
 
